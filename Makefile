@@ -27,7 +27,8 @@ OBJ_MAIN_SERVER = $(SRC_MAIN_SERVER:%.cpp=$(OBJ_DIR)/%.o)
 
 OBJ_MAIN_CLIENT = $(SRC_MAIN_CLIENT:%.cpp=$(OBJ_DIR)/%.o)
 
-DEPS = $(OBJ_SRC:.o=.d) $(OBJ_MAIN:.o=.d)
+DEPS = $(OBJ_SRC_SERVER:.o=.d) $(OBJ_MAIN_SERVER:.o=.d) \
+		$(OBJ_SRC_CLIENT:.o=.d) $(OBJ_MAIN_CLIENT:.o=.d)
 
 # ============= PARAMETERS ============= #
 
