@@ -19,9 +19,13 @@ OBJ_DIR = obj
 
 OBJ = $(SRC_LIB:.$(EXTENSION)=$(OBJ_DIR)/%.o)
 
-OBJ_SRC = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
+OBJ_SRC_SERVER = $(SRC_SERVER:%.cpp=$(OBJ_DIR)/%.o)
 
-OBJ_MAIN = $(SRC_MAIN:%.cpp=$(OBJ_DIR)/%.o)
+OBJ_SRC_CLIENT = $(SRC_CLIENT:%.cpp=$(OBJ_DIR)/%.o)
+
+OBJ_MAIN_SERVER = $(SRC_MAIN_SERVER:%.cpp=$(OBJ_DIR)/%.o)
+
+OBJ_MAIN_CLIENT = $(SRC_MAIN_CLIENT:%.cpp=$(OBJ_DIR)/%.o)
 
 DEPS = $(OBJ_SRC:.o=.d) $(OBJ_MAIN:.o=.d)
 
@@ -45,24 +49,35 @@ FLAGS_LIB = -std=c++20 -Wall -Wextra -Werror
 
 NAME_LIB	= \
 
-NAME	=	jetpack_client, jetpack_server
+NAME_CLIENT	=	jetpack_client
+
+NAME_SERVER	=	jetpack_server
 
 # ============= SOURCES ============= #
 
 SRC_LIB	=	\
 
-SRC_MAIN	=	main.cpp \
+SRC_MAIN_SERVER	=	main_server.cpp \
 
-SRC	= 	$(shell find src -type f -name "*.cpp" ! -name "main.cpp") \
+SRC_MAIN_CLIENT	=	main_client.cpp \
+
+SRC_SERVER	= 	$(shell find src/server -type f -name "*.cpp" ! \
+			 -name "main_server.cpp" ! -name "main_client.cpp") \
+
+SRC_CLIENT	= 	$(shell find src/client -type f -name "*.cpp" ! \
+			 -name "main_server.cpp" ! -name "main_client.cpp") \
 
 SRC_TESTS	= 	tests/test_1.cpp \
 
 # ============= RULES ============= #
 
-all: $(NAME) $(NAME_LIB)
+all: $(NAME_CLIENT) $(NAME_SERVER) $(NAME_LIB)
 
-$(NAME): $(OBJ_SRC) $(OBJ_MAIN)
-	$(COMPILER) -o $(NAME) $(OBJ_SRC) $(OBJ_MAIN) $(FLAGS)
+$(NAME_CLIENT): $(OBJ_SRC) $(OBJ_MAIN)
+	$(COMPILER) -o $(NAME_CLIENT) $(OBJ_SRC) $(OBJ_MAIN) $(FLAGS)
+
+$(NAME_SERVER): $(OBJ_SRC) $(OBJ_MAIN)
+	$(COMPILER) -o $(NAME_SERVER) $(OBJ_SRC) $(OBJ_MAIN) $(FLAGS)
 
 $(NAME_LIB): $(OBJ)
 	ar rc $(NAME_LIB) $(OBJ)
@@ -74,7 +89,7 @@ clean:
 	rm -f *.gcda *.gcno
 
 fclean: clean
-	rm -f $(NAME) $(NAME_LIB) unit_tests
+	rm -f $(NAME_CLIENT) $(NAME_SERVER) $(NAME_LIB) unit_tests
 
 # ============= COMPILATION ============= #
 
@@ -89,7 +104,7 @@ $(OBJ_DIR)/%.o: %.cpp
 re: fclean all
 
 run: all
-	./$(NAME)
+	./$(NAME_SERVER)
 
 # ============= TESTS ============= #
 
