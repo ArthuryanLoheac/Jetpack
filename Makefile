@@ -74,10 +74,10 @@ SRC_TESTS	= 	tests/test_1.cpp \
 all: $(NAME_CLIENT) $(NAME_SERVER) $(NAME_LIB)
 
 $(NAME_CLIENT): $(OBJ_SRC) $(OBJ_MAIN)
-	$(COMPILER) -o $(NAME_CLIENT) $(OBJ_SRC) $(OBJ_MAIN) $(FLAGS)
+	$(COMPILER) -o $(NAME_CLIENT) $(OBJ_SRC_CLIENT) $(OBJ_MAIN_CLIENT) $(FLAGS)
 
 $(NAME_SERVER): $(OBJ_SRC) $(OBJ_MAIN)
-	$(COMPILER) -o $(NAME_SERVER) $(OBJ_SRC) $(OBJ_MAIN) $(FLAGS)
+	$(COMPILER) -o $(NAME_SERVER) $(OBJ_SRC_SERVER) $(OBJ_MAIN_SERVER) $(FLAGS)
 
 $(NAME_LIB): $(OBJ)
 	ar rc $(NAME_LIB) $(OBJ)
@@ -110,7 +110,7 @@ run: all
 
 unit_tests:
 	@mkdir -p $(OBJ_DIR)
-	$(COMPILER) -o $(OBJ_DIR)/unit_tests $(SRC_TESTS) $(SRC) $(FLAGS_TEST)
+	$(COMPILER) -o $(OBJ_DIR)/unit_tests $(SRC_TESTS) $(SRC_SERVER) $(FLAGS_TEST)
 	cp $(OBJ_DIR)/unit_tests unit_tests
 
 tests_run: unit_tests
