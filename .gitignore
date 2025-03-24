@@ -11,4 +11,5 @@ unit_tests
 *.d
 obj/
 build
-jetpack_client, jetpack_server
+jetpack_client
+jetpack_server
