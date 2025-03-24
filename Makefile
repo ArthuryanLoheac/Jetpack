@@ -111,7 +111,8 @@ run: all
 
 unit_tests:
 	@mkdir -p $(OBJ_DIR)
-	$(COMPILER) -o $(OBJ_DIR)/unit_tests $(SRC_TESTS) $(SRC_SERVER) $(FLAGS_TEST)
+	$(COMPILER) -o $(OBJ_DIR)/unit_tests $(SRC_TESTS) \
+		$(SRC_SERVER) $(FLAGS_TEST)
 	cp $(OBJ_DIR)/unit_tests unit_tests
 
 tests_run: unit_tests
