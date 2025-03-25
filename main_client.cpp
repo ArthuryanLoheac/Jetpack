@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include "entrypoint.hpp"
 
 int main ( void )
 {

@@ -59,8 +59,14 @@ NAME_SERVER	=	jetpack_server
 SRC_LIB	=	\
 
 SRC_MAIN_SERVER	=	main_server.cpp \
+					src/log/Log.cpp \
 
 SRC_MAIN_CLIENT	=	main_client.cpp \
+					src/log/Log.cpp \
+					src/server/server/Server.cpp \
+					src/server/server/ServerConf.cpp \
+					src/server/client/Client.cpp \
+					src/server/client/ClientIO.cpp \
 
 SRC_SERVER	= 	$(shell find src/server -type f -name "*.cpp" ! \
 			 -name "main_server.cpp" ! -name "main_client.cpp") \

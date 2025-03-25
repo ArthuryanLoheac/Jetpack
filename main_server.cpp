@@ -6,9 +6,9 @@
 */
 
 #include <iostream>
+#include "entrypoint.hpp"
 
-int main ( void )
+int main (int argc, char **argv)
 {
-    std::cout << "Hello World\n";
-    return 0;
+    return entrypointServer(argc, argv);
 }
