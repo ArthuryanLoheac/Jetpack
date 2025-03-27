@@ -64,9 +64,11 @@ SRC_MAIN_CLIENT	=	main_client.cpp \
 
 SRC_SERVER	= 	$(shell find src/server -type f -name "*.cpp" ! \
 			 -name "main_server.cpp" ! -name "main_client.cpp") \
+			 src/log/Log.cpp \
 
 SRC_CLIENT	= 	$(shell find src/client -type f -name "*.cpp" ! \
 			 -name "main_server.cpp" ! -name "main_client.cpp") \
+			 src/log/Log.cpp \
 
 SRC_TESTS	= 	tests/test_1.cpp \
 
