@@ -15,6 +15,10 @@ static void handleMaxMin(sf::Vector2f &position)
         position.y = HEIGHT - Player::instance->getHeight() - 30;
         Player::instance->setVelocityY(0);
         isGround = true;
+        if (Player::instance->getLanding() == Player::ON_AIR){
+            Player::instance->setLanding(Player::LANDING);
+            Player::instance->getImage().getPosRectangle().left = 0;
+        }
     } else if (position.y <= 0) {
         position.y = 0;
         Player::instance->setVelocityY(0);
@@ -27,17 +31,26 @@ static void updateVelocity(std::map<int, int> &map_keys, float deltaTime)
     float fireVelocity = 0;
     float gravite = 400;
 
-    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed || map_keys[sf::Keyboard::Space] == sf::Event::KeyPressed)
+    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed || map_keys[sf::Keyboard::Space] == sf::Event::KeyPressed){
+        Player::instance->setLanding(Player::ON_AIR);
         fireVelocity = 1200;
+    }
     Player::instance->setFire(fireVelocity != 0);
     Player::instance->setVelocityY(Player::instance->getVelocityY() + ((-gravite + fireVelocity) * deltaTime));
 }
 
 void updateImage()
 {
-    if (Player::instance->getGround())
-        Player::instance->getImage().getPosRectangle().top = 0;
-    else {
+    if (Player::instance->getGround()) {
+        if (Player::instance->getLanding() == Player::LANDING) {
+            Player::instance->getImage().getPosRectangle().top = Player::instance->getImage().getPosRectangle().height * 2;
+            if (Player::instance->getImage().getPosRectangle().left / Player::instance->getImage().getPosRectangle().width >= Player::instance->getImage().getNbFrame() - 1) {
+                Player::instance->getImage().getPosRectangle().left = 0;
+                Player::instance->setLanding(Player::ON_GROUND);
+            }
+        } else
+            Player::instance->getImage().getPosRectangle().top = 0;
+    } else {
         if (Player::instance->getFire())
             Player::instance->getImage().getPosRectangle().top = Player::instance->getImage().getPosRectangle().height;
         else

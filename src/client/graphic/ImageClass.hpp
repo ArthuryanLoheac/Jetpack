@@ -22,6 +22,7 @@ class ImageClass
         void updateAnimation();
         void setNbFrame(int nbFrame) { this->nbFrame = nbFrame; }
         sf::IntRect &getPosRectangle() { return posRectangle; }
+        int getNbFrame() { return nbFrame; }
     private:
         sf::Texture texture;
         sf::Sprite sprite;

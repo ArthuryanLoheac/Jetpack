@@ -11,6 +11,12 @@
 class Player
 {
     public:
+        enum Landing {
+            LANDING,
+            ON_GROUND,
+            ON_AIR
+        };
+
         static Player *instance;
         Player() 
             : img("assets/player_sprite_sheet.png") {
@@ -32,6 +38,8 @@ class Player
         ImageClass &getImage() { return img; }
         void setGround(bool isGround) { this->isGround = isGround; }
         bool getGround() { return isGround; }
+        void setLanding(Landing landing) { this->landing = landing; }
+        Landing getLanding() { return landing; }
     private:
         float x = 100;
         float y = 100;
@@ -39,6 +47,7 @@ class Player
         int height = 134;
         float velocityY = 0.f;
         bool isFire = false;
-        bool isGround = true;
+        bool isGround = false;
         ImageClass img;
+        Landing landing = ON_AIR;
 };
