@@ -13,6 +13,7 @@
 #include <vector>
 #include <map>
 
+#include "ClientRun.hpp"
 #include "Player.hpp"
 
 static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &event)
@@ -21,39 +22,18 @@ static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &
         window.close();
     if (event.key.code == sf::Keyboard::Z)
         map[sf::Keyboard::Z] = event.type;
-    if (event.key.code == sf::Keyboard::S)
-        map[sf::Keyboard::S] = event.type;
-    if (event.key.code == sf::Keyboard::Q)
-        map[sf::Keyboard::Q] = event.type;
-    if (event.key.code == sf::Keyboard::D)
-        map[sf::Keyboard::D] = event.type;
+    if (event.key.code == sf::Keyboard::Space)
+        map[sf::Keyboard::Space] = event.type;
 }
 
-static void update(std::map<int, int> map_keys, sf::RectangleShape &shape, float deltaTime)
-{
-    sf::Vector2f position = {Player::instance->getX(), Player::instance->getY()};
-    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed)
-        position.y -= 200 * deltaTime;
-    if (map_keys[sf::Keyboard::S] == sf::Event::KeyPressed)
-        position.y += 200 * deltaTime;
-    if (map_keys[sf::Keyboard::Q] == sf::Event::KeyPressed)
-        position.x -= 200 * deltaTime;
-    if (map_keys[sf::Keyboard::D] == sf::Event::KeyPressed)
-        position.x += 200 * deltaTime;
-    shape.setPosition(position);
-    Player::instance->setPos(position.x, position.y);
-}
-    
-int graphic()
+int graphic(void)
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
     sf::RectangleShape shape(sf::Vector2f(100, 100));
     sf::Clock clock;
     std::map<int, int> map_keys = {
         {sf::Keyboard::Z, sf::Event::KeyReleased},
-        {sf::Keyboard::S, sf::Event::KeyReleased},
-        {sf::Keyboard::Q, sf::Event::KeyReleased},
-        {sf::Keyboard::D, sf::Event::KeyReleased}};
+        {sf::Keyboard::Space, sf::Event::KeyReleased}};
     sf::Event event;
 
     shape.setFillColor(sf::Color::Green);

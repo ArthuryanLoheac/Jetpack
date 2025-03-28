@@ -30,4 +30,5 @@
 #include <thread>
 
 int client(int port, std::string ip);
-void graphic(void);
+int graphic(void);
+void update(std::map<int, int> &map_keys, sf::RectangleShape &shape, float deltaTime);

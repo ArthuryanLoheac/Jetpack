@@ -42,7 +42,7 @@ static void clockPosition(sf::Clock &clock, int sockfd)
 
     if (clock.getElapsedTime().asSeconds() > 1.f/30.f) {
         clock.restart();
-        input = "x : " + std::to_string(Player::instance->getX()) + " y : " + std::to_string(Player::instance->getY()) + "\n";
+        input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
         write(sockfd, input.c_str(), input.size());
     }
 }
