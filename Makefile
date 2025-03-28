@@ -42,6 +42,8 @@ FLAGS = -I./include -I./src \
 	$(shell find include src -type d -exec echo -I{} \;) \
 	-MMD -MP $(FLAGS_LIB) \
 
+FLAGS_CLIENT = $(FLAGS) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+
 FLAGS_TEST = $(FLAGS) -lcriterion --coverage \
 
 FLAGS_LIB = -std=c++20 -Wall -Wextra -Werror
@@ -77,7 +79,7 @@ SRC_TESTS	= 	tests/test_1.cpp \
 all: $(NAME_CLIENT) $(NAME_SERVER) $(NAME_LIB)
 
 $(NAME_CLIENT): $(OBJ_SRC_CLIENT) $(OBJ_MAIN_CLIENT)
-	$(COMPILER) -o $(NAME_CLIENT) $(OBJ_SRC_CLIENT) $(OBJ_MAIN_CLIENT) $(FLAGS)
+	$(COMPILER) -o $(NAME_CLIENT) $(OBJ_SRC_CLIENT) $(OBJ_MAIN_CLIENT) $(FLAGS_CLIENT)
 
 $(NAME_SERVER): $(OBJ_SRC_SERVER) $(OBJ_MAIN_SERVER)
 	$(COMPILER) -o $(NAME_SERVER) $(OBJ_SRC_SERVER) $(OBJ_MAIN_SERVER) $(FLAGS)

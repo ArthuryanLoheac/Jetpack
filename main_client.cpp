@@ -5,11 +5,18 @@
 ** main
 */
 
-#include <iostream>
-#include "entrypoint.hpp"
+#include "Client.hpp"
+#include "Player.hpp"
 
-int main ( void )
+Player *Player::instance = nullptr;
+
+int main (int ac, char **av)
 {
-    std::cout << "Hello World\n";
+    Player player;
+    std::thread t1(graphic);
+    std::thread t2(client, ac, av);
+    t1.join();
+    t2.detach();
+
     return 0;
 }
