@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 
 #include "Player.hpp"
+#include <arpa/inet.h>
 
 static int returnError(std::string message)
 {
@@ -59,22 +60,19 @@ static void loopClient(int sockfd)
     }
 }
 
-int client(int ac, char **av)
+int client(int port, std::string ip)
 {
     struct sockaddr_in serv_addr;
-    std::string port;
     int sockfd;
 
-    if (ac != 2)
-        return 84;
-    port = av[1];
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
         return returnError("Error opening socket");
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(std::stoi(port));
+    if (inet_pton(AF_INET, ip.c_str(), &serv_addr.sin_addr) <= 0)
+        return returnError("Invalid IP address");
+    serv_addr.sin_port = htons(port);
     if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
         return returnError("Connection failed");
     loopClient(sockfd);

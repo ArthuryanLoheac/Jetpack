@@ -29,5 +29,5 @@
 #include <signal.h>
 #include <thread>
 
-int client(int ac, char **av);
+int client(int port, std::string ip);
 void graphic(void);

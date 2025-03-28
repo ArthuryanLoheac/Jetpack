@@ -4,28 +4,14 @@
 ** File description:
 ** GraphicalClient
 */
-#include "entrypoint.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <poll.h>
 #include <vector>
-#include <netdb.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <sstream>
 #include <map>
-#include <signal.h>
-#include <thread>
 
 #include "Player.hpp"
 
@@ -33,13 +19,13 @@ static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &
 {
     if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.close();
-    if (sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z)
+    if (event.key.code == sf::Keyboard::Z)
         map[sf::Keyboard::Z] = event.type;
-    if (sf::Event::KeyPressed && event.key.code == sf::Keyboard::S)
+    if (event.key.code == sf::Keyboard::S)
         map[sf::Keyboard::S] = event.type;
-    if (sf::Event::KeyPressed && event.key.code == sf::Keyboard::Q)
+    if (event.key.code == sf::Keyboard::Q)
         map[sf::Keyboard::Q] = event.type;
-    if (sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
+    if (event.key.code == sf::Keyboard::D)
         map[sf::Keyboard::D] = event.type;
 }
 
