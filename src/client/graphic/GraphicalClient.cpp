@@ -16,6 +16,7 @@
 #include "ClientRun.hpp"
 #include "Player.hpp"
 #include "ImageClass.hpp"
+#include "BackGround.hpp"
 
 static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &event)
 {
@@ -35,13 +36,21 @@ int graphic(void)
         {sf::Keyboard::Z, sf::Event::KeyReleased},
         {sf::Keyboard::Space, sf::Event::KeyReleased}};
     sf::Event event;
+    BackGround bg;
+    BackGround bg2(1726 * 3.7);
+    float deltaTime = 0;
 
     while (window.isOpen())
     {
+        deltaTime = clock.restart().asSeconds();
         while (window.pollEvent(event))
             Event(window, map_keys, event);
-        update(map_keys, clock.restart().asSeconds());
+        update(map_keys, deltaTime);
+        bg.update(deltaTime);
+        bg2.update(deltaTime);
         window.clear();
+        bg.draw(window);
+        bg2.draw(window);
         Player::instance->getImage().draw(window);
         window.display();
     }
