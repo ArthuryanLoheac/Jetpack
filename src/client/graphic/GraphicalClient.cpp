@@ -15,6 +15,7 @@
 
 #include "ClientRun.hpp"
 #include "Player.hpp"
+#include "ImageClass.hpp"
 
 static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &event)
 {
@@ -28,23 +29,20 @@ static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &
 
 int graphic(void)
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-    sf::RectangleShape shape(sf::Vector2f(100, 100));
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML window");
     sf::Clock clock;
     std::map<int, int> map_keys = {
         {sf::Keyboard::Z, sf::Event::KeyReleased},
         {sf::Keyboard::Space, sf::Event::KeyReleased}};
     sf::Event event;
 
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition(Player::instance->getX(), Player::instance->getY());
     while (window.isOpen())
     {
         while (window.pollEvent(event))
             Event(window, map_keys, event);
-        update(map_keys, shape, clock.restart().asSeconds());
+        update(map_keys, clock.restart().asSeconds());
         window.clear();
-        window.draw(shape);
+        Player::instance->getImage().draw(window);
         window.display();
     }
     return 0;

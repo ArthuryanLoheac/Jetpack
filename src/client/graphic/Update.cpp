@@ -6,16 +6,20 @@
 */
 #include "ClientRun.hpp"
 #include "Player.hpp"
+#include "ImageClass.hpp"
 
 static void handleMaxMin(sf::Vector2f &position)
 {
-    if (position.y >= 570) {
-        position.y = 570;
+    bool isGround = false;
+    if (position.y >= HEIGHT - Player::instance->getHeight() - 30) {
+        position.y = HEIGHT - Player::instance->getHeight() - 30;
         Player::instance->setVelocityY(0);
-    } else if (position.y <= 0){
+        isGround = true;
+    } else if (position.y <= 0) {
         position.y = 0;
         Player::instance->setVelocityY(0);
     }
+    Player::instance->setGround(isGround);
 }
 
 static void updateVelocity(std::map<int, int> &map_keys, float deltaTime)
@@ -29,13 +33,27 @@ static void updateVelocity(std::map<int, int> &map_keys, float deltaTime)
     Player::instance->setVelocityY(Player::instance->getVelocityY() + ((-gravite + fireVelocity) * deltaTime));
 }
 
-void update(std::map<int, int> &map_keys, sf::RectangleShape &shape, float deltaTime)
+void updateImage()
+{
+    if (Player::instance->getGround())
+        Player::instance->getImage().getPosRectangle().top = 0;
+    else {
+        if (Player::instance->getFire())
+            Player::instance->getImage().getPosRectangle().top = Player::instance->getImage().getPosRectangle().height;
+        else
+            Player::instance->getImage().setRectangle(0, Player::instance->getImage().getPosRectangle().height, Player::instance->getWidth(), Player::instance->getHeight());
+    }
+}
+
+void update(std::map<int, int> &map_keys, float deltaTime)
 {
     sf::Vector2f position = {Player::instance->getX(), Player::instance->getY()};
 
     updateVelocity(map_keys, deltaTime);
     position.y -= (Player::instance->getVelocityY() * deltaTime);
     handleMaxMin(position);
-    shape.setPosition(position);
+    Player::instance->getImage().setPosition(position.x, position.y);
     Player::instance->setPos(position.x, position.y);
+    Player::instance->getImage().updateAnimation();
+    updateImage();
 }
