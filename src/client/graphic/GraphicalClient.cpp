@@ -13,7 +13,10 @@
 #include <vector>
 #include <map>
 
+#include "ClientRun.hpp"
 #include "Player.hpp"
+#include "ImageClass.hpp"
+#include "BackGround.hpp"
 
 static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &event)
 {
@@ -21,50 +24,34 @@ static void Event(sf::RenderWindow &window, std::map<int, int> &map, sf::Event &
         window.close();
     if (event.key.code == sf::Keyboard::Z)
         map[sf::Keyboard::Z] = event.type;
-    if (event.key.code == sf::Keyboard::S)
-        map[sf::Keyboard::S] = event.type;
-    if (event.key.code == sf::Keyboard::Q)
-        map[sf::Keyboard::Q] = event.type;
-    if (event.key.code == sf::Keyboard::D)
-        map[sf::Keyboard::D] = event.type;
+    if (event.key.code == sf::Keyboard::Space)
+        map[sf::Keyboard::Space] = event.type;
 }
 
-static void update(std::map<int, int> map_keys, sf::RectangleShape &shape, float deltaTime)
+int graphic(void)
 {
-    sf::Vector2f position = {Player::instance->getX(), Player::instance->getY()};
-    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed)
-        position.y -= 200 * deltaTime;
-    if (map_keys[sf::Keyboard::S] == sf::Event::KeyPressed)
-        position.y += 200 * deltaTime;
-    if (map_keys[sf::Keyboard::Q] == sf::Event::KeyPressed)
-        position.x -= 200 * deltaTime;
-    if (map_keys[sf::Keyboard::D] == sf::Event::KeyPressed)
-        position.x += 200 * deltaTime;
-    shape.setPosition(position);
-    Player::instance->setPos(position.x, position.y);
-}
-    
-int graphic()
-{
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-    sf::RectangleShape shape(sf::Vector2f(100, 100));
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML window");
     sf::Clock clock;
     std::map<int, int> map_keys = {
         {sf::Keyboard::Z, sf::Event::KeyReleased},
-        {sf::Keyboard::S, sf::Event::KeyReleased},
-        {sf::Keyboard::Q, sf::Event::KeyReleased},
-        {sf::Keyboard::D, sf::Event::KeyReleased}};
+        {sf::Keyboard::Space, sf::Event::KeyReleased}};
     sf::Event event;
+    BackGround bg;
+    BackGround bg2(1726 * 3.7);
+    float deltaTime = 0;
 
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition(Player::instance->getX(), Player::instance->getY());
     while (window.isOpen())
     {
+        deltaTime = clock.restart().asSeconds();
         while (window.pollEvent(event))
             Event(window, map_keys, event);
-        update(map_keys, shape, clock.restart().asSeconds());
+        update(map_keys, deltaTime);
+        bg.update(deltaTime);
+        bg2.update(deltaTime);
         window.clear();
-        window.draw(shape);
+        bg.draw(window);
+        bg2.draw(window);
+        Player::instance->getImage().draw(window);
         window.display();
     }
     return 0;
