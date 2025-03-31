@@ -36,13 +36,16 @@ int main(int ac, char **av)
     Player player;
     std::string ip;
     int port;
+    int sockfd;
 
     if (!(ac == 5 || ac == 6))
         return 84;
     if (checkArgs(ac, av, port, ip) == 84)
         return 84;
+    if (client(port, ip, sockfd) == 84)
+        return 84;
     std::thread t1(graphic);
-    std::thread t2(client, port, ip);
+    std::thread t2(loopClient, sockfd);
     t1.join();
     t2.detach();
 

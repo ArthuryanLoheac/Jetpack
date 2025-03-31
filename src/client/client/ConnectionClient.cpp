@@ -47,7 +47,7 @@ static void clockPosition(sf::Clock &clock, int sockfd)
     }
 }
 
-static void loopClient(int sockfd)
+void loopClient(int sockfd)
 {
     sf::Clock clock;
     struct pollfd fds;
@@ -60,10 +60,9 @@ static void loopClient(int sockfd)
     }
 }
 
-int client(int port, std::string ip)
+int client(int port, std::string ip, int &sockfd)
 {
     struct sockaddr_in serv_addr;
-    int sockfd;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
@@ -75,6 +74,5 @@ int client(int port, std::string ip)
     serv_addr.sin_port = htons(port);
     if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
         return returnError("Connection failed");
-    loopClient(sockfd);
     return 0;
 }
