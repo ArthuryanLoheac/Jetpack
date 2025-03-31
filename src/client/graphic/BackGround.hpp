@@ -1,15 +1,14 @@
-#include "ImageClass.hpp"
+#pragma once
+#include "client/graphic/ImageClass.hpp"
 
-class BackGround
-{
-private:
+class BackGround {
+ private:
     ImageClass img;
     sf::Vector2f pos = {0, -160};
     float speed = 500;
-public:
-    BackGround(int posX = 0) 
-    : img("assets/background.png")
-    {
+ public:
+    BackGround(int posX = 0)
+    : img("assets/background.png") {
         pos.x = posX;
         img.setPosition(posX, pos.y);
         img.setScale(3.7, 3.7);
