@@ -133,5 +133,5 @@ tests_clean_run: fclean tests_run
 tests_clean_run_coverage: tests_clean_run
 	gcovr -r . -e tests/
 
-styl_check:
-	cpplint --filter=-runtime,-legal $(find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
+style_check:
+	cpplint --filter=-runtime,-legal $(shell find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
