@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: "Check the coding style"
-        run: cpplint --filter=-runtime,-legal $(shell find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
+        run: pipx run cpplint --filter=-runtime,-legal $(find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
   check_program_compilation:
     needs: check_coding_style
     runs-on: ubuntu-latest
