@@ -1,24 +1,18 @@
-/*
-** EPITECH PROJECT, 2025
-** BS
-** File description:
-** ServerConf
-*/
-
-#include "Server.hpp"
-#include <iostream>
-#include <exception>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <poll.h>
 #include <sys/wait.h>
+
+#include <iostream>
+#include <exception>
 #include <csignal>
 #include <atomic>
 
-void Server::setSocketOptions(int socketFd)
-{
+#include "server/server/Server.hpp"
+
+void Server::setSocketOptions(int socketFd) {
     int opt = 1;
 
     if (setsockopt(socketFd, SOL_SOCKET, SO_REUSEADDR, &opt,
@@ -27,8 +21,7 @@ void Server::setSocketOptions(int socketFd)
     }
 }
 
-void Server::setupServerSocket(int port)
-{
+void Server::setupServerSocket(int port) {
     struct sockaddr_in addrIn;
 
     socketFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -46,14 +39,12 @@ void Server::setupServerSocket(int port)
     }
 }
 
-void Server::initializePoll(struct pollfd fds[])
-{
+void Server::initializePoll(struct pollfd fds[]) {
     fds[0].fd = socketFd;
     fds[0].events = POLLIN;
 }
 
-void Server::processSocketEvents(int fd_index)
-{
+void Server::processSocketEvents(int fd_index) {
     if (fds[fd_index].fd == socketFd) {
         handleNewConnection(fds, nfds);
     } else {
@@ -61,8 +52,7 @@ void Server::processSocketEvents(int fd_index)
     }
 }
 
-bool Server::checkPollEvents()
-{
+bool Server::checkPollEvents() {
     int poll_result = poll(fds, nfds, -1);
 
     if (poll_result == -1) {
@@ -74,8 +64,7 @@ bool Server::checkPollEvents()
     return poll_result > 0;
 }
 
-void Server::processReadyFds()
-{
+void Server::processReadyFds() {
     for (i = nfds - 1; i >= 0; i--) {
         if (fds[i].revents & POLLIN) {
             processSocketEvents(i);

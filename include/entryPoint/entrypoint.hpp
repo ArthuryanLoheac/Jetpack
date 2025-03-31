@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** Jetpack
-** File description:
-** entrypoint
-*/
-
 #pragma once
 
 int entrypointServer(int ac, char **av);

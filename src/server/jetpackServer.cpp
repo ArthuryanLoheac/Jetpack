@@ -1,18 +1,12 @@
-/*
-** EPITECH PROJECT, 2025
-** Jetpack
-** File description:
-** jetpackServer
-*/
-
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include "Log.hpp"
+#include <string>
+
+#include "log/Log.hpp"
 #include "server/Server.hpp"
 
-static int printHelp(int exitCode)
-{
+static int printHelp(int exitCode) {
     std::cout << "USAGE: ./jetpackServer -p <port> -m <map> [-d]" << std::endl;
     std::cout << "\tport\tport number on which the server socket listens"
         << std::endl;
@@ -21,8 +15,7 @@ static int printHelp(int exitCode)
     return exitCode;
 }
 
-static int getPort(const std::string &portStr)
-{
+static int getPort(const std::string &portStr) {
     int port = -1;
 
     if (portStr.empty() || !std::all_of(portStr.begin(), portStr.end(),
@@ -41,8 +34,7 @@ static int getPort(const std::string &portStr)
     return port;
 }
 
-static std::string getMap(const std::string pathMap)
-{
+static std::string getMap(const std::string pathMap) {
     std::ifstream file(pathMap);
     std::string map = "";
 
@@ -56,8 +48,7 @@ static std::string getMap(const std::string pathMap)
     return map;
 }
 
-static bool handleArgs(int argc, char **argv, int &port, std::string &map)
-{
+static bool handleArgs(int argc, char **argv, int &port, std::string &map) {
     for (int i = 0; i < argc; i++) {
         if (std::string(argv[i]) == "-p" && i + 1 < argc) {
             port = getPort(argv[i + 1]);
@@ -67,14 +58,14 @@ static bool handleArgs(int argc, char **argv, int &port, std::string &map)
             i++;
         } else if (std::string(argv[i]) == "-d") {
             Log::setDebug(true);
-        } else
+        } else {
             return false;
+        }
     }
     return true;
 }
 
-static int runServer(int port, std::string map)
-{
+static int runServer(int port, std::string map) {
     Server server(port, map);
 
     try {
@@ -87,8 +78,7 @@ static int runServer(int port, std::string map)
     return 0;
 }
 
-int entrypointServer(int argc, char **argv)
-{
+int entrypointServer(int argc, char **argv) {
     std::string map = "";
     int port = -1;
 

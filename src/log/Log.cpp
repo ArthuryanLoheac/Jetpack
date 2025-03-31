@@ -1,11 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** test_log
-** File description:
-** Log
-*/
-
-#include "Log.hpp"
 #include <chrono>
 #include <ctime>
 #include <iomanip>
@@ -13,12 +5,14 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
+#include <string>
+
+#include "log/Log.hpp"
 
 std::string Log::filePath = "";
 bool Log::debug = false;
 
-Log::Log(const std::string& level) : level(level)
-{
+Log::Log(const std::string& level) : level(level) {
 }
 
 Log::~Log() {
@@ -108,9 +102,9 @@ void Log::flush() {
             (&tm_now, "%H:%M:%S") << ") → " << buffer.str();
     else
         logMessage << specialCase();
-    if (!filePath.empty()) {
+    if (!filePath.empty())
         flushInFile(logMessage.str(), filePath);
-    } else
+    else
         std::cout << logMessage.str();
     buffer.str("");
     buffer.clear();
