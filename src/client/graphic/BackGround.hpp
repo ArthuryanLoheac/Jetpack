@@ -1,11 +1,13 @@
 #pragma once
 #include "client/graphic/ImageClass.hpp"
+#include "client/client/DataManager.hpp"
 
 class BackGround {
  private:
     ImageClass img;
     sf::Vector2f pos = {0, -160};
     float speed = 500;
+
  public:
     BackGround(int posX = 0)
     : img("assets/background.png") {
@@ -13,6 +15,7 @@ class BackGround {
         img.setPosition(posX, pos.y);
         img.setScale(3.7, 3.7);
         img.setRectangle(0, 0, 1726, 341);
+        speed = DataManager::instance->getSpeedX();
     }
     void update(float deltaTime) {
         pos.x -= speed * deltaTime;

@@ -9,6 +9,7 @@
 #include "clientRun/ClientRun.hpp"
 #include "client/graphic/Player.hpp"
 #include "client/graphic/ImageClass.hpp"
+#include "client/client/DataManager.hpp"
 
 static void handleMaxMin(sf::Vector2f &position) {
     bool isGround = false;
@@ -29,12 +30,12 @@ static void handleMaxMin(sf::Vector2f &position) {
 
 static void updateVelocity(std::map<int, int> &map_keys, float deltaTime) {
     float fireVelocity = 0;
-    float gravite = 400;
+    float gravite = DataManager::instance->getGravity();
 
     if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed ||
         map_keys[sf::Keyboard::Space] == sf::Event::KeyPressed) {
         Player::instance->setLanding(Player::ON_AIR);
-        fireVelocity = 1200;
+        fireVelocity = DataManager::instance->getSpeedJetpack();
     }
     Player::instance->setFire(fireVelocity != 0);
     Player::instance->setVelocityY(Player::instance->getVelocityY() +

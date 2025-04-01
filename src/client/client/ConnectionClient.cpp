@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** Jetpack
-** File description:
-** ConnectionServor
-*/
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -15,6 +9,8 @@
 #include <iostream>
 
 #include "client/graphic/Player.hpp"
+#include "client/client/DataManager.hpp"
+#include "clientRun/ClientRun.hpp"
 
 #include <SFML/System/Clock.hpp>
 
@@ -31,7 +27,7 @@ static void readDatas(int sockfd, struct pollfd &fds) {
         if (fds.revents & POLLIN) {
             valread = read(sockfd, buffer, 1024);
             if (valread > 0)
-                std::cout << buffer;
+                handleCommand(buffer);
         }
     }
 }
@@ -58,7 +54,7 @@ void loopClient(int sockfd) {
     }
 }
 
-int client(int port, std::string ip, int &sockfd) {
+int client(int &sockfd) {
     struct sockaddr_in serv_addr;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -66,9 +62,10 @@ int client(int port, std::string ip, int &sockfd) {
         return returnError("Error opening socket");
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    if (inet_pton(AF_INET, ip.c_str(), &serv_addr.sin_addr) <= 0)
+    if (inet_pton(AF_INET, DataManager::instance->getIp().c_str(),
+        &serv_addr.sin_addr) <= 0)
         return returnError("Invalid IP address");
-    serv_addr.sin_port = htons(port);
+    serv_addr.sin_port = htons(DataManager::instance->getPort());
     if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
         return returnError("Connection failed");
     return 0;
