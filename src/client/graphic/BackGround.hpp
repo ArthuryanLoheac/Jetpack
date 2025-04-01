@@ -7,6 +7,7 @@ class BackGround {
     ImageClass img;
     sf::Vector2f pos = {0, -160};
     float speed = 500;
+
  public:
     BackGround(int posX = 0)
     : img("assets/background.png") {
