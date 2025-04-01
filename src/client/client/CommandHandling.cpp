@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"

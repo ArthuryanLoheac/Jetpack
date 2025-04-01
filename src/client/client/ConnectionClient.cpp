@@ -62,7 +62,8 @@ int client(int &sockfd) {
         return returnError("Error opening socket");
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    if (inet_pton(AF_INET, DataManager::instance->getIp().c_str(), &serv_addr.sin_addr) <= 0)
+    if (inet_pton(AF_INET, DataManager::instance->getIp().c_str(),
+        &serv_addr.sin_addr) <= 0)
         return returnError("Invalid IP address");
     serv_addr.sin_port = htons(DataManager::instance->getPort());
     if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)

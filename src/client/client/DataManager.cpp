@@ -1,9 +1,10 @@
-#include "DataManager.hpp"
+#include <string>
+
+#include "client/client/DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
-DataManager::DataManager()
-{
+DataManager::DataManager() {
     if (instance)
         return;
     instance = this;

@@ -15,7 +15,8 @@ int checkArgs(int ac, char **av) {
             i++;
         } else if (strcmp(av[i], "-p") == 0) {
             DataManager::instance->setPort(atoi(av[i + 1]));
-            if (DataManager::instance->getPort() < 0 || DataManager::instance->getPort() > 65535)
+            if (DataManager::instance->getPort() < 0 ||
+                DataManager::instance->getPort() > 65535)
                 return 84;
             i+= 2;
         } else if (strcmp(av[i], "-h") == 0) {
