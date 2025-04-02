@@ -39,7 +39,7 @@ int main(int ac, char **av) {
         return 84;
     if (checkArgs(ac, av) == 84)
         return 84;
-    if (client(sockfd) == 84)
+    if (client_connection(sockfd) == 84)
         return 84;
     std::thread t1(graphic);
     std::thread t2(loopClient, sockfd);
