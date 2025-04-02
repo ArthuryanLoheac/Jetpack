@@ -11,7 +11,7 @@ Authors:
     - Léopold PINTARD
     - Carlos SO BUARO
     - Arthuryan LOHEAC DE SAINTE MARIE
-
+  
 Abstract
 
    This document specifies the Jetpack Protocol, a TCP-based

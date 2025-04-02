@@ -20,7 +20,7 @@ class Server {
  public:
     class ftpException : public std::exception {
      public:
-        ftpException(std::string message);
+        explicit ftpException(std::string message);
         const char *what() const noexcept;
      private:
         std::string _message;
