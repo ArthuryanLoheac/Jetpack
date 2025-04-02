@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "log/Log.hpp"
-#include "Log.hpp"
 
 bool Log::debug = false;
 
@@ -52,8 +51,7 @@ Log &Log::operator<<(std::ostream &(*manip)(std::ostream &)) {
     return *this;
 }
 
-void Log::setDebug(bool value)
-{
+void Log::setDebug(bool value) {
     debug = value;
 }
 
