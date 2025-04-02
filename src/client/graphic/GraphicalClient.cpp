@@ -25,6 +25,14 @@ sf::Event &event) {
         map[sf::Keyboard::Space] = event.type;
 }
 
+void setMusic(sf::SoundBuffer &music, sf::Sound &sound) {
+    if (!music.loadFromFile("assets/theme.ogg"))
+        return;
+    sound.setBuffer(music);
+    sound.play();
+    sound.setLoop(true);
+}
+
 int graphic(void) {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML window");
     sf::Clock clock;
@@ -35,7 +43,10 @@ int graphic(void) {
     BackGround bg;
     BackGround bg2(1726 * 3.7);
     float deltaTime = 0;
+    sf::SoundBuffer music;
+    sf::Sound sound;
 
+    setMusic(music, sound);
     while (window.isOpen()) {
         deltaTime = clock.restart().asSeconds();
         while (window.pollEvent(event))
