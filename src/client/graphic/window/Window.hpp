@@ -17,6 +17,7 @@ class Window {
     private:
         sf::Clock clock;
         std::map<int, int> map_keys;
+        std::map<int, int> map_keysLastFrame;
         sf::Event event;
         float deltaTime;
         sf::RenderWindow window;
@@ -33,4 +34,6 @@ class Window {
         bool pollEvent() { return window.pollEvent(event); }
         void clear() { window.clear(); }
         void display() { window.display(); }
+        bool getKeyPress(int key) { return map_keys[key] == sf::Event::KeyPressed; }
+        bool getKeyClick(int key) { return (map_keys[key] == sf::Event::KeyPressed && map_keysLastFrame[key] == sf::Event::KeyReleased); }
 };

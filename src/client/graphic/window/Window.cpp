@@ -12,4 +12,6 @@ Window::Window()
 
 void Window::updateDeltaTime() {
     deltaTime = clock.restart().asSeconds();
+    for (auto &key : map_keys)
+        map_keysLastFrame[key.first] = key.second;
 }

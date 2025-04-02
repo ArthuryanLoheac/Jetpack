@@ -15,6 +15,8 @@ class Game {
    BackGround bg;
    BackGround bg2;
 
+  int VolumeMusic;
+  int VolumeSound;
  public:
    GameSound music;
    GameSound jetpack; 
@@ -22,4 +24,9 @@ class Game {
    Game();
    void update(float deltaTime);
    void draw(sf::RenderWindow &window);
+   void updateSound();
+   void setVolumeMusic(int volume);
+   void setVolumeSound(int volume);
+   int getVolumeMusic();
+   int getVolumeSound();
 };

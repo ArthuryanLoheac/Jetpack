@@ -20,10 +20,7 @@ static void Event(Window &window) {
     if (window.getEvent().type == sf::Event::Closed ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.getWindow().close();
-    if (window.getEvent().key.code == sf::Keyboard::Z)
-        window.getMapKeys()[sf::Keyboard::Z] = window.getEvent().type;
-    if (window.getEvent().key.code == sf::Keyboard::Space)
-        window.getMapKeys()[sf::Keyboard::Space] = window.getEvent().type;
+    window.getMapKeys()[window.getEvent().key.code] = window.getEvent().type;
 }
 
 int graphic(void) {

@@ -67,7 +67,16 @@ void updateImage() {
     }
 }
 
-void updateSound(Game &game) {
+static void updateSound(Game &game, Window &window) {
+    if (window.getKeyClick(sf::Keyboard::M))
+        game.setVolumeMusic(game.getVolumeMusic() - 10);
+    if (window.getKeyClick(sf::Keyboard::P))
+        game.setVolumeMusic(game.getVolumeMusic() + 10);
+    if (window.getKeyClick(sf::Keyboard::L))
+        game.setVolumeSound(game.getVolumeSound() - 10);
+    if (window.getKeyClick(sf::Keyboard::O))
+        game.setVolumeSound(game.getVolumeSound() + 10);
+
     if (Player::instance->getFire()) {
         if (game.jetpack.sound.getStatus() != sf::Sound::Playing)
             game.jetpack.sound.play();
@@ -88,5 +97,5 @@ void update(Game &game, Window &window) {
     Player::instance->setPos(position.x, position.y);
     Player::instance->getImage().updateAnimation();
     updateImage();
-    updateSound(game);
+    updateSound(game, window);
 }
