@@ -34,7 +34,7 @@ int graphic(void) {
         window.updateDeltaTime();
         while (window.pollEvent())
             Event(window);
-        update(window.getMapKeys(), window.getDeltaTime());
+        update(game, window);
         game.update(window.getDeltaTime());
         window.clear();
         game.draw(window.getWindow());

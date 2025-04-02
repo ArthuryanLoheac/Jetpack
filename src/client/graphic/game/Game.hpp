@@ -7,16 +7,18 @@
 
 class Game {
  private:
-   struct Sounds {
+   struct GameSound {
       sf::SoundBuffer buff;
       sf::Sound sound;
    };
 
    BackGround bg;
    BackGround bg2;
-   Sounds music;
 
  public:
+   GameSound music;
+   GameSound jetpack; 
+  
    Game();
    void update(float deltaTime);
    void draw(sf::RenderWindow &window);

@@ -13,8 +13,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
-class Window
-{
+class Window {
     private:
         sf::Clock clock;
         std::map<int, int> map_keys;

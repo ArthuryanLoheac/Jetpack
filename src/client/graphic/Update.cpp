@@ -10,6 +10,8 @@
 #include "client/graphic/Player.hpp"
 #include "client/graphic/ImageClass.hpp"
 #include "client/client/DataManager.hpp"
+#include "client/graphic/game/Game.hpp"
+#include "client/graphic/window/Window.hpp"
 
 static void handleMaxMin(sf::Vector2f &position) {
     bool isGround = false;
@@ -65,15 +67,26 @@ void updateImage() {
     }
 }
 
-void update(std::map<int, int> &map_keys, float deltaTime) {
+void updateSound(Game &game) {
+    if (Player::instance->getFire()) {
+        if (game.jetpack.sound.getStatus() != sf::Sound::Playing)
+            game.jetpack.sound.play();
+    } else {
+        if (game.jetpack.sound.getStatus() == sf::Sound::Playing)
+            game.jetpack.sound.stop();
+    }
+}
+
+void update(Game &game, Window &window) {
     sf::Vector2f position =
         {Player::instance->getX(), Player::instance->getY()};
 
-    updateVelocity(map_keys, deltaTime);
-    position.y -= (Player::instance->getVelocityY() * deltaTime);
+    updateVelocity(window.getMapKeys(), window.getDeltaTime());
+    position.y -= (Player::instance->getVelocityY() * window.getDeltaTime());
     handleMaxMin(position);
     Player::instance->getImage().setPosition(position.x, position.y);
     Player::instance->setPos(position.x, position.y);
     Player::instance->getImage().updateAnimation();
     updateImage();
+    updateSound(game);
 }

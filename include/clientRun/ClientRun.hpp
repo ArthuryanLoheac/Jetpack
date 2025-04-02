@@ -21,11 +21,16 @@
 
 #include "client/graphic/ImageClass.hpp"
 #include "entryPoint/entrypoint.hpp"
+#include "client/graphic/game/Game.hpp"
+#include "client/graphic/window/Window.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
+
+class Game;
+class Window;
 
 const int WIDTH = 1280;
 const int HEIGHT = 920;
@@ -33,5 +38,5 @@ const int HEIGHT = 920;
 int client(int &sockfd);
 void loopClient(int sockfd);
 int graphic(void);
-void update(std::map<int, int> &map_keys, float deltaTime);
+void update(Game &game, Window &window);
 void handleCommand(std::string command);
