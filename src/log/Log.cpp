@@ -1,11 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** test_log
-** File description:
-** Log
-*/
-
-#include "src/log/Log.hpp"
 #include <string>
 #include <ctime>
 #include <iomanip>
@@ -13,6 +5,8 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
+
+#include "log/Log.hpp"
 
 bool Log::debug = false;
 
