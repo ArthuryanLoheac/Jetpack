@@ -23,7 +23,6 @@ jobs:
       with:
         python-version: 3.x
     - run: pip install cpplint
-    - run: apt-get update && apt-get install -y make
     - run: make style_check
   check_program_compilation:
     needs: check_coding_style
