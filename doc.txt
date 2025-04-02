@@ -1,0 +1,152 @@
+EPITECH Jetpack Protocol
+
+RFC Number: EPITECH-RFC-023
+Category: Standards Track
+Subcategory: Protocol
+Title: Jetpack Protocol
+Status: Active
+Version: 1.0
+Date: April 2, 2025
+Authors:
+    - Léopold PINTARD
+    - Carlos SO BUARO
+    - Arthuryan LOHEAC DE SAINTE MARIE
+
+Abstract
+
+   This document specifies the Jetpack Protocol, a TCP-based
+   communication protocol for a game where players control characters
+   with jetpacks. It defines the message formats, command sequences,
+   and physics calculations required for interoperability between
+   server and client implementations.
+
+Table of Contents
+
+   1. Introduction
+   2. Formats
+      2.1. Map Format
+      2.2. Gravity Calculations
+   3. Commands
+      3.1. Response Codes
+      3.2. Server Commands
+      3.3. Client Commands
+   4. Security Considerations
+   5. IANA Considerations
+   6. References
+
+1. Introduction
+
+   This documentation officializes the protocol of the Jetpack project to
+   communicate between the server and the client.
+
+   It defines a list of commands and possible values of these commands, but
+   also some rules related to the physics of the program.
+
+   Communications are made in TCP, by sending the commands in text and not
+   encoded.
+
+   For example: "FIRE 0" where the name of the command is in uppercase and
+   the content is split by spaces (in this documentation denoted by <SP>).
+
+   All commands must end with the Telnet end-of-line code <CRLF>.
+
+2. Formats
+
+   2.1. Map Format
+
+      The map, given as a parameter to the server, must use:
+         - "_" -> empty space
+         - "e" -> electric fence (obstacle)
+         - "c" -> coin
+
+   2.2. Gravity Calculations
+
+      To follow the server simulation, the client must use the following
+      math formulas for gravity:
+
+      > position_y = position_y - (velocity_y * deltatime)
+      > velocity_y = velocity_y - (gravity * deltatime)
+
+      (The velocity of X is constant and is given by the server)
+      The gravity is given by the server in the HELLO command, and is a
+      constant value.
+
+3. Commands
+
+   Arguments are surrounded by <> (special cases are <SP> (space) and <CRLF>
+   (end of command))
+
+   3.1. Response Codes
+
+      The server and the client must answer with a code to indicate if the
+      command was received correctly or not. The format of the answer is:
+      <code> <SP> <message> <CRLF>
+
+      200 Ok
+         The request has been processed correctly.
+
+      400 Bad request
+         The request is incorrectly formatted.
+
+      500 Internal error
+         The request could not be satisfied due to internal server /
+         client error.
+
+      501 Not implemented
+         The request is not implemented.
+
+   3.2. Server Commands
+
+      START <CRLF> ->
+         server is ready to start the game
+
+      MAP <SP> <map> <SP> <length> <SP> <height> <SP> <repetition> <SP>
+      <CRLF> ->
+         send the map to the client (with the length, height and repetition)
+         the server need to wait for the client to send the MAP command
+
+      HELLO <SP> <playerNumber> <SP> <gravity> <SP> <velocity_x> <SP>
+      <CRLF> ->
+         send the ID of the player to the client
+
+      PLAYER <SP> <playerNumber> <SP> <x> <SP> <y> <SP> <velocity_y> <SP>
+      <coins> <SP> <isFiring> <SP> <CRLF> ->
+         send the state of the game for the given player
+
+      DEATH <SP> <playerNumber> <SP> <CRLF> ->
+         send the ID of the player who died
+
+      FINISH <SP> <playerNumber> <SP> <CRLF> ->
+         send the ID of the player who won
+
+   3.3. Client Commands
+
+      READY <CRLF> ->
+         client is ready to start the game (the server must wait for all
+         players)
+
+      MAP <CRLF> ->
+         client is ready to receive the map
+
+      FIRE <SP> <isFiring> <SP> <CRLF> ->
+         send info if the player is firing (moving up). !! Value must be 0
+         (not firing) or 1 (firing) !!
+
+4. Security Considerations
+
+   The Jetpack Protocol does not include authentication or encryption
+   mechanisms. Implementations should be aware that all communications
+   are sent in plaintext and may be subject to interception or
+   modification.
+
+5. IANA Considerations
+
+   This document has no IANA actions.
+
+6. References
+
+   [RFC793]  Postel, J., "Transmission Control Protocol", STD 7,
+             RFC 793, September 1981.
+
+   [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate
+             Requirement Levels", BCP 14, RFC 2119, March 1997.
