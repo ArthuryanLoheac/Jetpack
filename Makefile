@@ -49,6 +49,13 @@ FLAGS_TEST = $(FLAGS) -lcriterion --coverage \
 
 FLAGS_LIB = -std=c++20 -Wall -Wextra -Werror
 
+FLAGS_LINTER =	\
+	--repository=. \
+	--quiet \
+	--output=vs7	\
+	--filter=-legal/copyright,-build/c++17,+build/c++20,-runtime/references	\
+	--recursive
+
 # ============= NAMES ============= #
 
 NAME_LIB	= \
@@ -134,4 +141,5 @@ tests_clean_run_coverage: tests_clean_run
 	gcovr -r . -e tests/
 
 style_check:
-	cpplint --filter=-runtime,-legal $(shell find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
+	@cpplint $(FLAGS_LINTER) \
+		$(shell find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
