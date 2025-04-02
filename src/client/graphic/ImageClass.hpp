@@ -6,7 +6,7 @@
 
 class ImageClass {
  public:
-    ImageClass(std::string path);
+    explicit ImageClass(std::string path);
     sf::Sprite getSprite() { return sprite; }
     void draw(sf::RenderWindow &window) { window.draw(sprite); }
     void setRectangle(int x, int y, int width, int height) {

@@ -14,26 +14,26 @@
 #include <SFML/Audio.hpp>
 
 class Window {
-    private:
-        sf::Clock clock;
-        std::map<int, int> map_keys;
-        std::map<int, int> map_keysLastFrame;
-        sf::Event event;
-        float deltaTime;
-        sf::RenderWindow window;
+ private:
+    sf::Clock clock;
+    std::map<int, int> map_keys;
+    std::map<int, int> map_keysLastFrame;
+    sf::Event event;
+    float deltaTime;
+    sf::RenderWindow window;
 
-    public:
-        Window();
-        sf::RenderWindow &getWindow() { return window; }
-        sf::Event &getEvent() { return event; }
-        sf::Clock &getClock() { return clock; }
-        float getDeltaTime() { return deltaTime; }
-        std::map<int, int> &getMapKeys() { return map_keys; }
-        bool isOpen() { return window.isOpen(); }
-        void updateDeltaTime();
-        bool pollEvent() { return window.pollEvent(event); }
-        void clear() { window.clear(); }
-        void display() { window.display(); }
-        bool getKeyPress(int key) { return map_keys[key] == sf::Event::KeyPressed; }
-        bool getKeyClick(int key) { return (map_keys[key] == sf::Event::KeyPressed && map_keysLastFrame[key] == sf::Event::KeyReleased); }
+ public:
+    Window();
+    sf::RenderWindow &getWindow() { return window; }
+    sf::Event &getEvent() { return event; }
+    sf::Clock &getClock() { return clock; }
+    float getDeltaTime() { return deltaTime; }
+    std::map<int, int> &getMapKeys() { return map_keys; }
+    bool isOpen() { return window.isOpen(); }
+    void updateDeltaTime();
+    bool pollEvent() { return window.pollEvent(event); }
+    void clear() { window.clear(); }
+    void display() { window.display(); }
+    bool getKeyPress(int key);
+    bool getKeyClick(int key);
 };

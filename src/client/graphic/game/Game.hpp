@@ -7,26 +7,26 @@
 
 class Game {
  private:
-   struct GameSound {
-      sf::SoundBuffer buff;
-      sf::Sound sound;
-   };
+    struct GameSound {
+        sf::SoundBuffer buff;
+        sf::Sound sound;
+    };
 
-   BackGround bg;
-   BackGround bg2;
+    BackGround bg;
+    BackGround bg2;
 
-  int VolumeMusic;
-  int VolumeSound;
+    int VolumeMusic;
+    int VolumeSound;
  public:
-   GameSound music;
-   GameSound jetpack; 
-  
-   Game();
-   void update(float deltaTime);
-   void draw(sf::RenderWindow &window);
-   void updateSound();
-   void setVolumeMusic(int volume);
-   void setVolumeSound(int volume);
-   int getVolumeMusic();
-   int getVolumeSound();
+    GameSound music;
+    GameSound jetpack;
+
+    Game();
+    void update(float deltaTime);
+    void draw(sf::RenderWindow &window);
+    void updateSound();
+    void setVolumeMusic(int volume);
+    void setVolumeSound(int volume);
+    int getVolumeMusic();
+    int getVolumeSound();
 };

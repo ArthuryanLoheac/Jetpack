@@ -5,7 +5,7 @@
 
 class Log {
  public:
-    Log(const std::string& level);
+    explicit Log(const std::string& level);
     ~Log();
     static Log& info();
     static Log& warn();
@@ -16,6 +16,7 @@ class Log {
     Log& operator<<(std::ostream& (*manip)(std::ostream&));
     static void setFilePath(const std::string& path);
     static void setDebug(bool value);
+    static std::string &getFilePath() { return filePath; }
 
  private:
     void flush();

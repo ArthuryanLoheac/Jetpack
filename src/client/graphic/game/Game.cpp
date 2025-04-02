@@ -1,6 +1,6 @@
-#include "Game.hpp"
+#include "client/graphic/game/Game.hpp"
 
-Game::Game() 
+Game::Game()
     : bg(BackGround()), bg2(BackGround(1726 * 3.7)) {
     VolumeMusic = 50;
     VolumeSound = 50;
@@ -27,8 +27,7 @@ void Game::draw(sf::RenderWindow &window) {
     bg2.draw(window);
 }
 
-void Game::updateSound()
-{
+void Game::updateSound() {
     jetpack.sound.setVolume(VolumeSound);
     music.sound.setVolume(VolumeMusic);
 }
