@@ -8,7 +8,7 @@ class Client {
  public:
     class clientException : public std::exception {
      public:
-        clientException(std::string message);
+        explicit clientException(std::string message);
         ~clientException();
         const char *what() const noexcept;
      private:
@@ -16,12 +16,14 @@ class Client {
     };
     Client(int _id, int _clientFd, std::string mapPath);
     ~Client();
+    std::string getMapPath() const { return mapPath; }
     std::string receiveInput();
     bool handleInput();
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
 
- protected:
+    bool ready;
+
  private:
     int id;
     int clientFd;

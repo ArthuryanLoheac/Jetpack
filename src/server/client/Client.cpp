@@ -18,7 +18,7 @@ const char *Client::clientException::what() const noexcept {
 // ---------------------------- END CLASS THROW ----------------------------
 
 Client::Client(int _id, int _clientFd, std::string _mapPath) :
-    id(_id), clientFd(_clientFd), mapPath(_mapPath) {
+    ready(false), id(_id), clientFd(_clientFd), mapPath(_mapPath) {
     Log::info() << "Client " << id << " connected" << std::endl;
     sendOutput("HELLO " + std::to_string(id) + ", " + std::to_string(GRAVITY)
         + ", " + std::to_string(SPEED_HORIZONTAL) + ", "
@@ -28,5 +28,3 @@ Client::Client(int _id, int _clientFd, std::string _mapPath) :
 Client::~Client() {
     Log::info() << "Client " << id << " disconnected" << std::endl;
 }
-
-

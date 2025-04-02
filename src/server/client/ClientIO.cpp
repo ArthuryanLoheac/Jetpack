@@ -8,15 +8,23 @@
 #include <string>
 
 #include "server/client/Client.hpp"
+#include "server/commands/Commands.hpp"
 #include "log/Log.hpp"
 
 bool Client::handleInput() {
     std::string input = receiveInput();
+    Commands command;
 
     if (input.empty()) {
         return false;
     }
     Log::info() << "Client " << id << " sent: " << input << std::endl;
+    try {
+        command.handleReceivingCommand(input, *this);
+    } catch (const std::exception& e) {
+        Log::error() << "Error handling command: " << e.what() << std::endl;
+        return false;
+    }
     return true;
 }
 
