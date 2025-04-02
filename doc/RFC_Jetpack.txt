@@ -61,6 +61,7 @@ Authors:
 
         MAP <map> <length> <height> <repetition> <CRLF> ->
             send the map to the client (with the length, height and repetition)
+            the server need to wait for the client to send the MAP command
 
         HELLO <playerNumber> <gravity> <velocity_x> <CRLF> ->
             send the ID of the player to the client
@@ -79,6 +80,9 @@ Authors:
         READY <CRLF> ->
             client is ready to start the game (the server must wait for all
             players)
+
+        MAP <CRLF> ->
+            client is ready to receive the map
 
         FIRE <isFiring> <CRLF> ->
             send info if the player is firing (moving up). !! Value must be 0
