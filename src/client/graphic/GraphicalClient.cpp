@@ -8,45 +8,34 @@
 #include "client/graphic/Player.hpp"
 #include "client/graphic/ImageClass.hpp"
 #include "client/graphic/BackGround.hpp"
+#include "client/graphic/game/Game.hpp"
+#include "client/graphic/window/Window.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
-static void Event(sf::RenderWindow &window, std::map<int, int> &map,
-sf::Event &event) {
-    if (event.type == sf::Event::Closed ||
+static void Event(Window &window) {
+    if (window.getEvent().type == sf::Event::Closed ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        window.close();
-    if (event.key.code == sf::Keyboard::Z)
-        map[sf::Keyboard::Z] = event.type;
-    if (event.key.code == sf::Keyboard::Space)
-        map[sf::Keyboard::Space] = event.type;
+        window.getWindow().close();
+    window.getMapKeys()[window.getEvent().key.code] = window.getEvent().type;
 }
 
 int graphic(void) {
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML window");
-    sf::Clock clock;
-    std::map<int, int> map_keys = {
-        {sf::Keyboard::Z, sf::Event::KeyReleased},
-        {sf::Keyboard::Space, sf::Event::KeyReleased}};
-    sf::Event event;
-    BackGround bg;
-    BackGround bg2(1726 * 3.7);
-    float deltaTime = 0;
+    Window window;
+    Game game;
 
     while (window.isOpen()) {
-        deltaTime = clock.restart().asSeconds();
-        while (window.pollEvent(event))
-            Event(window, map_keys, event);
-        update(map_keys, deltaTime);
-        bg.update(deltaTime);
-        bg2.update(deltaTime);
+        window.updateDeltaTime();
+        while (window.pollEvent())
+            Event(window);
+        update(game, window);
+        game.update(window.getDeltaTime());
         window.clear();
-        bg.draw(window);
-        bg2.draw(window);
-        Player::instance->getImage().draw(window);
+        game.draw(window.getWindow());
+        Player::instance->getImage().draw(window.getWindow());
         window.display();
     }
     return 0;

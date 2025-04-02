@@ -24,6 +24,8 @@ class Log {
     Log &operator<<(std::ostream &(*manip)(std::ostream &));
     static void setFilePath(const std::string &path);
     static void setDebug(bool value);
+    static std::string &getFilePath() { return filePath; }
+
  private:
     void flush();
     void flushInFile(const std::string &logMessage,
