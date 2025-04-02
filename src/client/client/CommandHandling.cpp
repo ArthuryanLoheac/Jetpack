@@ -17,7 +17,7 @@ static void handleHello(std::istringstream& iss) {
     std::getline(iss, speedX, ' ');
     std::getline(iss, speedJetpack, ' ');
 
-    DataManager::instance->setId(std::stoi(id.c_str() + 1));
+    DataManager::instance->setId(std::stoi(id.c_str()));
     DataManager::instance->setGravity(std::stoi(gravity));
     DataManager::instance->setSpeedX(std::stoi(speedX));
     DataManager::instance->setSpeedJetpack(std::stoi(speedJetpack));
