@@ -9,6 +9,7 @@
 
 #include "log/Log.hpp"
 
+std::string Log::filePath = "";
 bool Log::debug = false;
 
 Log::Log(const std::string& level) : level(level) {
