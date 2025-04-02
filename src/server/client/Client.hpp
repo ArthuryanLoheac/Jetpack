@@ -14,6 +14,7 @@ class Client {
      private:
         std::string _message;
     };
+    
     Client(int _id, int _clientFd, std::string mapPath);
     ~Client();
     std::string receiveInput();
@@ -21,9 +22,19 @@ class Client {
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
 
+    struct Player {
+        int id;
+        float x;
+        float y;
+        float velocity_y;
+        int coins;
+        bool isFire;
+    };
+
  protected:
  private:
-    int id;
     int clientFd;
     std::string mapPath;
+    Player self;
+    Player opponent;
 };

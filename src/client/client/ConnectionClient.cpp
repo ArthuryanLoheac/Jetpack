@@ -11,6 +11,7 @@
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
 #include "clientRun/ClientRun.hpp"
+#include "server/client/Client.hpp"
 
 #include <SFML/System/Clock.hpp>
 
@@ -42,7 +43,7 @@ static void clockPosition(sf::Clock &clock, int sockfd) {
     }
 }
 
-void loopClient(int sockfd) {
+void loopClient(int sockfd, Client client) {
     sf::Clock clock;
     struct pollfd fds;
 
@@ -54,7 +55,7 @@ void loopClient(int sockfd) {
     }
 }
 
-int client(int &sockfd) {
+int client_connection(int &sockfd) {
     struct sockaddr_in serv_addr;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);

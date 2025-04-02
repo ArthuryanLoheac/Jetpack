@@ -30,7 +30,7 @@
 const int WIDTH = 1280;
 const int HEIGHT = 920;
 
-int client(int &sockfd);
+int client_connection(int &sockfd);
 void loopClient(int sockfd);
 int graphic(void);
 void update(std::map<int, int> &map_keys, float deltaTime);

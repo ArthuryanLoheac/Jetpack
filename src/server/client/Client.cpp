@@ -17,16 +17,19 @@ const char *Client::clientException::what() const noexcept {
 
 // ---------------------------- END CLASS THROW ----------------------------
 
+Client::Player::Player() :
+    id(0), x(0), y(0), velocity_y(0), coins(0), isFire(false) {
+}
+
 Client::Client(int _id, int _clientFd, std::string _mapPath) :
-    id(_id), clientFd(_clientFd), mapPath(_mapPath) {
-    Log::info() << "Client " << id << " connected" << std::endl;
-    sendOutput("HELLO " + std::to_string(id) + ", " + std::to_string(GRAVITY)
-        + ", " + std::to_string(SPEED_HORIZONTAL) + ", "
-        + std::to_string(SPEED_JETPACK));
+    clientFd(_clientFd), mapPath(_mapPath) {
+    self.id = _id; // Assign playerNumber in self to _id
+    Log::info() << "Client " << self.id << " connected" << std::endl;
+    sendOutput("ID " + std::to_string(self.id));
 }
 
 Client::~Client() {
-    Log::info() << "Client " << id << " disconnected" << std::endl;
+    Log::info() << "Client " << self.id << " disconnected" << std::endl;
 }
 
 
