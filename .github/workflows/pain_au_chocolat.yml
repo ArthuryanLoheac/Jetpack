@@ -23,7 +23,8 @@ jobs:
       with:
         python-version: 3.x
     - run: pip install cpplint
-    - run: cpplint --filter=-runtime,-legal $(find . -type f \( -name '*.cpp' -o -name '*.hpp' \))
+    - run: apt-get update && apt-get install -y make
+    - run: make style_check
   check_program_compilation:
     needs: check_coding_style
     runs-on: ubuntu-latest
