@@ -1,5 +1,16 @@
                           EPITECH Jetpack Protocol
 
+RFC Number: EPITECH-RFC-023
+Category: Standards Track
+Subcategory: Protocol
+Title: Jetpack Protocol
+Status: Active
+Version: 1.0
+Date: April 2, 2025
+Authors:
+    - Léopold PINTARD
+    - Carlos SO BUARO
+    - Arthuryan LOHEAC DE SAINTE MARIE
 
 0. Introduction
 
