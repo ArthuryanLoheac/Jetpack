@@ -8,7 +8,7 @@ class Client {
  public:
     class clientException : public std::exception {
      public:
-        clientException(std::string message);
+        explicit clientException(std::string message);
         ~clientException();
         const char *what() const noexcept;
      private:
