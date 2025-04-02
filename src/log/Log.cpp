@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "log/Log.hpp"
+#include "Log.hpp"
 
 bool Log::debug = false;
 
@@ -51,7 +52,8 @@ Log &Log::operator<<(std::ostream &(*manip)(std::ostream &)) {
     return *this;
 }
 
-void Log::setDebug(bool value) {
+void Log::setDebug(bool value)
+{
     debug = value;
 }
 
@@ -90,7 +92,6 @@ void Log::flush() {
         std::cerr << "Failed to get local time." << std::endl;
         return;
     }
-        return;
     if (std::find(special.begin(), special.end(), level) == special.end())
         logMessage << "[" << level << "]\t(" <<std::put_time
             (&tm_now, "%H:%M:%S") << ") → " << buffer.str();

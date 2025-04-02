@@ -14,7 +14,6 @@ class Log {
  public:
     explicit Log(const std::string &level);
     ~Log();
-    std::string &getFilePath();
     static Log &info();
     static Log &warn();
     static Log &error();
@@ -22,7 +21,6 @@ class Log {
     template <typename T>
     Log &operator<<(const T &message);
     Log &operator<<(std::ostream &(*manip)(std::ostream &));
-    static void setFilePath(const std::string &path);
     static void setDebug(bool value);
 
  private:
