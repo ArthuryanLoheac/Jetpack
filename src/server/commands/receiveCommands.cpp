@@ -3,7 +3,8 @@
 #include "server/commands/Commands.hpp"
 #include "server/client/ClientServer.hpp"
 
-void Commands::handleReceivingCommand(std::string command, ClientServer &client) {
+void Commands::handleReceivingCommand(std::string command,
+ClientServer &client) {
     std::string commandName = command.substr(0, command.find(' '));
 
     if (receivingCommands.find(commandName) == receivingCommands.end()) {
