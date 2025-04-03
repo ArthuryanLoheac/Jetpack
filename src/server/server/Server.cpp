@@ -90,22 +90,19 @@ void signalHandler(int signal) {
 }
 
 bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
-    bool everyoneReady = true;
+    //bool everyoneReady = true;
     if (!gameStarted) {
         for (auto &client : clients) {
             if (!client.second.ready) {
-                everyoneReady = false;
+                //everyoneReady = false;
                 break;
             }
         }
     }
-    if (everyoneReady && !gameStarted && clients.size() > 1) {
-        gameSimulation.startGame(clients);
-        gameStarted = true;
-    }
-    if (gameStarted) {
-        return gameSimulation.updateGame();
-    }
+    //if (everyoneReady && !gameStarted && clients.size() > 1)
+    startGame();
+    if (gameStarted)
+        return updateGame();
     return false;
 }
 
