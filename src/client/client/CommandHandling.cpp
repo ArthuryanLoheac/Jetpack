@@ -24,7 +24,7 @@ static void handleHello(std::istringstream& iss) {
     DataManager::instance->setSpeedJetpack(std::stoi(speedJetpack));
 }
 
-static void handlePlayer(std::istringstream& iss, Client client) {
+static void handlePlayer(std::istringstream& iss, Client &client) {
     std::string id;
     std::string x;
     std::string y;
@@ -47,7 +47,7 @@ static void handlePlayer(std::istringstream& iss, Client client) {
     client.setFire(std::stoi(isFiring.c_str()));
 }
 
-void handleCommand(std::string command, Client client) {
+void handleCommand(std::string command, Client &client) {
     std::istringstream iss(command);
     std::string commandName;
 

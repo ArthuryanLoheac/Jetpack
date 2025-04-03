@@ -20,7 +20,7 @@ static int returnError(std::string message) {
     return 84;
 }
 
-static void readDatas(int sockfd, struct pollfd &fds, Client client) {
+static void readDatas(int sockfd, struct pollfd &fds, Client &client) {
     char buffer[1024] = {0};
     int valread;
 
@@ -43,7 +43,7 @@ static void clockPosition(sf::Clock &clock, int sockfd) {
     }
 }
 
-void loopClient(int sockfd, Client client) {
+void loopClient(int sockfd, Client &client) {
     sf::Clock clock;
     struct pollfd fds;
 

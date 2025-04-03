@@ -43,7 +43,7 @@ int main(int ac, char **av) {
     if (client_connection(sockfd) == 84)
         return 84;
     std::thread t1(graphic);
-    std::thread t2(loopClient, sockfd, client);
+    std::thread t2(loopClient, sockfd, std::ref(client));
     t1.join();
     t2.detach();
 

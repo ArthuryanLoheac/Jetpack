@@ -16,7 +16,6 @@ class Client {
     };
 
     Client(int _id, int _clientFd, std::string mapPath);
-    Client(const Client &other);
     ~Client();
 
     void sendOutput(std::string output);

@@ -27,11 +27,6 @@ Client::~Client() {
     Log::info() << "Client " << self.id << " disconnected" << std::endl;
 }
 
-Client::Client(const Client &other)
-    : clientFd(other.clientFd), mapPath(other.mapPath) {
-    self.id = other.self.id;
-}
-
 void Client::setId(int id) {
     self.id = id;
 }
