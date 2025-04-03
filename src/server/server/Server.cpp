@@ -27,7 +27,7 @@ const char *Server::ftpException::what() const noexcept {
 // ---------------------------- END CLASS THROW ----------------------------
 
 Server::Server(int port, std::string _map) :
-port(port), map(_map), nfds(1), i(0) {
+port(port), map(_map), nfds(1), i(0), gameStarted(false) {
     fds = new struct pollfd[MAX_CONNECTIONS];
     Log::info() << "Map:\n" << map << std::endl;
     iClient = 0;
@@ -89,6 +89,26 @@ void signalHandler(int signal) {
     sigInt = true;
 }
 
+bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
+    bool everyoneReady = true;
+    if (!gameStarted) {
+        for (auto &client : clients) {
+            if (!client.second.ready) {
+                everyoneReady = false;
+                break;
+            }
+        }
+    }
+    if (everyoneReady && !gameStarted && clients.size() > 1) {
+        gameSimulation.startGame(clients);
+        gameStarted = true;
+    }
+    if (gameStarted) {
+        return gameSimulation.updateGame();
+    }
+    return false;
+}
+
 void Server::run() {
     bool hasEvents;
     struct sigaction sigIntHandler;
@@ -100,6 +120,7 @@ void Server::run() {
     sigaction(SIGINT, &sigIntHandler, nullptr);
     sigInt = false;
     while (!sigInt) {
+        sigInt = handleGameEvents(clients);
         hasEvents = checkPollEvents();
         if (hasEvents) {
             processReadyFds();
