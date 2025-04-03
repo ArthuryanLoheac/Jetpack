@@ -36,11 +36,9 @@ static void readDatas(int sockfd, struct pollfd &fds) {
 static void clockPosition(sf::Clock &clock, int sockfd) {
     std::string input;
 
-    if (clock.getElapsedTime().asSeconds() > 1.f/30.f) {
-        clock.restart();
-        input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
-        write(sockfd, input.c_str(), input.size());
-    }
+    (void)clock;
+    input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
+    write(sockfd, input.c_str(), input.size());
 }
 
 void loopClient(int sockfd) {

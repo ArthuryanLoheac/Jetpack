@@ -24,6 +24,9 @@ class ImageClass {
     void setNbFrame(int nbFrame) { this->nbFrame = nbFrame; }
     sf::IntRect &getPosRectangle() { return posRectangle; }
     int getNbFrame() { return nbFrame; }
+    void setTransparency(int transparency) {
+        sprite.setColor(sf::Color(255, 255, 255, transparency));
+    }
 
  private:
     sf::Texture texture;
