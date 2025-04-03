@@ -6,7 +6,7 @@
 void Commands::handleReceivingCommand(std::string command, Client &client) {
     std::string commandName = command.substr(0, command.find(' '));
 
-    if (receivingCommands.find(commandName) == receivingCommands.end()){
+    if (receivingCommands.find(commandName) == receivingCommands.end()) {
         client.sendOutput("501 Not implemented");
         return;
     }
