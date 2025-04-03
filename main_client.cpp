@@ -30,13 +30,12 @@ int checkArgs(int ac, char **av) {
 }
 
 int main(int ac, char **av) {
-    std::vector<Player> players;
-    Player player;
-    players.push_back(player);
     int sockfd;
     DataManager dataManager;
     DataManager::instance->setDebug(false);
     Client client(0, sockfd, "");
+    Player player;
+    DataManager::instance->getPlayers().push_back(player);
 
     if (!(ac == 5 || ac == 6))
         return 84;

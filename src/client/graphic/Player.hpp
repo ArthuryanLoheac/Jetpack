@@ -42,6 +42,8 @@ class Player {
     Landing getLanding() { return landing; }
     void setId(int id) { this->id = id; }
     int getId() { return id; }
+    void setCoins(int coins) { this->coins = coins; }
+    int getCoins() { return coins; }
 
  private:
     float x = 100;
@@ -51,6 +53,7 @@ class Player {
     float velocityY = 0.f;
     bool isFire = false;
     bool isGround = false;
+    int coins = 0;
     int id;
     ImageClass img;
     Landing landing = ON_AIR;
