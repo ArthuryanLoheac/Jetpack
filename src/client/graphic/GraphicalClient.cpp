@@ -37,8 +37,8 @@ int graphic(void) {
         game.draw(window.getWindow());
         for (auto &player : DataManager::instance->getPlayers()) {
             Player::instance->getImage().setTransparency(player.getId() == Player::instance->getId() ? 255 : 100);
-            player.getImage().setPosition(player.getX(), player.getY());
-            player.getImage().draw(window.getWindow());
+            Player::instance->getImage().setPosition(player.getX(), player.getY());
+            Player::instance->getImage().drawR(window.getWindow());
         }
         window.display();
     }
