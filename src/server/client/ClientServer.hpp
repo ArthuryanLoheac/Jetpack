@@ -8,14 +8,16 @@ class ClientServer {
  public:
     class Player {
      public:
-        Player(int i);
+         Player(int i);
 
-        int id;
-        float x;
-        float y;
-        float velocity_y;
-        int coins;
-        bool isFire;
+         int id;
+         float x;
+         float y;
+         float velocity_y;
+         int coins;
+         bool isFire;
+         int width;
+         int height;
     };
 
     class clientException : public std::exception {

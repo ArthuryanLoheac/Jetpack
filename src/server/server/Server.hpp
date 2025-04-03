@@ -16,6 +16,8 @@
 
 #include "server/client/ClientServer.hpp"
 
+#include "SFML/System/Clock.hpp"
+
 class Server {
  public:
     class ftpException : public std::exception {
@@ -42,8 +44,12 @@ class Server {
 
     void startGame();
     bool updateGame();
+    void sendPlayersDataToEachClient(ClientServer &player);
+    void updateGravity(ClientServer &player);
 
  private:
+    sf::Clock clock;
+
     int port;
     std::string map;
     int socketFd;
@@ -54,4 +60,5 @@ class Server {
     int i;
     int iClient;
     bool gameStarted;
+    float deltaTime;
 };

@@ -33,5 +33,5 @@ ClientServer::~ClientServer() {
 // ---------------------------- PLAYER CLASS ----------------------------
 
 ClientServer::Player::Player(int i) :
-    id(i), x(100), y(100), velocity_y(0.f), coins(0), isFire(false) {
+    id(i), x(100), y(100), velocity_y(0.f), coins(0), isFire(false), width(134), height(134) {
 }
