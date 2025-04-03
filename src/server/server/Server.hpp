@@ -14,13 +14,13 @@
 #include <unordered_map>
 #include <string>
 
-#include "server/client/Client.hpp"
+#include "server/client/ClientServer.hpp"
 
 class Server {
  public:
     class ftpException : public std::exception {
      public:
-        ftpException(std::string message);
+        explicit ftpException(std::string message);
         const char *what() const noexcept;
      private:
         std::string _message;
@@ -44,7 +44,7 @@ class Server {
     std::string map;
     int socketFd;
     const int MAX_CONNECTIONS = 42;
-    std::unordered_map<int, Client> clients;
+    std::unordered_map<int, ClientServer> clients;
     struct pollfd *fds;
     int nfds;
     int i;
