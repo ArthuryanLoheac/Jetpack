@@ -6,6 +6,18 @@
 
 class ClientServer {
  public:
+    class Player {
+     public:
+        Player();
+
+        int id;
+        float x;
+        float y;
+        float velocity_y;
+        int coins;
+        bool isFire;
+    };
+
     class clientException : public std::exception {
      public:
         explicit clientException(std::string message);
@@ -27,4 +39,6 @@ class ClientServer {
     int id;
     int clientFd;
     std::string mapPath;
+
+    Player player;
 };

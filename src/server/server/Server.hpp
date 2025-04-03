@@ -19,10 +19,10 @@
 class Server {
  public:
     class ftpException : public std::exception {
-    public:
+     public:
         explicit ftpException(std::string message);
         const char *what() const noexcept;
-    private:
+     private:
         std::string _message;
     };
     Server(int port, std::string userHomePath);

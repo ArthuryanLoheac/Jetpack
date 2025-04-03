@@ -7,5 +7,8 @@ void Server::startGame() {
 
 bool Server::updateGame() {
     printf("Game updated\n");
+    for (auto &client : clients) {
+        ClientServer &player = client.second;
+    }
     return false;
 }

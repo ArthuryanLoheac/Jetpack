@@ -98,9 +98,8 @@ bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
                 break;
             }
         }
+        startGame();
     }
-    //if (everyoneReady && !gameStarted && clients.size() > 1)
-    startGame();
     if (gameStarted)
         return updateGame();
     return false;
