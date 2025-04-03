@@ -23,6 +23,7 @@
 #include "entryPoint/entrypoint.hpp"
 #include "client/graphic/game/Game.hpp"
 #include "client/graphic/window/Window.hpp"
+#include "client/client/Client.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -35,8 +36,8 @@ class Window;
 const int WIDTH = 1280;
 const int HEIGHT = 920;
 
-int client(int &sockfd);
-void loopClient(int sockfd);
+int client_connection(int &sockfd);
+void loopClient(int sockfd, Client &client);
 int graphic(void);
 void update(Game &game, Window &window);
-void handleCommand(std::string command);
+void handleCommand(std::string command, Client &client);

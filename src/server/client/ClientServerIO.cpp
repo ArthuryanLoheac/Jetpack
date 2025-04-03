@@ -7,10 +7,10 @@
 #include <unistd.h>
 #include <string>
 
-#include "server/client/Client.hpp"
+#include "server/client/ClientServer.hpp"
 #include "log/Log.hpp"
 
-bool Client::handleInput() {
+bool ClientServer::handleInput() {
     std::string input = receiveInput();
 
     if (input.empty()) {
@@ -20,7 +20,7 @@ bool Client::handleInput() {
     return true;
 }
 
-std::string Client::getInput(std::string& buffer) {
+std::string ClientServer::getInput(std::string& buffer) {
     size_t lineEnd = buffer.find("\r\n");
     std::string input;
 
@@ -40,7 +40,7 @@ std::string Client::getInput(std::string& buffer) {
     return "";
 }
 
-std::string Client::receiveInput() {
+std::string ClientServer::receiveInput() {
     char buffer[1024];
     std::string inputBuffer;
     ssize_t readSize;
@@ -61,7 +61,7 @@ std::string Client::receiveInput() {
     return input;
 }
 
-void Client::sendOutput(std::string output) {
+void ClientServer::sendOutput(std::string output) {
     output += "\r\n";
     if (write(clientFd, output.c_str(), output.size()) == -1) {
         throw clientException("Error: write");

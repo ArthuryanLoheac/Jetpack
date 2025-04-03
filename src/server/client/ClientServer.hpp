@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-class Client {
+class ClientServer {
  public:
     class clientException : public std::exception {
      public:
@@ -14,14 +14,14 @@ class Client {
      private:
         std::string _message;
     };
-    Client(int _id, int _clientFd, std::string mapPath);
-    ~Client();
+
+    ClientServer(int _id, int _clientFd, std::string mapPath);
+    ~ClientServer();
     std::string receiveInput();
     bool handleInput();
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
 
- protected:
  private:
     int id;
     int clientFd;
