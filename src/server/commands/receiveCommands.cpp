@@ -1,3 +1,5 @@
+#include <string>
+
 #include "server/commands/Commands.hpp"
 #include "server/client/Client.hpp"
 
