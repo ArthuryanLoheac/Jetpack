@@ -58,6 +58,8 @@ void Server::handleNewConnection(struct pollfd fds[], int &nfds) {
     iClient++;
     printf("New client connected: %s:%d - %d\n",
            inet_ntoa(addrIn.sin_addr), ntohs(addrIn.sin_port), iClient);
+    if (clients.size() == 1)
+        clock.restart();
 }
 
 void Server::handleClientData(int clientFd) {

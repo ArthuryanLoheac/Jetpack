@@ -31,11 +31,14 @@ class ClientServer {
     ClientServer(int _id, int _clientFd, std::string mapPath);
     ~ClientServer();
     std::string receiveInput();
-    bool handleInput();
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
     std::string getMapPath() const { return mapPath; }
     Player &getPlayer() { return player; }
+
+    bool handleInput();
+    void handleCommand(std::string command);
+    void handleFire(std::istringstream &iss);
 
     bool ready;
  private:

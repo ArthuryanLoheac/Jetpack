@@ -10,13 +10,32 @@
 #include "server/client/ClientServer.hpp"
 #include "log/Log.hpp"
 
+void ClientServer::handleFire(std::istringstream &iss) {
+    std::string isFiring;
+
+    std::getline(iss, isFiring, ' ');
+    if (isFiring == "1")
+        player.isFire = true;
+    else
+        player.isFire = false;
+}
+
+void ClientServer::handleCommand(std::string command) {
+    std::istringstream iss(command);
+    std::string commandName;
+
+    std::getline(iss, commandName, ' ');
+    if (commandName == "FIRE")
+        handleFire(iss);
+}
+
 bool ClientServer::handleInput() {
     std::string input = receiveInput();
 
-    if (input.empty()) {
+    if (input.empty())
         return false;
-    }
     Log::info() << "Client " << id << " sent: " << input << std::endl;
+    handleCommand(input);
     return true;
 }
 
