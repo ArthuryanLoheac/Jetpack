@@ -34,6 +34,7 @@ int main(int ac, char **av) {
     int sockfd;
     DataManager dataManager;
     DataManager::instance->setDebug(false);
+    Client client(0, sockfd, "");
 
     if (!(ac == 5 || ac == 6))
         return 84;
@@ -42,7 +43,7 @@ int main(int ac, char **av) {
     if (client_connection(sockfd) == 84)
         return 84;
     std::thread t1(graphic);
-    std::thread t2(loopClient, sockfd);
+    std::thread t2(loopClient, sockfd, client);
     t1.join();
     t2.detach();
 
