@@ -9,7 +9,7 @@ class BackGround {
     float speed = 500;
 
  public:
-    BackGround(int posX = 0)
+    explicit BackGround(int posX = 0)
     : img("assets/background.png") {
         pos.x = posX;
         img.setPosition(posX, pos.y);
