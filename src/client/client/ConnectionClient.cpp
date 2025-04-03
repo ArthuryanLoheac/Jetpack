@@ -11,7 +11,7 @@
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
 #include "clientRun/ClientRun.hpp"
-#include "server/client/Client.hpp"
+#include "client/client/Client.hpp"
 
 #include <SFML/System/Clock.hpp>
 
@@ -20,7 +20,7 @@ static int returnError(std::string message) {
     return 84;
 }
 
-static void readDatas(int sockfd, struct pollfd &fds) {
+static void readDatas(int sockfd, struct pollfd &fds, Client client) {
     char buffer[1024] = {0};
     int valread;
 
@@ -28,7 +28,7 @@ static void readDatas(int sockfd, struct pollfd &fds) {
         if (fds.revents & POLLIN) {
             valread = read(sockfd, buffer, 1024);
             if (valread > 0)
-                handleCommand(buffer);
+                handleCommand(buffer, client);
         }
     }
 }
@@ -50,7 +50,7 @@ void loopClient(int sockfd, Client client) {
     fds.fd = sockfd;
     fds.events = POLLIN;
     while (1) {
-        readDatas(sockfd, fds);
+        readDatas(sockfd, fds, client);
         clockPosition(clock, sockfd);
     }
 }
