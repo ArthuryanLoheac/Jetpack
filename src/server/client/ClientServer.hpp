@@ -8,7 +8,7 @@ class ClientServer {
  public:
     class Player {
      public:
-         Player(int i);
+         explicit Player(int i);
 
          int id;
          float x;
@@ -41,6 +41,7 @@ class ClientServer {
     void handleFire(std::istringstream &iss);
 
     bool ready;
+
  private:
     int id;
     int clientFd;

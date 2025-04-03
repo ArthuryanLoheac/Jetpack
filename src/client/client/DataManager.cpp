@@ -1,7 +1,7 @@
 #include <string>
+#include <vector>
 
 #include "client/client/DataManager.hpp"
-#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -43,8 +43,7 @@ std::vector<Player> &DataManager::getPlayers() {
     return players;
 }
 
-void DataManager::setGravity(int gravity)
-{
+void DataManager::setGravity(int gravity) {
     this->gravity = gravity;
 }
 

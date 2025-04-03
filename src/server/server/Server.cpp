@@ -56,8 +56,6 @@ void Server::handleNewConnection(struct pollfd fds[], int &nfds) {
     nfds++;
     clients.try_emplace(clientFd, iClient, clientFd, map);
     iClient++;
-    printf("New client connected: %s:%d - %d\n",
-           inet_ntoa(addrIn.sin_addr), ntohs(addrIn.sin_port), iClient);
     if (clients.size() == 1)
         clock.restart();
 }
@@ -92,11 +90,11 @@ void signalHandler(int signal) {
 }
 
 bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
-    //bool everyoneReady = true;
+    // bool everyoneReady = true;
     if (!gameStarted) {
         for (auto &client : clients) {
             if (!client.second.ready) {
-                //everyoneReady = false;
+                // everyoneReady = false;
                 break;
             }
         }
