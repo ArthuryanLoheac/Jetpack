@@ -8,7 +8,7 @@ class ClientServer {
  public:
     class Player {
      public:
-        Player();
+        Player(int i);
 
         int id;
         float x;
@@ -33,6 +33,7 @@ class ClientServer {
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
     std::string getMapPath() const { return mapPath; }
+    Player &getPlayer() { return player; }
 
     bool ready;
  private:
