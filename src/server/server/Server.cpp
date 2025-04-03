@@ -85,7 +85,7 @@ void signalHandler(int signal) {
     sigInt = true;
 }
 
-bool Server::handleGameEvents(std::unordered_map<int, Client> &clients) {
+bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
     bool everyoneReady = true;
     if (!gameStarted) {
         for (auto &client : clients) {

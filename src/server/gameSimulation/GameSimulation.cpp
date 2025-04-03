@@ -9,7 +9,7 @@ GameSimulation::~GameSimulation() {
     Log::info() << "Game simulation destroyed" << std::endl;
 }
 
-void GameSimulation::startGame(std::unordered_map<int, Client> &clients) {
+void GameSimulation::startGame(std::unordered_map<int, ClientServer> &clients) {
     this->clients = clients;
     gameState = 1;
     Log::info() << "Game started" << std::endl;
