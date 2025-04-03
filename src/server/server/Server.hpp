@@ -48,4 +48,5 @@ class Server {
     struct pollfd *fds;
     int nfds;
     int i;
+    int iClient;
 };

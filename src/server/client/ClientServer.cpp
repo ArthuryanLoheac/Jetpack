@@ -19,7 +19,9 @@ const char *ClientServer::clientException::what() const noexcept {
 ClientServer::ClientServer(int _id, int _clientFd, std::string _mapPath) :
     id(_id), clientFd(_clientFd), mapPath(_mapPath) {
     Log::info() << "Client " << id << " connected" << std::endl;
-    sendOutput("ID " + std::to_string(id));
+     sendOutput("HELLO " + std::to_string(id) + ", " + std::to_string(GRAVITY)
+         + ", " + std::to_string(SPEED_HORIZONTAL) + ", "
+         + std::to_string(SPEED_JETPACK));
 }
 
 ClientServer::~ClientServer() {

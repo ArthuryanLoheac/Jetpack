@@ -30,6 +30,7 @@ Server::Server(int port, std::string _map) :
 port(port), map(_map), nfds(1), i(0) {
     fds = new struct pollfd[MAX_CONNECTIONS];
     Log::info() << "Map:\n" << map << std::endl;
+    iClient = 0;
 }
 
 Server::~Server() {
@@ -53,7 +54,10 @@ void Server::handleNewConnection(struct pollfd fds[], int &nfds) {
     fds[nfds].fd = clientFd;
     fds[nfds].events = POLLIN;
     nfds++;
-    clients.try_emplace(clientFd, i, clientFd, map);
+    clients.try_emplace(clientFd, iClient, clientFd, map);
+    iClient++;
+    printf("New client connected: %s:%d - %d\n",
+           inet_ntoa(addrIn.sin_addr), ntohs(addrIn.sin_port), iClient);
 }
 
 void Server::handleClientData(int clientFd) {

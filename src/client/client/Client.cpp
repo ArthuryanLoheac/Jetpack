@@ -19,8 +19,6 @@ const char *Client::clientException::what() const noexcept {
 Client::Client(int _id, int _clientFd, std::string _mapPath) :
     clientFd(_clientFd), mapPath(_mapPath) {
     self.id = _id;
-    Log::info() << "Client " << self.id << " connected" << std::endl;
-    sendOutput("ID " + std::to_string(self.id));
 }
 
 Client::~Client() {
