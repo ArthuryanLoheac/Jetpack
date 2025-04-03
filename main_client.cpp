@@ -30,7 +30,9 @@ int checkArgs(int ac, char **av) {
 }
 
 int main(int ac, char **av) {
+    std::vector<Player> players;
     Player player;
+    players.push_back(player);
     int sockfd;
     DataManager dataManager;
     DataManager::instance->setDebug(false);
@@ -43,7 +45,7 @@ int main(int ac, char **av) {
     if (client_connection(sockfd) == 84)
         return 84;
     std::thread t1(graphic);
-    std::thread t2(loopClient, sockfd, std::ref(client));
+    std::thread t2(loopClient, sockfd);
     t1.join();
     t2.detach();
 

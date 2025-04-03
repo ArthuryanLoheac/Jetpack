@@ -20,7 +20,7 @@ static int returnError(std::string message) {
     return 84;
 }
 
-static void readDatas(int sockfd, struct pollfd &fds, Client &client) {
+static void readDatas(int sockfd, struct pollfd &fds) {
     char buffer[1024] = {0};
     int valread;
 
@@ -28,7 +28,7 @@ static void readDatas(int sockfd, struct pollfd &fds, Client &client) {
         if (fds.revents & POLLIN) {
             valread = read(sockfd, buffer, 1024);
             if (valread > 0)
-                handleCommand(buffer, client);
+                handleCommand(buffer);
         }
     }
 }
@@ -43,14 +43,14 @@ static void clockPosition(sf::Clock &clock, int sockfd) {
     }
 }
 
-void loopClient(int sockfd, Client &client) {
+void loopClient(int sockfd) {
     sf::Clock clock;
     struct pollfd fds;
 
     fds.fd = sockfd;
     fds.events = POLLIN;
     while (1) {
-        readDatas(sockfd, fds, client);
+        readDatas(sockfd, fds);
         clockPosition(clock, sockfd);
     }
 }
