@@ -28,3 +28,4 @@ Client::Client(int _id, int _clientFd, std::string _mapPath) :
 Client::~Client() {
     Log::info() << "Client " << id << " disconnected" << std::endl;
 }
+
