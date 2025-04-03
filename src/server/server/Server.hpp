@@ -15,6 +15,7 @@
 #include <string>
 
 #include "server/client/Client.hpp"
+#include "server/gameSimulation/GameSimulation.hpp"
 
 class Server {
  public:
@@ -38,6 +39,7 @@ class Server {
     void handleNewConnection(struct pollfd fds[], int &nfds);
     void handleClientData(int clientFd);
     void removeClient(struct pollfd fds[], int &nfds, int index);
+    bool handleGameEvents(std::unordered_map<int, Client>&);
 
  private:
     int port;
@@ -48,4 +50,6 @@ class Server {
     struct pollfd *fds;
     int nfds;
     int i;
+    bool gameStarted;
+    GameSimulation gameSimulation;
 };
