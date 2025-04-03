@@ -5,7 +5,7 @@
 
 class Log {
  public:
-    Log(const std::string& level);
+    explicit Log(const std::string& level);
     ~Log();
     static Log& info();
     static Log& warn();
