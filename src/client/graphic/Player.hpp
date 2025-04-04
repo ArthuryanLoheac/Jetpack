@@ -17,7 +17,7 @@ class Player {
     };
 
     static Player *instance;
-    explicit Player(sf ::Texture &texturePlayer)
+    explicit Player(sf::Texture &texturePlayer)
         : img(texturePlayer) {
         img.setRectangle(0, 0, width, height);
         img.setTimeAnimation(0.15f);
