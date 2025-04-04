@@ -40,6 +40,7 @@ int graphic(void) {
                 Player::instance->getImage().setPosition(player.getX(), player.getY());
                 Player::instance->getImage().draw(window.getWindow());
             } else {
+                updateImagePlayer(player);
                 player.getImage().setPosition(player.getX(), player.getY());
                 player.getImage().setTransparency(100);
                 player.getImage().draw(window.getWindow());

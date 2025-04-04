@@ -120,10 +120,10 @@ $(OBJ_DIR)/%.o: %.cpp
 re: fclean all
 
 run: all
-	./$(NAME_SERVER) -p 1111 -m ./main_client.cpp 
+	./$(NAME_SERVER) -p 1111 -m ./main_client.cpp
 
 run_client: all
-	./$(NAME_CLIENT) -p 1111 -h 127.0.0.1 
+	./$(NAME_CLIENT) -p 1111 -h 127.0.0.1
 
 # ============= TESTS ============= #
 

@@ -49,7 +49,7 @@ static void handlePlayer(std::istringstream& iss) {
     float y = std::stof(yStr);
     float velocityY = std::stof(velocityYStr);
     int coins = std::stoi(coinsStr);
-    bool isFire = (isFireStr == "1");
+    bool isFire = std::stoi(isFireStr) == 1;
 
     if (!isIdInList(id)) {
         Player &newPlayer = DataManager::instance->addNewPlayer();

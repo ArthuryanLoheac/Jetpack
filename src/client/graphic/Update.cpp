@@ -67,6 +67,39 @@ void updateImage() {
     }
 }
 
+void updateImagePlayer(Player &player) {
+    ImageClass &image = player.getImage();
+
+    if (player.getY() >= HEIGHT - player.getHeight() - 30) {
+        player.setGround(true);
+        if (player.getLanding() == Player::ON_AIR) {
+            player.setLanding(Player::LANDING);
+            image.getPosRectangle().left = 0;
+        }
+    } else {
+        player.setGround(false);
+    }
+    if (player.getGround()) {
+        if (player.getLanding() == Player::LANDING) {
+            image.getPosRectangle().top = image.getPosRectangle().height * 2;
+            if (image.getPosRectangle().left / image.getPosRectangle().width >=
+                    image.getNbFrame() - 1) {
+                image.getPosRectangle().left = 0;
+                player.setLanding(Player::ON_GROUND);
+            }
+        } else {
+            image.getPosRectangle().top = 0;
+        }
+    } else {
+        if (player.getFire())
+            image.getPosRectangle().top = image.getPosRectangle().height;
+        else
+            image.setRectangle(0, image.getPosRectangle().height,
+                player.getWidth(), player.getHeight());
+    }
+    player.getImage().updateAnimation();
+}
+
 static void updateSound(Game &game, Window &window) {
     if (window.getKeyClick(sf::Keyboard::M))
         game.setVolumeMusic(game.getVolumeMusic() - 10);
