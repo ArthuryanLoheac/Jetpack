@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "client/graphic/Player.hpp"
+#include <memory>
 
 class DataManager {
  private:
@@ -14,7 +15,7 @@ class DataManager {
 
     int port;
     std::string ip;
-    std::vector<Player> players;
+    std::vector<std::shared_ptr<Player>> players;
 
  public:
     static DataManager *instance;
@@ -27,7 +28,7 @@ class DataManager {
     bool getDebug() const;
     int getPort() const;
     std::string getIp() const;
-    std::vector<Player> &getPlayers();
+    std::vector<std::shared_ptr<Player>> &getPlayers();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);

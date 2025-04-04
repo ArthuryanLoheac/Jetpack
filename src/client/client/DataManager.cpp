@@ -39,7 +39,7 @@ std::string DataManager::getIp() const {
     return ip;
 }
 
-std::vector<Player> &DataManager::getPlayers() {
+std::vector<std::shared_ptr<Player>> &DataManager::getPlayers() {
     return players;
 }
 

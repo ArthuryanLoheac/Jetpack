@@ -6,6 +6,7 @@
 #include "client/client/DataManager.hpp"
 #include "clientRun/ClientRun.hpp"
 #include "client/client/Client.hpp"
+#include <memory>
 
 static void handleHello(std::istringstream& iss) {
     std::string id;
@@ -27,7 +28,7 @@ static void handleHello(std::istringstream& iss) {
 
 static bool isIdInList(int id) {
     for (auto &p : DataManager::instance->getPlayers()) {
-        if (p.getId() == id)
+        if (p->getId() == id)
             return true;
     }
     return false;
@@ -51,20 +52,20 @@ static void handlePlayer(std::istringstream& iss) {
     bool isFire = (isFireStr == "1");
 
     if (!isIdInList(id)) {
-        Player newPlayer;
-        newPlayer.setId(id);
-        newPlayer.setPos(x, y);
-        newPlayer.setVelocityY(velocityY);
-        newPlayer.setFire(isFire);
-        newPlayer.setCoins(coins);
+        std::shared_ptr<Player> newPlayer = std::make_shared<Player>();
+        newPlayer->setId(id);
+        newPlayer->setPos(x, y);
+        newPlayer->setVelocityY(velocityY);
+        newPlayer->setFire(isFire);
+        newPlayer->setCoins(coins);
         DataManager::instance->getPlayers().push_back(newPlayer);
     } else {
         for (auto &p : DataManager::instance->getPlayers()) {
-            if (p.getId() == id) {
-                p.setPos(x, y);
-                p.setVelocityY(velocityY);
-                p.setFire(isFire);
-                p.setCoins(coins);
+            if (p->getId() == id) {
+                p->setPos(x, y);
+                p->setVelocityY(velocityY);
+                p->setFire(isFire);
+                p->setCoins(coins);
             }
         }
     }

@@ -3,6 +3,7 @@
 #include "clientRun/ClientRun.hpp"
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
+#include <memory>
 
 Player *Player::instance = nullptr;
 
@@ -34,7 +35,7 @@ int main(int ac, char **av) {
     DataManager dataManager;
     DataManager::instance->setDebug(false);
     Client client(0, sockfd, "");
-    Player player;
+    std::shared_ptr<Player> player = std::make_shared<Player>();
     DataManager::instance->getPlayers().push_back(player);
 
     if (!(ac == 5 || ac == 6))
