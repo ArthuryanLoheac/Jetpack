@@ -39,11 +39,17 @@ std::string DataManager::getIp() const {
     return ip;
 }
 
-std::vector<std::shared_ptr<Player>> &DataManager::getPlayers() {
+std::vector<Player> &DataManager::getPlayers() {
     return players;
 }
 
-void DataManager::setGravity(int gravity) {
+Player &DataManager::addNewPlayer() {
+    std::shared_ptr<Player> newPlayer = std::make_shared<Player>();
+    players.push_back(*newPlayer);
+    return players.back();
+}
+void DataManager::setGravity(int gravity)
+{
     this->gravity = gravity;
 }
 

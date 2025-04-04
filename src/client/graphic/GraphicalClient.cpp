@@ -36,10 +36,10 @@ int graphic(void) {
         window.clear();
         game.draw(window.getWindow());
         for (auto &player : DataManager::instance->getPlayers()) {
-            Player::instance->getImage().setTransparency(player->getId()
+            Player::instance->getImage().setTransparency(player.getId()
                 == Player::instance->getId() ? 255 : 100);
             Player::instance->getImage().
-                setPosition(player->getX(), player->getY());
+                setPosition(player.getX(), player.getY());
             Player::instance->getImage().draw(window.getWindow());
         }
         window.display();

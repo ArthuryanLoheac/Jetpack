@@ -15,7 +15,7 @@ class DataManager {
 
     int port;
     std::string ip;
-    std::vector<std::shared_ptr<Player>> players;
+    std::vector<Player> players;
 
  public:
     static DataManager *instance;
@@ -28,7 +28,8 @@ class DataManager {
     bool getDebug() const;
     int getPort() const;
     std::string getIp() const;
-    std::vector<std::shared_ptr<Player>> &getPlayers();
+    std::vector<Player> &getPlayers();
+    Player &addNewPlayer();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);

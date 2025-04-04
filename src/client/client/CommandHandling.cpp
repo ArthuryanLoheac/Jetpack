@@ -28,7 +28,7 @@ static void handleHello(std::istringstream& iss) {
 
 static bool isIdInList(int id) {
     for (auto &p : DataManager::instance->getPlayers()) {
-        if (p->getId() == id)
+        if (p.getId() == id)
             return true;
     }
     return false;
@@ -52,20 +52,19 @@ static void handlePlayer(std::istringstream& iss) {
     bool isFire = (isFireStr == "1");
 
     if (!isIdInList(id)) {
-        std::shared_ptr<Player> newPlayer = std::make_shared<Player>();
-        newPlayer->setId(id);
-        newPlayer->setPos(x, y);
-        newPlayer->setVelocityY(velocityY);
-        newPlayer->setFire(isFire);
-        newPlayer->setCoins(coins);
-        DataManager::instance->getPlayers().push_back(newPlayer);
+        Player &newPlayer = DataManager::instance->addNewPlayer();
+        newPlayer.setId(id);
+        newPlayer.setPos(x, y);
+        newPlayer.setVelocityY(velocityY);
+        newPlayer.setFire(isFire);
+        newPlayer.setCoins(coins);
     } else {
         for (auto &p : DataManager::instance->getPlayers()) {
-            if (p->getId() == id) {
-                p->setPos(x, y);
-                p->setVelocityY(velocityY);
-                p->setFire(isFire);
-                p->setCoins(coins);
+            if (p.getId() == id) {
+                p.setPos(x, y);
+                p.setVelocityY(velocityY);
+                p.setFire(isFire);
+                p.setCoins(coins);
             }
         }
     }
