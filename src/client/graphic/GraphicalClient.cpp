@@ -23,6 +23,26 @@ static void Event(Window &window) {
     window.getMapKeys()[window.getEvent().key.code] = window.getEvent().type;
 }
 
+void drawPlayers(Window &window) {
+    // Draw the players
+    for (auto &player : DataManager::instance->getPlayers()) {
+        if (player.getId() != Player::instance->getId()) {
+            updateImagePlayer(player);
+            player.getImage().setPosition(player.getX(), player.getY());
+            player.getImage().setTransparency(100);
+            player.getImage().draw(window.getWindow());
+        }
+    }
+    // Draw the main player in front
+    for (auto &player : DataManager::instance->getPlayers()) {
+        if (player.getId() == Player::instance->getId()) {
+            Player::instance->getImage().setPosition(
+                player.getX(), player.getY());
+            Player::instance->getImage().draw(window.getWindow());
+        }
+    }
+}
+
 int graphic(void) {
     Window window;
     Game game;
@@ -35,13 +55,7 @@ int graphic(void) {
         game.update(window.getDeltaTime());
         window.clear();
         game.draw(window.getWindow());
-        for (auto &player : DataManager::instance->getPlayers()) {
-            Player::instance->getImage().setTransparency(player.getId()
-                == Player::instance->getId() ? 255 : 100);
-            Player::instance->getImage().
-                setPosition(player.getX(), player.getY());
-            Player::instance->getImage().draw(window.getWindow());
-        }
+        drawPlayers(window);
         window.display();
     }
     return 0;

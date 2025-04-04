@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 
 #include "clientRun/ClientRun.hpp"
 #include "client/graphic/Player.hpp"
@@ -34,7 +35,7 @@ int main(int ac, char **av) {
     DataManager dataManager;
     DataManager::instance->setDebug(false);
     Client client(0, sockfd, "");
-    Player player;
+    Player player(DataManager::instance->getTexturePlayer());
     DataManager::instance->getPlayers().push_back(player);
 
     if (!(ac == 5 || ac == 6))

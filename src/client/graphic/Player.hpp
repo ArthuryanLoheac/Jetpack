@@ -17,8 +17,8 @@ class Player {
     };
 
     static Player *instance;
-    Player()
-        : img("assets/player_sprite_sheet.png") {
+    explicit Player(sf::Texture &texturePlayer)
+        : img(texturePlayer) {
         img.setRectangle(0, 0, width, height);
         img.setTimeAnimation(0.15f);
         img.setPosition(x, y);
@@ -54,7 +54,7 @@ class Player {
     bool isFire = false;
     bool isGround = false;
     int coins = 0;
-    int id;
+    int id = 0;
     ImageClass img;
     Landing landing = ON_AIR;
 };

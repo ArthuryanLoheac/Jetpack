@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
@@ -48,16 +49,15 @@ static void handlePlayer(std::istringstream& iss) {
     float y = std::stof(yStr);
     float velocityY = std::stof(velocityYStr);
     int coins = std::stoi(coinsStr);
-    bool isFire = (isFireStr == "1");
+    bool isFire = std::stoi(isFireStr) == 1;
 
     if (!isIdInList(id)) {
-        Player newPlayer;
+        Player &newPlayer = DataManager::instance->addNewPlayer();
         newPlayer.setId(id);
         newPlayer.setPos(x, y);
         newPlayer.setVelocityY(velocityY);
         newPlayer.setFire(isFire);
         newPlayer.setCoins(coins);
-        DataManager::instance->getPlayers().push_back(newPlayer);
     } else {
         for (auto &p : DataManager::instance->getPlayers()) {
             if (p.getId() == id) {
