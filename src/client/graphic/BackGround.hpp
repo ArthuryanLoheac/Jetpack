@@ -9,8 +9,8 @@ class BackGround {
     float speed = 500;
 
  public:
-    explicit BackGround(int posX = 0)
-    : img("assets/background.png") {
+    explicit BackGround(sf::Texture &texture, int posX = 0)
+    : img(texture) {
         pos.x = posX;
         img.setPosition(posX, pos.y);
         img.setScale(3.7, 3.7);

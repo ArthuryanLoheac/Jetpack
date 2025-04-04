@@ -39,11 +39,11 @@ int graphic(void) {
             if (player.getId() == Player::instance->getId()) {
                 Player::instance->getImage().setPosition(player.getX(), player.getY());
                 Player::instance->getImage().draw(window.getWindow());
-                continue;
+            } else {
+                player.getImage().setPosition(player.getX(), player.getY());
+                player.getImage().setTransparency(100);
+                player.getImage().draw(window.getWindow());
             }
-            player.getImage().setPosition(player.getX(), player.getY());
-            player.getImage().setTransparency(100);
-            player.getImage().draw(window.getWindow());
         }
         window.display();
     }

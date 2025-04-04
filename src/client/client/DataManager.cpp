@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "client/client/DataManager.hpp"
+#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -9,6 +10,8 @@ DataManager::DataManager() {
     if (instance)
         return;
     instance = this;
+    texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
+    textureBackground.loadFromFile("assets/background.png");
 }
 
 int DataManager::getGravity() const {
@@ -44,7 +47,7 @@ std::vector<Player> &DataManager::getPlayers() {
 }
 
 Player &DataManager::addNewPlayer() {
-    std::shared_ptr<Player> newPlayer = std::make_shared<Player>();
+    std::shared_ptr<Player> newPlayer = std::make_shared<Player>(DataManager::instance->getTexturePlayer());
     players.push_back(*newPlayer);
     return players.back();
 }
@@ -75,4 +78,12 @@ void DataManager::setPort(int port) {
 
 void DataManager::setIp(std::string ip) {
     this->ip = ip;
+}
+
+sf::Texture &DataManager::getTexturePlayer() {
+    return texturePlayer;
+}
+
+sf::Texture &DataManager::getTextureBackground() {
+    return textureBackground;
 }

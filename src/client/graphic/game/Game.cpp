@@ -1,7 +1,8 @@
 #include "client/graphic/game/Game.hpp"
 
 Game::Game()
-    : bg(BackGround()), bg2(BackGround(1726 * 3.7)) {
+    : bg(BackGround(DataManager::instance->getTextureBackground())),
+    bg2(BackGround(DataManager::instance->getTextureBackground(), 1726 * 3.7)) {
     VolumeMusic = 50;
     VolumeSound = 50;
 
