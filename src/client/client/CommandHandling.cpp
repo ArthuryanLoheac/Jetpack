@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
 #include "clientRun/ClientRun.hpp"
 #include "client/client/Client.hpp"
-#include <memory>
 
 static void handleHello(std::istringstream& iss) {
     std::string id;

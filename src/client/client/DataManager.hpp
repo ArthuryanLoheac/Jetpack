@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "client/graphic/Player.hpp"
-#include <memory>
 
 class DataManager {
  private:

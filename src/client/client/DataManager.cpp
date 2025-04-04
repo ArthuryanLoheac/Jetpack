@@ -1,8 +1,8 @@
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "client/client/DataManager.hpp"
-#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -47,12 +47,12 @@ std::vector<Player> &DataManager::getPlayers() {
 }
 
 Player &DataManager::addNewPlayer() {
-    std::shared_ptr<Player> newPlayer = std::make_shared<Player>(DataManager::instance->getTexturePlayer());
+    std::shared_ptr<Player> newPlayer =
+        std::make_shared<Player>(DataManager::instance->getTexturePlayer());
     players.push_back(*newPlayer);
     return players.back();
 }
-void DataManager::setGravity(int gravity)
-{
+void DataManager::setGravity(int gravity) {
     this->gravity = gravity;
 }
 

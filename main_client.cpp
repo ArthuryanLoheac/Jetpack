@@ -1,9 +1,9 @@
 #include <string>
+#include <memory>
 
 #include "clientRun/ClientRun.hpp"
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
-#include <memory>
 
 Player *Player::instance = nullptr;
 
