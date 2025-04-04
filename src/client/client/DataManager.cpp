@@ -47,9 +47,7 @@ std::vector<Player> &DataManager::getPlayers() {
 }
 
 Player &DataManager::addNewPlayer() {
-    std::shared_ptr<Player> newPlayer =
-        std::make_shared<Player>(DataManager::instance->getTexturePlayer());
-    players.push_back(*newPlayer);
+    players.emplace_back(DataManager::instance->getTexturePlayer());
     return players.back();
 }
 void DataManager::setGravity(int gravity) {
