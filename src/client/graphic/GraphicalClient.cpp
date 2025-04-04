@@ -35,7 +35,13 @@ int graphic(void) {
         game.update(window.getDeltaTime());
         window.clear();
         game.draw(window.getWindow());
-        Player::instance->getImage().draw(window.getWindow());
+        for (auto &player : DataManager::instance->getPlayers()) {
+            Player::instance->getImage().setTransparency(player.getId()
+                == Player::instance->getId() ? 255 : 100);
+            Player::instance->getImage().
+                setPosition(player.getX(), player.getY());
+            Player::instance->getImage().draw(window.getWindow());
+        }
         window.display();
     }
     return 0;

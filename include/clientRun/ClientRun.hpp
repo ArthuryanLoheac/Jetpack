@@ -37,7 +37,7 @@ const int WIDTH = 1280;
 const int HEIGHT = 920;
 
 int client_connection(int &sockfd);
-void loopClient(int sockfd, Client &client);
+void loopClient(int sockfd);
 int graphic(void);
 void update(Game &game, Window &window);
-void handleCommand(std::string command, Client &client);
+void handleCommand(std::string command);

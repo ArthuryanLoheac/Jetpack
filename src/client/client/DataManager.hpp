@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <vector>
+
+#include "client/graphic/Player.hpp"
 
 class DataManager {
  private:
@@ -11,6 +14,7 @@ class DataManager {
 
     int port;
     std::string ip;
+    std::vector<Player> players;
 
  public:
     static DataManager *instance;
@@ -23,6 +27,7 @@ class DataManager {
     bool getDebug() const;
     int getPort() const;
     std::string getIp() const;
+    std::vector<Player> &getPlayers();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);

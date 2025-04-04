@@ -30,6 +30,7 @@ Server::Server(int port, std::string _map) :
 port(port), map(_map), nfds(1), i(0), gameStarted(false) {
     fds = new struct pollfd[MAX_CONNECTIONS];
     Log::info() << "Map:\n" << map << std::endl;
+    iClient = 0;
 }
 
 Server::~Server() {
@@ -53,7 +54,10 @@ void Server::handleNewConnection(struct pollfd fds[], int &nfds) {
     fds[nfds].fd = clientFd;
     fds[nfds].events = POLLIN;
     nfds++;
-    clients.try_emplace(clientFd, i, clientFd, map);
+    clients.try_emplace(clientFd, iClient, clientFd, map);
+    iClient++;
+    if (clients.size() == 1)
+        clock.restart();
 }
 
 void Server::handleClientData(int clientFd) {
@@ -86,22 +90,18 @@ void signalHandler(int signal) {
 }
 
 bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
-    bool everyoneReady = true;
+    // bool everyoneReady = true;
     if (!gameStarted) {
         for (auto &client : clients) {
             if (!client.second.ready) {
-                everyoneReady = false;
+                // everyoneReady = false;
                 break;
             }
         }
+        startGame();
     }
-    if (everyoneReady && !gameStarted && clients.size() > 1) {
-        gameSimulation.startGame(clients);
-        gameStarted = true;
-    }
-    if (gameStarted) {
-        return gameSimulation.updateGame();
-    }
+    if (gameStarted)
+        return updateGame();
     return false;
 }
 

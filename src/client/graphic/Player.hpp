@@ -19,11 +19,12 @@ class Player {
     static Player *instance;
     Player()
         : img("assets/player_sprite_sheet.png") {
-        instance = this;
         img.setRectangle(0, 0, width, height);
         img.setTimeAnimation(0.15f);
         img.setPosition(x, y);
         img.setNbFrame(4);
+        if (instance == nullptr)
+            instance = this;
     }
     void setPos(float x, float y) { this->x = x; this->y = y;}
     float getX() { return x; }
@@ -39,6 +40,10 @@ class Player {
     bool getGround() { return isGround; }
     void setLanding(Landing landing) { this->landing = landing; }
     Landing getLanding() { return landing; }
+    void setId(int id) { this->id = id; }
+    int getId() { return id; }
+    void setCoins(int coins) { this->coins = coins; }
+    int getCoins() { return coins; }
 
  private:
     float x = 100;
@@ -48,6 +53,8 @@ class Player {
     float velocityY = 0.f;
     bool isFire = false;
     bool isGround = false;
+    int coins = 0;
+    int id;
     ImageClass img;
     Landing landing = ON_AIR;
 };

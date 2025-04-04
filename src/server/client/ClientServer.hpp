@@ -6,6 +6,20 @@
 
 class ClientServer {
  public:
+    class Player {
+     public:
+         explicit Player(int i);
+
+         int id;
+         float x;
+         float y;
+         float velocity_y;
+         int coins;
+         bool isFire;
+         int width;
+         int height;
+    };
+
     class clientException : public std::exception {
      public:
         explicit clientException(std::string message);
@@ -17,14 +31,21 @@ class ClientServer {
     ClientServer(int _id, int _clientFd, std::string mapPath);
     ~ClientServer();
     std::string receiveInput();
-    bool handleInput();
     void sendOutput(std::string output);
     std::string getInput(std::string& buffer);
     std::string getMapPath() const { return mapPath; }
+    Player &getPlayer() { return player; }
+
+    bool handleInput();
+    void handleCommand(std::string command);
+    void handleFire(std::istringstream &iss);
 
     bool ready;
+
  private:
     int id;
     int clientFd;
     std::string mapPath;
+
+    Player player;
 };

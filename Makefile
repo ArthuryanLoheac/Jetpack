@@ -41,6 +41,7 @@ EXTENSION = cpp
 FLAGS = -I./include -I./src \
 	$(shell find include src -type d -exec echo -I{} \;) \
 	-MMD -MP $(FLAGS_LIB) \
+	-lsfml-window -lsfml-system -lsfml-audio
 
 FLAGS_CLIENT = $(FLAGS) -lsfml-graphics \
 	-lsfml-window -lsfml-system -lsfml-audio

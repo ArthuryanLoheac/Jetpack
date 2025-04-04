@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #include "client/client/DataManager.hpp"
 
@@ -36,6 +37,10 @@ int DataManager::getPort() const {
 
 std::string DataManager::getIp() const {
     return ip;
+}
+
+std::vector<Player> &DataManager::getPlayers() {
+    return players;
 }
 
 void DataManager::setGravity(int gravity) {

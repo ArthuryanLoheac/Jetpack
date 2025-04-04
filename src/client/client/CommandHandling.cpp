@@ -19,35 +19,58 @@ static void handleHello(std::istringstream& iss) {
     std::getline(iss, speedJetpack, ' ');
 
     DataManager::instance->setId(std::stoi(id.c_str()));
+    Player::instance->setId(std::stoi(id.c_str()));
     DataManager::instance->setGravity(std::stoi(gravity));
     DataManager::instance->setSpeedX(std::stoi(speedX));
     DataManager::instance->setSpeedJetpack(std::stoi(speedJetpack));
 }
 
-static void handlePlayer(std::istringstream& iss, Client &client) {
-    std::string id;
-    std::string x;
-    std::string y;
-    std::string velocityY;
-    std::string coins;
-    std::string isFiring;
-
-    std::getline(iss, id, ' ');
-    std::getline(iss, x, ' ');
-    std::getline(iss, y, ' ');
-    std::getline(iss, velocityY, ' ');
-    std::getline(iss, coins, ' ');
-    std::getline(iss, isFiring, ' ');
-
-    client.setId(std::stoi(id.c_str()));
-    client.setX(std::stoi(x.c_str()));
-    client.setY(std::stoi(y.c_str()));
-    client.setVelocityY(std::stoi(velocityY.c_str()));
-    client.setCoins(std::stoi(coins.c_str()));
-    client.setFire(std::stoi(isFiring.c_str()));
+static bool isIdInList(int id) {
+    for (auto &p : DataManager::instance->getPlayers()) {
+        if (p.getId() == id)
+            return true;
+    }
+    return false;
 }
 
-void handleCommand(std::string command, Client &client) {
+static void handlePlayer(std::istringstream& iss) {
+    std::string idStr, xStr, yStr, velocityYStr, coinsStr, isFireStr;
+
+    std::getline(iss, idStr, ' ');
+    std::getline(iss, xStr, ' ');
+    std::getline(iss, yStr, ' ');
+    std::getline(iss, velocityYStr, ' ');
+    std::getline(iss, coinsStr, ' ');
+    std::getline(iss, isFireStr, ' ');
+
+    int id = std::stoi(idStr);
+    float x = std::stof(xStr);
+    float y = std::stof(yStr);
+    float velocityY = std::stof(velocityYStr);
+    int coins = std::stoi(coinsStr);
+    bool isFire = (isFireStr == "1");
+
+    if (!isIdInList(id)) {
+        Player newPlayer;
+        newPlayer.setId(id);
+        newPlayer.setPos(x, y);
+        newPlayer.setVelocityY(velocityY);
+        newPlayer.setFire(isFire);
+        newPlayer.setCoins(coins);
+        DataManager::instance->getPlayers().push_back(newPlayer);
+    } else {
+        for (auto &p : DataManager::instance->getPlayers()) {
+            if (p.getId() == id) {
+                p.setPos(x, y);
+                p.setVelocityY(velocityY);
+                p.setFire(isFire);
+                p.setCoins(coins);
+            }
+        }
+    }
+}
+
+void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
 
@@ -57,5 +80,5 @@ void handleCommand(std::string command, Client &client) {
     if (commandName == "HELLO")
         handleHello(iss);
     if (commandName == "PLAYER")
-        handlePlayer(iss, client);
+        handlePlayer(iss);
 }

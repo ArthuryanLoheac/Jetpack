@@ -15,7 +15,8 @@
 #include <string>
 
 #include "server/client/ClientServer.hpp"
-#include "server/gameSimulation/GameSimulation.hpp"
+
+#include "SFML/System/Clock.hpp"
 
 class Server {
  public:
@@ -41,7 +42,14 @@ class Server {
     void removeClient(struct pollfd fds[], int &nfds, int index);
     bool handleGameEvents(std::unordered_map<int, ClientServer>&);
 
+    void startGame();
+    bool updateGame();
+    void sendPlayersDataToEachClient(ClientServer &player);
+    void updateGravity(ClientServer &player);
+
  private:
+    sf::Clock clock;
+
     int port;
     std::string map;
     int socketFd;
@@ -50,6 +58,7 @@ class Server {
     struct pollfd *fds;
     int nfds;
     int i;
+    int iClient;
     bool gameStarted;
-    GameSimulation gameSimulation;
+    float deltaTime;
 };
