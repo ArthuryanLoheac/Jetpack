@@ -26,7 +26,7 @@ static void Event(Window &window) {
 void drawPlayers(Window &window) {
     // Draw the players
     for (auto &player : DataManager::instance->getPlayers()) {
-        if (!player.getId() == Player::instance->getId()) {
+        if (player.getId() != Player::instance->getId()) {
             updateImagePlayer(player);
             player.getImage().setPosition(player.getX(), player.getY());
             player.getImage().setTransparency(100);
