@@ -42,14 +42,15 @@ std::string DataManager::getIp() const {
     return ip;
 }
 
-std::vector<Player> &DataManager::getPlayers() {
+std::vector<std::unique_ptr<Player>> &DataManager::getPlayers() {
     return players;
 }
 
 Player &DataManager::addNewPlayer() {
-    players.emplace_back(DataManager::instance->getTexturePlayer());
-    return players.back();
+    players.emplace_back(std::make_unique<Player>(texturePlayer));
+    return *players.back();
 }
+
 void DataManager::setGravity(int gravity) {
     this->gravity = gravity;
 }

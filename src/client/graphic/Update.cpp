@@ -13,7 +13,7 @@
 #include "client/graphic/game/Game.hpp"
 #include "client/graphic/window/Window.hpp"
 
-static void handleMaxMin(sf::Vector2f &position) {
+void handleMaxMin(sf::Vector2f &position) {
     bool isGround = false;
     if (position.y >= HEIGHT - Player::instance->getHeight() - 30) {
         position.y = HEIGHT - Player::instance->getHeight() - 30;
@@ -123,6 +123,7 @@ void update(Game &game, Window &window) {
     sf::Vector2f position =
         {Player::instance->getX(), Player::instance->getY()};
 
+    std::lock_guard<std::mutex> lock(Player::instance->getMutexPlayer());
     updateVelocity(window.getMapKeys(), window.getDeltaTime());
     position.y -= (Player::instance->getVelocityY() * window.getDeltaTime());
     handleMaxMin(position);

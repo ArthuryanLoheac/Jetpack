@@ -27,8 +27,8 @@ static void handleHello(std::istringstream& iss) {
 }
 
 static bool isIdInList(int id) {
-    for (auto &p : DataManager::instance->getPlayers()) {
-        if (p.getId() == id)
+    for (const auto &p : DataManager::instance->getPlayers()) {
+        if (p->getId() == id)
             return true;
     }
     return false;
@@ -53,18 +53,20 @@ static void handlePlayer(std::istringstream& iss) {
 
     if (!isIdInList(id)) {
         Player &newPlayer = DataManager::instance->addNewPlayer();
+        std::lock_guard<std::mutex> lock(newPlayer.getMutexPlayer());
         newPlayer.setId(id);
         newPlayer.setPos(x, y);
         newPlayer.setVelocityY(velocityY);
         newPlayer.setFire(isFire);
         newPlayer.setCoins(coins);
     } else {
-        for (auto &p : DataManager::instance->getPlayers()) {
-            if (p.getId() == id) {
-                p.setPos(x, y);
-                p.setVelocityY(velocityY);
-                p.setFire(isFire);
-                p.setCoins(coins);
+        for (const auto &p : DataManager::instance->getPlayers()) {
+            if (p->getId() == id) {
+                std::lock_guard<std::mutex> lock(p->getMutexPlayer());
+                p->setPos(x, y);
+                p->setVelocityY(velocityY);
+                p->setFire(isFire);
+                p->setCoins(coins);
             }
         }
     }
