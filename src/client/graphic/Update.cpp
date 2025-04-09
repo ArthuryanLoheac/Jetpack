@@ -123,6 +123,7 @@ void update(Game &game, Window &window) {
     sf::Vector2f position =
         {Player::instance->getX(), Player::instance->getY()};
 
+    Player::instance->getMutexPlayer().lock();
     updateVelocity(window.getMapKeys(), window.getDeltaTime());
     position.y -= (Player::instance->getVelocityY() * window.getDeltaTime());
     handleMaxMin(position);
@@ -131,4 +132,5 @@ void update(Game &game, Window &window) {
     Player::instance->getImage().updateAnimation();
     updateImage();
     updateSound(game, window);
+    Player::instance->getMutexPlayer().unlock();
 }

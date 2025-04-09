@@ -52,32 +52,17 @@ void updateVelocity(float deltaTime, Player &player) {
         ((-gravite + fireVelocity) * deltaTime));
 }
 
-void updateVelocityP1(std::map<int, int> &map_keys, float deltaTime, Player &player) {
-    float fireVelocity = 0;
-    float gravite = DataManager::instance->getGravity();
-
-    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed ||
-        map_keys[sf::Keyboard::Space] == sf::Event::KeyPressed) {
-        player.setLanding(Player::ON_AIR);
-        fireVelocity = DataManager::instance->getSpeedJetpack();
-    }
-    player.setFire(fireVelocity != 0);
-    player.setVelocityY(player.getVelocityY() +
-        ((-gravite + fireVelocity) * deltaTime));
-}
-
 void updatePlayers(Window &window) {
     for (auto &player : DataManager::instance->getPlayers()) {
         player->getMutexPlayer().lock();
-        sf::Vector2f position =
-            {player->getX(), player->getY()};
-        if (player->getId() == Player::instance->getId())
-            updateVelocityP1(window.getMapKeys(), window.getDeltaTime(), *player);
-        else 
+        if (player->getId() != Player::instance->getId()) {
+            sf::Vector2f position =
+                {player->getX(), player->getY()};
             updateVelocity(window.getDeltaTime(), *player);
-        position.y -= (player->getVelocityY() * window.getDeltaTime());
-        handleMaxMin(position);
-        player->setPos(position.x, position.y);
+            position.y -= (player->getVelocityY() * window.getDeltaTime());
+            handleMaxMin(position);
+            player->setPos(position.x, position.y);
+        }
         player->getMutexPlayer().unlock();
     }
 }
