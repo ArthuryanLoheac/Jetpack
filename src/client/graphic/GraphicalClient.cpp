@@ -54,7 +54,7 @@ void updateVelocity(float deltaTime, Player &player) {
 
 void updatePlayers(Window &window) {
     for (auto &player : DataManager::instance->getPlayers()) {
-        player->getMutexPlayer().lock();
+        std::lock_guard<std::mutex> lock(player->getMutexPlayer());
         if (player->getId() != Player::instance->getId()) {
             sf::Vector2f position =
                 {player->getX(), player->getY()};
@@ -63,7 +63,6 @@ void updatePlayers(Window &window) {
             handleMaxMin(position);
             player->setPos(position.x, position.y);
         }
-        player->getMutexPlayer().unlock();
     }
 }
 
