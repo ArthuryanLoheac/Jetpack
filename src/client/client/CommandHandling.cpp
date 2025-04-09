@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
@@ -26,8 +27,8 @@ static void handleHello(std::istringstream& iss) {
 }
 
 static bool isIdInList(int id) {
-    for (auto &p : DataManager::instance->getPlayers()) {
-        if (p.getId() == id)
+    for (const auto &p : DataManager::instance->getPlayers()) {
+        if (p->getId() == id)
             return true;
     }
     return false;
@@ -48,23 +49,24 @@ static void handlePlayer(std::istringstream& iss) {
     float y = std::stof(yStr);
     float velocityY = std::stof(velocityYStr);
     int coins = std::stoi(coinsStr);
-    bool isFire = (isFireStr == "1");
+    bool isFire = std::stoi(isFireStr) == 1;
 
     if (!isIdInList(id)) {
-        Player newPlayer;
+        Player &newPlayer = DataManager::instance->addNewPlayer();
+        std::lock_guard<std::mutex> lock(newPlayer.getMutexPlayer());
         newPlayer.setId(id);
         newPlayer.setPos(x, y);
         newPlayer.setVelocityY(velocityY);
         newPlayer.setFire(isFire);
         newPlayer.setCoins(coins);
-        DataManager::instance->getPlayers().push_back(newPlayer);
     } else {
-        for (auto &p : DataManager::instance->getPlayers()) {
-            if (p.getId() == id) {
-                p.setPos(x, y);
-                p.setVelocityY(velocityY);
-                p.setFire(isFire);
-                p.setCoins(coins);
+        for (const auto &p : DataManager::instance->getPlayers()) {
+            if (p->getId() == id) {
+                std::lock_guard<std::mutex> lock(p->getMutexPlayer());
+                p->setPos(x, y);
+                p->setVelocityY(velocityY);
+                p->setFire(isFire);
+                p->setCoins(coins);
             }
         }
     }

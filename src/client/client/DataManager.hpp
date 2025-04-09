@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "client/graphic/Player.hpp"
 
@@ -14,7 +15,9 @@ class DataManager {
 
     int port;
     std::string ip;
-    std::vector<Player> players;
+    std::vector<std::unique_ptr<Player>> players;
+    sf::Texture texturePlayer;
+    sf::Texture textureBackground;
 
  public:
     static DataManager *instance;
@@ -27,7 +30,8 @@ class DataManager {
     bool getDebug() const;
     int getPort() const;
     std::string getIp() const;
-    std::vector<Player> &getPlayers();
+    std::vector<std::unique_ptr<Player>> &getPlayers();
+    Player &addNewPlayer();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);
@@ -36,4 +40,7 @@ class DataManager {
     void setDebug(bool isDebug);
     void setPort(int port);
     void setIp(std::string ip);
+
+    sf::Texture &getTexturePlayer();
+    sf::Texture &getTextureBackground();
 };

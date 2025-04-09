@@ -41,3 +41,5 @@ void loopClient(int sockfd);
 int graphic(void);
 void update(Game &game, Window &window);
 void handleCommand(std::string command);
+void updateImagePlayer(Player &player);
+void handleMaxMin(sf::Vector2f &position);

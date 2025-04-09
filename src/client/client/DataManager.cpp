@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "client/client/DataManager.hpp"
 
@@ -9,6 +10,8 @@ DataManager::DataManager() {
     if (instance)
         return;
     instance = this;
+    texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
+    textureBackground.loadFromFile("assets/background.png");
 }
 
 int DataManager::getGravity() const {
@@ -39,8 +42,13 @@ std::string DataManager::getIp() const {
     return ip;
 }
 
-std::vector<Player> &DataManager::getPlayers() {
+std::vector<std::unique_ptr<Player>> &DataManager::getPlayers() {
     return players;
+}
+
+Player &DataManager::addNewPlayer() {
+    players.emplace_back(std::make_unique<Player>(texturePlayer));
+    return *players.back();
 }
 
 void DataManager::setGravity(int gravity) {
@@ -69,4 +77,12 @@ void DataManager::setPort(int port) {
 
 void DataManager::setIp(std::string ip) {
     this->ip = ip;
+}
+
+sf::Texture &DataManager::getTexturePlayer() {
+    return texturePlayer;
+}
+
+sf::Texture &DataManager::getTextureBackground() {
+    return textureBackground;
 }

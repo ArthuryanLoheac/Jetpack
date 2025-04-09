@@ -1,11 +1,6 @@
-/*
-** EPITECH PROJECT, 2025
-** Jetpack
-** File description:
-** Player
-*/
-
 #pragma once
+#include <mutex>
+
 #include "client/graphic/ImageClass.hpp"
 
 class Player {
@@ -17,8 +12,8 @@ class Player {
     };
 
     static Player *instance;
-    Player()
-        : img("assets/player_sprite_sheet.png") {
+    explicit Player(sf::Texture &texturePlayer)
+        : img(texturePlayer) {
         img.setRectangle(0, 0, width, height);
         img.setTimeAnimation(0.15f);
         img.setPosition(x, y);
@@ -44,6 +39,7 @@ class Player {
     int getId() { return id; }
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
+    std::mutex &getMutexPlayer() { return mutexPlayer; }
 
  private:
     float x = 100;
@@ -54,7 +50,8 @@ class Player {
     bool isFire = false;
     bool isGround = false;
     int coins = 0;
-    int id;
+    int id = 0;
     ImageClass img;
     Landing landing = ON_AIR;
+    std::mutex mutexPlayer;
 };

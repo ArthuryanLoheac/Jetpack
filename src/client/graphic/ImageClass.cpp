@@ -2,9 +2,8 @@
 
 #include "client/graphic/ImageClass.hpp"
 
-ImageClass::ImageClass(std::string path) {
-    this->texture.loadFromFile(path);
-    this->sprite.setTexture(this->texture);
+ImageClass::ImageClass(sf::Texture &text) {
+    this->sprite.setTexture(text);
 }
 
 void ImageClass::updateAnimation() {
