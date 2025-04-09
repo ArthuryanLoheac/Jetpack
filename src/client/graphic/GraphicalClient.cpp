@@ -26,18 +26,18 @@ static void Event(Window &window) {
 void drawPlayers(Window &window) {
     // Draw the players
     for (auto &player : DataManager::instance->getPlayers()) {
-        if (player.getId() != Player::instance->getId()) {
-            updateImagePlayer(player);
-            player.getImage().setPosition(player.getX(), player.getY());
-            player.getImage().setTransparency(100);
-            player.getImage().draw(window.getWindow());
+        if (player->getId() != Player::instance->getId()) {
+            updateImagePlayer(*player);
+            player->getImage().setPosition(player->getX(), player->getY());
+            player->getImage().setTransparency(100);
+            player->getImage().draw(window.getWindow());
         }
     }
     // Draw the main player in front
     for (auto &player : DataManager::instance->getPlayers()) {
-        if (player.getId() == Player::instance->getId()) {
+        if (player->getId() == Player::instance->getId()) {
             Player::instance->getImage().setPosition(
-                player.getX(), player.getY());
+                player->getX(), player->getY());
             Player::instance->getImage().draw(window.getWindow());
         }
     }

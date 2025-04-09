@@ -15,7 +15,7 @@ class DataManager {
 
     int port;
     std::string ip;
-    std::vector<Player> players;
+    std::vector<std::unique_ptr<Player>> players;
     sf::Texture texturePlayer;
     sf::Texture textureBackground;
 
@@ -30,7 +30,7 @@ class DataManager {
     bool getDebug() const;
     int getPort() const;
     std::string getIp() const;
-    std::vector<Player> &getPlayers();
+    std::vector<std::unique_ptr<Player>> &getPlayers();
     Player &addNewPlayer();
 
     void setGravity(int gravity);

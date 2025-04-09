@@ -1,11 +1,6 @@
-/*
-** EPITECH PROJECT, 2025
-** Jetpack
-** File description:
-** Player
-*/
-
 #pragma once
+#include <mutex>
+
 #include "client/graphic/ImageClass.hpp"
 
 class Player {
@@ -44,6 +39,7 @@ class Player {
     int getId() { return id; }
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
+    std::mutex &getMutexPlayer() { return mutexPlayer; }
 
  private:
     float x = 100;
@@ -57,4 +53,5 @@ class Player {
     int id = 0;
     ImageClass img;
     Landing landing = ON_AIR;
+    std::mutex mutexPlayer;
 };
