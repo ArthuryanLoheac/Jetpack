@@ -13,7 +13,7 @@
 #include "client/graphic/game/Game.hpp"
 #include "client/graphic/window/Window.hpp"
 
-static void handleMaxMin(sf::Vector2f &position) {
+void handleMaxMin(sf::Vector2f &position) {
     bool isGround = false;
     if (position.y >= HEIGHT - Player::instance->getHeight() - 30) {
         position.y = HEIGHT - Player::instance->getHeight() - 30;

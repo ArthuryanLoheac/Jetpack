@@ -43,6 +43,45 @@ void drawPlayers(Window &window) {
     }
 }
 
+void updateVelocity(float deltaTime, Player &player) {
+    float fireVelocity = player.getFire() ?
+        DataManager::instance->getSpeedJetpack() : 0;
+    float gravite = DataManager::instance->getGravity();
+
+    player.setVelocityY(player.getVelocityY() +
+        ((-gravite + fireVelocity) * deltaTime));
+}
+
+void updateVelocityP1(std::map<int, int> &map_keys, float deltaTime, Player &player) {
+    float fireVelocity = 0;
+    float gravite = DataManager::instance->getGravity();
+
+    if (map_keys[sf::Keyboard::Z] == sf::Event::KeyPressed ||
+        map_keys[sf::Keyboard::Space] == sf::Event::KeyPressed) {
+        player.setLanding(Player::ON_AIR);
+        fireVelocity = DataManager::instance->getSpeedJetpack();
+    }
+    player.setFire(fireVelocity != 0);
+    player.setVelocityY(player.getVelocityY() +
+        ((-gravite + fireVelocity) * deltaTime));
+}
+
+void updatePlayers(Window &window) {
+    for (auto &player : DataManager::instance->getPlayers()) {
+        player->getMutexPlayer().lock();
+        sf::Vector2f position =
+            {player->getX(), player->getY()};
+        if (player->getId() == Player::instance->getId())
+            updateVelocityP1(window.getMapKeys(), window.getDeltaTime(), *player);
+        else 
+            updateVelocity(window.getDeltaTime(), *player);
+        position.y -= (player->getVelocityY() * window.getDeltaTime());
+        handleMaxMin(position);
+        player->setPos(position.x, position.y);
+        player->getMutexPlayer().unlock();
+    }
+}
+
 int graphic(void) {
     Window window;
     Game game;
@@ -53,6 +92,7 @@ int graphic(void) {
             Event(window);
         update(game, window);
         game.update(window.getDeltaTime());
+        updatePlayers(window);
         window.clear();
         game.draw(window.getWindow());
         drawPlayers(window);
