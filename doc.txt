@@ -119,6 +119,9 @@ Table of Contents
       FINISH <SP> <playerNumber> <SP> <CRLF> ->
          send the ID of the player who won
 
+      READY <SP> <playerNumber> <SP> <CRLF> ->
+         send the ID of the player set ready
+
    3.3. Client Commands
 
       READY <CRLF> ->
