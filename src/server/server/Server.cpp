@@ -90,7 +90,6 @@ void signalHandler(int signal) {
 }
 
 bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
-    printf("Game\n");
     // bool everyoneReady = true;
     if (!gameStarted) {
         for (auto &client : clients) {
@@ -107,7 +106,6 @@ bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
 }
 
 bool Server::handleMenuEvents() {
-    printf("Menu\n");
     return updateMenu();
 }
 

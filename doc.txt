@@ -124,7 +124,7 @@ Table of Contents
 
    3.3. Client Commands
 
-       READY <SP> <ready> <SP> <CRLF> ->
+      READY <SP> <ready> <SP> <CRLF> ->
          send if the player is ready (0 || 1) (the server must wait for all
          players)
 

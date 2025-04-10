@@ -42,8 +42,9 @@ static void clockPosition(int sockfd) {
 
 static void clockReadys(int sockfd) {
     std::string input;
+    bool isReady = Player::instance->getReady() == Player::READY;
 
-    input = "READY " + std::to_string(Player::instance->getReady()) + "\n";
+    input = "READY " + std::to_string(isReady) + "\n";
     write(sockfd, input.c_str(), input.size());
 }
 

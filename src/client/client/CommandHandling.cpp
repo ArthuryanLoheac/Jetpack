@@ -72,6 +72,29 @@ static void handlePlayer(std::istringstream& iss) {
     }
 }
 
+static void handleReady(std::istringstream& iss) {
+    std::string idStr, isReady;
+
+    std::getline(iss, idStr, ' ');
+    std::getline(iss, isReady, ' ');
+
+    int id = std::stoi(idStr);
+    Player::Ready ready = (std::stoi(isReady) == 1) ? 
+        Player::READY : Player::NOT_READY;
+
+    if (!isIdInList(id)) {
+        Player &newPlayer = DataManager::instance->addNewPlayer();
+        newPlayer.setId(id);
+        newPlayer.setReady(ready);
+    } else {
+        for (const auto &p : DataManager::instance->getPlayers()) {
+            if (p->getId() == id) {
+                p->setReady(ready);
+            }
+        }
+    }
+}
+
 void handleStart() {
     std::lock_guard<std::mutex> lock(DataManager::instance->mutexState);
     DataManager::instance->setState(DataManager::GAME);
@@ -90,4 +113,6 @@ void handleCommand(std::string command) {
         handlePlayer(iss);
     if (commandName == "START")
         handleStart();
+    if (commandName == "READY")
+        handleReady(iss);
 }
