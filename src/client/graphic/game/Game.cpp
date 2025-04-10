@@ -12,7 +12,6 @@ Game::Game()
         return;
     jetpack.sound.setBuffer(jetpack.buff);
     music.sound.setBuffer(music.buff);
-    music.sound.play();
     music.sound.setLoop(true);
     music.sound.setVolume(VolumeMusic);
     jetpack.sound.setVolume(VolumeSound);
@@ -21,6 +20,10 @@ Game::Game()
 void Game::update(float deltaTime) {
     bg.update(deltaTime);
     bg2.update(deltaTime);
+}
+
+void Game::Start() {
+    music.sound.play();
 }
 
 void Game::draw(sf::RenderWindow &window) {

@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "client/client/DataManager.hpp"
+#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -46,6 +47,11 @@ std::vector<std::unique_ptr<Player>> &DataManager::getPlayers() {
     return players;
 }
 
+DataManager::GameState DataManager::getState() const
+{
+    return state;
+}
+
 Player &DataManager::addNewPlayer() {
     players.emplace_back(std::make_unique<Player>(texturePlayer));
     return *players.back();
@@ -85,4 +91,8 @@ sf::Texture &DataManager::getTexturePlayer() {
 
 sf::Texture &DataManager::getTextureBackground() {
     return textureBackground;
+}
+
+void DataManager::setState(GameState state) {
+    this->state = state;
 }

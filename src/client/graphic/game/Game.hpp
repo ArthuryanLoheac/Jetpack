@@ -22,6 +22,7 @@ class Game {
     GameSound jetpack;
 
     Game();
+    void Start();
     void update(float deltaTime);
     void draw(sf::RenderWindow &window);
     void updateSound();

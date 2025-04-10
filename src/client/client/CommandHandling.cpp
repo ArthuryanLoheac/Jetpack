@@ -72,6 +72,11 @@ static void handlePlayer(std::istringstream& iss) {
     }
 }
 
+void handleStart() {
+    std::lock_guard<std::mutex> lock(DataManager::instance->mutexState);
+    DataManager::instance->setState(DataManager::GAME);
+}
+
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
@@ -83,4 +88,6 @@ void handleCommand(std::string command) {
         handleHello(iss);
     if (commandName == "PLAYER")
         handlePlayer(iss);
+    if (commandName == "START")
+        handleStart();
 }
