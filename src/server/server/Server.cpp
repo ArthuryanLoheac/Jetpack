@@ -89,20 +89,10 @@ void signalHandler(int signal) {
     sigInt = true;
 }
 
-bool Server::handleGameEvents(std::unordered_map<int, ClientServer> &clients) {
-    // bool everyoneReady = true;
-    if (!gameStarted) {
-        for (auto &client : clients) {
-            if (!client.second.ready) {
-                // everyoneReady = false;
-                break;
-            }
-        }
+bool Server::handleGameEvents() {
+    if (!gameStarted)
         startGame();
-    }
-    if (gameStarted)
-        return updateGame();
-    return false;
+    return updateGame();
 }
 
 bool Server::handleMenuEvents() {
@@ -121,7 +111,7 @@ void Server::run() {
     sigInt = false;
     while (!sigInt) {
         if (state == GAME)
-            sigInt = handleGameEvents(clients);
+            sigInt = handleGameEvents();
         else if (state == MENU)
             sigInt = handleMenuEvents();
         hasEvents = checkPollEvents();

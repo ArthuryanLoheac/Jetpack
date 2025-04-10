@@ -45,7 +45,7 @@ class Server {
     void handleNewConnection(struct pollfd fds[], int &nfds);
     void handleClientData(int clientFd);
     void removeClient(struct pollfd fds[], int &nfds, int index);
-    bool handleGameEvents(std::unordered_map<int, ClientServer>&);
+    bool handleGameEvents();
     bool handleMenuEvents();
 
     void startGame();

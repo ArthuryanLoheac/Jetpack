@@ -10,9 +10,20 @@ void Server::sendReadyDataToEachClient(ClientServer &player) {
 }
 
 bool Server::updateMenu() {
+    bool everyoneReady = true;
+    fflush(stdout);
+    if (clients.size() == 0)
+        everyoneReady = false;
     deltaTime = clock.restart().asSeconds();
     for (auto &client : clients) {
         sendReadyDataToEachClient(client.second);
+        if (!client.second.ready)
+            everyoneReady = false;
+    }
+    if (everyoneReady) {
+        state = GAME;
+        for (auto &client : clients)
+            client.second.sendOutput("START ");
     }
     return false;
 }

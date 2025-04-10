@@ -13,8 +13,7 @@ class Player {
 
     enum Ready {
         NOT_READY,
-        READY,
-        SENDED
+        READY
     };
 
     static Player *instance;
