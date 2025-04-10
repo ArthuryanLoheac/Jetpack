@@ -22,6 +22,7 @@
 #include "client/graphic/ImageClass.hpp"
 #include "entryPoint/entrypoint.hpp"
 #include "client/graphic/game/Game.hpp"
+#include "client/graphic/game/Menu.hpp"
 #include "client/graphic/window/Window.hpp"
 #include "client/client/Client.hpp"
 
@@ -31,6 +32,7 @@
 #include <SFML/Audio.hpp>
 
 class Game;
+class Menu;
 class Window;
 
 const int WIDTH = 1280;
@@ -43,3 +45,5 @@ void update(Game &game, Window &window);
 void handleCommand(std::string command);
 void updateImagePlayer(Player &player);
 void handleMaxMin(sf::Vector2f &position);
+void updateGame(Window &window, Game &game);
+void updateMenu(Window &window, Menu &menu);

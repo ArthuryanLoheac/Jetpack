@@ -12,6 +12,8 @@ DataManager::DataManager() {
     instance = this;
     texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
     textureBackground.loadFromFile("assets/background.png");
+    textureMenu.loadFromFile("assets/menu.jpg");
+    font.loadFromFile("assets/jetpack_font.ttf");
 }
 
 int DataManager::getGravity() const {
@@ -44,6 +46,10 @@ std::string DataManager::getIp() const {
 
 std::vector<std::unique_ptr<Player>> &DataManager::getPlayers() {
     return players;
+}
+
+DataManager::GameState DataManager::getState() const {
+    return state;
 }
 
 Player &DataManager::addNewPlayer() {
@@ -85,4 +91,16 @@ sf::Texture &DataManager::getTexturePlayer() {
 
 sf::Texture &DataManager::getTextureBackground() {
     return textureBackground;
+}
+
+void DataManager::setState(GameState state) {
+    this->state = state;
+}
+
+sf::Texture &DataManager::getTextureMenu() {
+    return textureMenu;
+}
+
+sf::Font &DataManager::getFont() {
+    return font;
 }

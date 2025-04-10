@@ -1,28 +1,32 @@
 #pragma once
+#include <vector>
 
 #include "client/graphic/BackGround.hpp"
+#include "clientRun/ClientRun.hpp"
 
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
-class Game {
+class Menu {
  private:
-    struct GameSound {
+    struct MenuSound {
         sf::SoundBuffer buff;
         sf::Sound sound;
     };
 
-    BackGround bg;
-    BackGround bg2;
+    ImageClass bg;
+    std::vector<sf::Text> text;
+
+    sf::Text youAre;
 
     int VolumeMusic;
     int VolumeSound;
 
  public:
-    GameSound music;
-    GameSound jetpack;
+    MenuSound music;
+    MenuSound jetpack;
 
-    Game();
+    explicit Menu(int id);
     void Start();
     void update(float deltaTime);
     void draw(sf::RenderWindow &window);

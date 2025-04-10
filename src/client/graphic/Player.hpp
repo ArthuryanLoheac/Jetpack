@@ -11,6 +11,11 @@ class Player {
         ON_AIR
     };
 
+    enum Ready {
+        NOT_READY,
+        READY
+    };
+
     static Player *instance;
     explicit Player(sf::Texture &texturePlayer)
         : img(texturePlayer) {
@@ -40,6 +45,14 @@ class Player {
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
     std::mutex &getMutexPlayer() { return mutexPlayer; }
+    Ready getReady() {
+        std::lock_guard<std::mutex> lock(mutexPlayer);
+        return ready;
+    }
+    void setReady(Ready ready) {
+        std::lock_guard<std::mutex> lock(mutexPlayer);
+        this->ready = ready;
+    }
 
  private:
     float x = 100;
@@ -51,6 +64,7 @@ class Player {
     bool isGround = false;
     int coins = 0;
     int id = 0;
+    Ready ready = NOT_READY;
     ImageClass img;
     Landing landing = ON_AIR;
     std::mutex mutexPlayer;

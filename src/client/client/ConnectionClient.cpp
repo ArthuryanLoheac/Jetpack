@@ -33,23 +33,33 @@ static void readDatas(int sockfd, struct pollfd &fds) {
     }
 }
 
-static void clockPosition(sf::Clock &clock, int sockfd) {
+static void clockPosition(int sockfd) {
     std::string input;
 
-    (void)clock;
     input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
     write(sockfd, input.c_str(), input.size());
 }
 
+static void clockReadys(int sockfd) {
+    std::string input;
+    bool isReady = Player::instance->getReady() == Player::READY;
+
+    input = "READY " + std::to_string(isReady) + "\n";
+    write(sockfd, input.c_str(), input.size());
+}
+
 void loopClient(int sockfd) {
-    sf::Clock clock;
     struct pollfd fds;
 
     fds.fd = sockfd;
     fds.events = POLLIN;
     while (1) {
         readDatas(sockfd, fds);
-        clockPosition(clock, sockfd);
+        if (DataManager::instance->getState() == DataManager::MENU) {
+            clockReadys(sockfd);
+        } else if (DataManager::instance->getState() == DataManager::GAME) {
+            clockPosition(sockfd);
+        }
     }
 }
 

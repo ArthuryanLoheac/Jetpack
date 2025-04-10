@@ -35,6 +35,8 @@ static bool isIdInList(int id) {
 }
 
 static void handlePlayer(std::istringstream& iss) {
+    if (DataManager::instance->getState() == DataManager::MENU)
+        DataManager::instance->setState(DataManager::GAME);
     std::string idStr, xStr, yStr, velocityYStr, coinsStr, isFireStr;
 
     std::getline(iss, idStr, ' ');
@@ -72,6 +74,35 @@ static void handlePlayer(std::istringstream& iss) {
     }
 }
 
+static void handleReady(std::istringstream& iss) {
+    std::string idStr, isReady;
+
+    std::getline(iss, idStr, ' ');
+    std::getline(iss, isReady, ' ');
+
+    int id = std::stoi(idStr);
+    Player::Ready ready = (std::stoi(isReady) == 1) ?
+        Player::READY : Player::NOT_READY;
+
+    if (!isIdInList(id)) {
+        Player &newPlayer = DataManager::instance->addNewPlayer();
+        newPlayer.setId(id);
+        newPlayer.setReady(ready);
+    } else {
+        for (const auto &p : DataManager::instance->getPlayers()) {
+            if (p->getId() == id && p->getId() != Player::instance->getId()) {
+                p->setReady(ready);
+            }
+        }
+    }
+}
+
+void handleStart() {
+    DataManager::instance->mutexState.lock();
+    DataManager::instance->setState(DataManager::GAME);
+    DataManager::instance->mutexState.unlock();
+}
+
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
@@ -81,6 +112,10 @@ void handleCommand(std::string command) {
     std::getline(iss, commandName, ' ');
     if (commandName == "HELLO")
         handleHello(iss);
-    if (commandName == "PLAYER")
+    else if (commandName == "PLAYER")
         handlePlayer(iss);
+    else if (commandName == "START")
+        handleStart();
+    else if (commandName == "READY")
+        handleReady(iss);
 }

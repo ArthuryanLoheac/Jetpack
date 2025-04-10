@@ -36,11 +36,12 @@ class ClientServer {
     std::string getMapPath() const { return mapPath; }
     Player &getPlayer() { return player; }
 
+    void handleReady(std::istringstream &iss);
     bool handleInput();
     void handleCommand(std::string command);
     void handleFire(std::istringstream &iss);
 
-    bool ready;
+    bool ready = false;
 
  private:
     int id;

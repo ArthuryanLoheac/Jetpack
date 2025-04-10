@@ -119,10 +119,13 @@ Table of Contents
       FINISH <SP> <playerNumber> <SP> <CRLF> ->
          send the ID of the player who won
 
+      READY <SP> <playerNumber> <SP> <ready> <SP> <CRLF> ->
+         send the ID of the player set ready (0 || 1)
+
    3.3. Client Commands
 
-      READY <CRLF> ->
-         client is ready to start the game (the server must wait for all
+      READY <SP> <ready> <SP> <CRLF> ->
+         send if the player is ready (0 || 1) (the server must wait for all
          players)
 
       MAP <CRLF> ->

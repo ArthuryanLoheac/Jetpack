@@ -20,6 +20,16 @@ void ClientServer::handleFire(std::istringstream &iss) {
         player.isFire = false;
 }
 
+void ClientServer::handleReady(std::istringstream &iss) {
+    std::string isReady;
+
+    std::getline(iss, isReady, ' ');
+    if (isReady == "1")
+        ready = true;
+    else
+        ready = false;
+}
+
 void ClientServer::handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
@@ -27,6 +37,8 @@ void ClientServer::handleCommand(std::string command) {
     std::getline(iss, commandName, ' ');
     if (commandName == "FIRE")
         handleFire(iss);
+    if (commandName == "READY")
+        handleReady(iss);
 }
 
 bool ClientServer::handleInput() {
