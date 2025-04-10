@@ -6,11 +6,12 @@
 #include "client/graphic/Player.hpp"
 
 class DataManager {
-   public:
+ public:
       enum GameState {
          MENU,
          GAME
       };
+
  private:
     int gravity;
     int speed_x;

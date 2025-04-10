@@ -41,7 +41,7 @@ class ClientServer {
     void handleCommand(std::string command);
     void handleFire(std::istringstream &iss);
 
-    bool ready = false; 
+    bool ready = false;
 
  private:
     int id;

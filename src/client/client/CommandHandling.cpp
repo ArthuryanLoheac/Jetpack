@@ -81,7 +81,7 @@ static void handleReady(std::istringstream& iss) {
     std::getline(iss, isReady, ' ');
 
     int id = std::stoi(idStr);
-    Player::Ready ready = (std::stoi(isReady) == 1) ? 
+    Player::Ready ready = (std::stoi(isReady) == 1) ?
         Player::READY : Player::NOT_READY;
 
     if (!isIdInList(id)) {

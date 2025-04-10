@@ -31,9 +31,9 @@ int graphic(void) {
         window.updateDeltaTime();
         if (lastState == DataManager::MENU && state == DataManager::GAME)
             game.Start();
-        if (state == DataManager::MENU) {
+        if (state == DataManager::MENU)
             updateMenu(window, menu);
-        } else if (state == DataManager::GAME)
+        else if (state == DataManager::GAME)
             updateGame(window, game);
         window.display();
         lastState = state;

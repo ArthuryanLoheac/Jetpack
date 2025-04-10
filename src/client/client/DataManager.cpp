@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "client/client/DataManager.hpp"
-#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -49,8 +48,7 @@ std::vector<std::unique_ptr<Player>> &DataManager::getPlayers() {
     return players;
 }
 
-DataManager::GameState DataManager::getState() const
-{
+DataManager::GameState DataManager::getState() const {
     return state;
 }
 

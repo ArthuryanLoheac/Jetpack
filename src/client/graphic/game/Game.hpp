@@ -17,6 +17,7 @@ class Game {
 
     int VolumeMusic;
     int VolumeSound;
+
  public:
     GameSound music;
     GameSound jetpack;

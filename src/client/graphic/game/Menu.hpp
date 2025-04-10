@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #include "client/graphic/BackGround.hpp"
 #include "clientRun/ClientRun.hpp"
@@ -20,6 +21,7 @@ class Menu {
 
     int VolumeMusic;
     int VolumeSound;
+
  public:
     MenuSound music;
     MenuSound jetpack;

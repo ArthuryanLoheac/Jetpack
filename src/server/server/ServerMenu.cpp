@@ -4,14 +4,13 @@
 void Server::sendReadyDataToEachClient(ClientServer &player) {
     for (auto &otherClient : clients) {
         player.sendOutput("READY " +
-                          std::to_string(otherClient.second.getPlayer().id) + " " +
-                          std::to_string(otherClient.second.ready));
+            std::to_string(otherClient.second.getPlayer().id) + " " +
+            std::to_string(otherClient.second.ready));
     }
 }
 
 bool Server::updateMenu() {
     bool everyoneReady = true;
-    fflush(stdout);
     if (clients.size() == 0)
         everyoneReady = false;
     deltaTime = clock.restart().asSeconds();

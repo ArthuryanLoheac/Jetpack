@@ -20,10 +20,10 @@
 
 class Server {
  public:
-   enum GameState {
-      MENU,
-      GAME
-   };
+    enum GameState {
+        MENU,
+        GAME
+    };
 
     class ftpException : public std::exception {
      public:
@@ -55,6 +55,7 @@ class Server {
 
     bool updateMenu();
     void sendReadyDataToEachClient(ClientServer &player);
+
  private:
     sf::Clock clock;
 
