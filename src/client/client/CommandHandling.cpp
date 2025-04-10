@@ -88,7 +88,7 @@ static void handleReady(std::istringstream& iss) {
         newPlayer.setReady(ready);
     } else {
         for (const auto &p : DataManager::instance->getPlayers()) {
-            if (p->getId() == id) {
+            if (p->getId() == id && p->getId() != Player::instance->getId()) {
                 p->setReady(ready);
             }
         }

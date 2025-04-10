@@ -119,9 +119,9 @@ $(OBJ_DIR)/%.o: %.cpp
 
 re: fclean all
 
-COMAND_SERVER = ./$(NAME_SERVER) -p 1111 -m ./main_client.cpp
+COMAND_SERVER = ./$(NAME_SERVER) -p 1112 -m ./main_client.cpp
 
-COMMAND_CLIENT = ./$(NAME_CLIENT) -p 1111 -h 127.0.0.1
+COMMAND_CLIENT = ./$(NAME_CLIENT) -p 1112 -h 127.0.0.1
 
 run: all
 	$(COMAND_SERVER)

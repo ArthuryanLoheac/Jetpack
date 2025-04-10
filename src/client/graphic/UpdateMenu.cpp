@@ -22,8 +22,7 @@ static void EventMenu(Window &window) {
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.getWindow().close();
     if (window.getEvent().type == sf::Event::KeyPressed &&
-        window.getEvent().key.code == sf::Keyboard::Enter &&
-        Player::instance->getReady() == Player::NOT_READY) {
+        window.getEvent().key.code == sf::Keyboard::Enter) {
         Player::instance->setReady(Player::READY);
     }
     window.getMapKeys()[window.getEvent().key.code] = window.getEvent().type;
