@@ -9,6 +9,7 @@
 #include "client/graphic/ImageClass.hpp"
 #include "client/graphic/BackGround.hpp"
 #include "client/graphic/game/Game.hpp"
+#include "client/graphic/game/Menu.hpp"
 #include "client/graphic/window/Window.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -23,10 +24,10 @@ static void EventMenu(Window &window) {
     window.getMapKeys()[window.getEvent().key.code] = window.getEvent().type;
 }
 
-
-void updateMenu(Window &window, Game &game) {
+void updateMenu(Window &window, Menu &menu) {
     while (window.pollEvent())
         EventMenu(window);
+    menu.update(window.getDeltaTime());
     window.clear();
-    (void)game;
+    menu.draw(window.getWindow());
 }

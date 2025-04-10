@@ -13,6 +13,8 @@ DataManager::DataManager() {
     instance = this;
     texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
     textureBackground.loadFromFile("assets/background.png");
+    textureMenu.loadFromFile("assets/menu.jpg");
+    font.loadFromFile("assets/jetpack_font.ttf");
 }
 
 int DataManager::getGravity() const {
@@ -95,4 +97,12 @@ sf::Texture &DataManager::getTextureBackground() {
 
 void DataManager::setState(GameState state) {
     this->state = state;
+}
+
+sf::Texture &DataManager::getTextureMenu() {
+    return textureMenu;
+}
+
+sf::Font &DataManager::getFont() {
+    return font;
 }

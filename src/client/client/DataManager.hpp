@@ -23,6 +23,8 @@ class DataManager {
     std::vector<std::unique_ptr<Player>> players;
     sf::Texture texturePlayer;
     sf::Texture textureBackground;
+    sf::Texture textureMenu;
+    sf::Font font;
     GameState state = MENU;
 
  public:
@@ -39,6 +41,7 @@ class DataManager {
     std::string getIp() const;
     std::vector<std::unique_ptr<Player>> &getPlayers();
     GameState getState() const;
+    sf::Font &getFont();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);
@@ -51,5 +54,6 @@ class DataManager {
 
     sf::Texture &getTexturePlayer();
     sf::Texture &getTextureBackground();
+    sf::Texture &getTextureMenu();
     Player &addNewPlayer();
 };

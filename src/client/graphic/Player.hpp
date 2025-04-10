@@ -40,6 +40,8 @@ class Player {
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
     std::mutex &getMutexPlayer() { return mutexPlayer; }
+    bool getReady() { return ready; }
+    void setReady(bool ready) { this->ready = ready; }
 
  private:
     float x = 100;
@@ -51,6 +53,7 @@ class Player {
     bool isGround = false;
     int coins = 0;
     int id = 0;
+    bool ready = false;
     ImageClass img;
     Landing landing = ON_AIR;
     std::mutex mutexPlayer;

@@ -9,6 +9,7 @@
 #include "client/graphic/ImageClass.hpp"
 #include "client/graphic/BackGround.hpp"
 #include "client/graphic/game/Game.hpp"
+#include "client/graphic/game/Menu.hpp"
 #include "client/graphic/window/Window.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -19,6 +20,7 @@
 int graphic(void) {
     Window window;
     Game game;
+    Menu menu(DataManager::instance->getId());
     DataManager::GameState lastState = DataManager::MENU;
 
     while (window.isOpen()) {
@@ -30,7 +32,7 @@ int graphic(void) {
         if (lastState == DataManager::MENU && state == DataManager::GAME)
             game.Start();
         if (state == DataManager::MENU) {
-            updateMenu(window, game);
+            updateMenu(window, menu);
         } else if (state == DataManager::GAME)
             updateGame(window, game);
         window.display();
