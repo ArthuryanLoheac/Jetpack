@@ -20,6 +20,11 @@
 
 class Server {
  public:
+   enum GameState {
+      MENU,
+      GAME
+   };
+
     class ftpException : public std::exception {
      public:
         explicit ftpException(std::string message);
@@ -41,12 +46,15 @@ class Server {
     void handleClientData(int clientFd);
     void removeClient(struct pollfd fds[], int &nfds, int index);
     bool handleGameEvents(std::unordered_map<int, ClientServer>&);
+    bool handleMenuEvents();
 
     void startGame();
     bool updateGame();
     void sendPlayersDataToEachClient(ClientServer &player);
     void updateGravity(ClientServer &player);
 
+    bool updateMenu();
+    void sendReadyDataToEachClient(ClientServer &player);
  private:
     sf::Clock clock;
 
@@ -59,6 +67,7 @@ class Server {
     int nfds;
     int i;
     int iClient;
+    GameState state = MENU;
     bool gameStarted;
     float deltaTime;
 };

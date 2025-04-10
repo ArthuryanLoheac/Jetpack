@@ -44,3 +44,4 @@ bool Server::updateGame() {
     }
     return false;
 }
+

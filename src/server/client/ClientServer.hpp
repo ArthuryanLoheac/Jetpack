@@ -18,6 +18,7 @@ class ClientServer {
          bool isFire;
          int width;
          int height;
+         bool isReady;
     };
 
     class clientException : public std::exception {
@@ -36,11 +37,12 @@ class ClientServer {
     std::string getMapPath() const { return mapPath; }
     Player &getPlayer() { return player; }
 
+    void handleReady();
     bool handleInput();
     void handleCommand(std::string command);
     void handleFire(std::istringstream &iss);
 
-    bool ready;
+    bool ready = false; 
 
  private:
     int id;
