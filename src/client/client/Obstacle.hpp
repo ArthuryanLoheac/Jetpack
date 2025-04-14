@@ -19,6 +19,6 @@ class Obstacle {
 
     static bool cmpObstacles(Obstacle &a, Obstacle &b);
  private:
-    int width = 134;
-    int height = 134;
+    int width = 92;
+    int height = 92;
 };
