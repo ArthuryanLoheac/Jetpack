@@ -34,6 +34,7 @@
 class Game;
 class Menu;
 class Window;
+class Player;
 
 const int WIDTH = 1280;
 const int HEIGHT = 920;

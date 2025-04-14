@@ -114,7 +114,7 @@ void handleMap(std::istringstream& iss) {
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
-
+ 
     if (DataManager::instance->getDebug())
         std::cout << command;
     std::getline(iss, commandName, ' ');

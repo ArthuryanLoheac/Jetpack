@@ -10,6 +10,7 @@
 #include "client/graphic/BackGround.hpp"
 #include "client/graphic/game/Game.hpp"
 #include "client/graphic/window/Window.hpp"
+#include "DataManager.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -71,8 +72,10 @@ void updateGame(Window &window, Game &game) {
         EventGame(window);
     update(game, window);
     game.update(window.getDeltaTime());
+    DataManager::instance->updateMap(window.getDeltaTime());
     updatePlayers(window);
     window.clear();
     game.draw(window.getWindow());
+    DataManager::instance->drawMap(window);
     drawPlayers(window);
 }

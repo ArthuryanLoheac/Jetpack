@@ -1,8 +1,9 @@
 #include "client/graphic/game/Menu.hpp"
+#include "DataManager.hpp"
 
 
 Menu::Menu(int id)
-    : bg(DataManager::instance->getTextureMenu()) {
+    : bg(DataManager::instance->getTexture("Menu")) {
     bg.setScale(1.3f, 1.3f);
     bg.setPosition(-300, 0);
 
