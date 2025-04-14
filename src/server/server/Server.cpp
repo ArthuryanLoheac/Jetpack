@@ -10,8 +10,11 @@
 #include <csignal>
 #include <atomic>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 #include "server/Server.hpp"
+#include "server/Obstacle.hpp"
 #include "log/Log.hpp"
 
 std::atomic<bool> sigInt;
@@ -99,6 +102,31 @@ bool Server::handleMenuEvents() {
     return updateMenu();
 }
 
+void Server::sortObstacles() {
+    std::sort(obstacles.begin(), obstacles.end(), Obstacle::cmpObstacle);
+}
+
+void Server::getMapObstacles() {
+    int id = 0;
+    int x = 0;
+    int y = 0;
+    for (char c : map) {
+        if (c == 'c') {
+            obstacles.emplace_back(id, x, y, Obstacle::COIN);
+            id++;
+        } else if (c == 'e') {
+            obstacles.emplace_back(id, x, y, Obstacle::BOMB);
+            id++;
+        }
+        if (c == '\n') {
+            x = 0;
+            y += 92;
+        } else {
+            x += 92;
+        }
+    }
+}
+
 void Server::run() {
     bool hasEvents;
     struct sigaction sigIntHandler;
@@ -109,6 +137,8 @@ void Server::run() {
     sigIntHandler.sa_flags = 0;
     sigaction(SIGINT, &sigIntHandler, nullptr);
     sigInt = false;
+    getMapObstacles();
+    sortObstacles();
     while (!sigInt) {
         if (state == GAME)
             sigInt = handleGameEvents();

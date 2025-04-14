@@ -2,6 +2,7 @@
 
 #include "server/server/Server.hpp"
 #include "game/gameConstants.hpp"
+#include "server/Obstacle.hpp"
 
 void Server::startGame() {
     gameStarted = true;
@@ -38,8 +39,33 @@ void Server::updateGravity(ClientServer &player) {
     }
 }
 
+bool Server::checkCollisions(ClientServer &player) {
+    auto p = player.getPlayer();
+    for (auto obstacle = obstacles.rbegin();
+        obstacle != obstacles.rend(); ++obstacle) {
+        if (p.x + p.width >= obstacle->getRect().left &&
+            p.x <= obstacle->getRect().left + obstacle->getRect().width &&
+            p.y + p.height >= obstacle->getRect().top &&
+            p.y <= obstacle->getRect().top + obstacle->getRect().height) {
+            if (obstacle->getType() == Obstacle::COIN &&
+                !p.checkCoinsEarned(obstacle->getId())) {
+                p.coins++;
+                p.coinsEarned.push_back(obstacle->getId());
+                obstacles.erase(std::next(obstacle).base());
+                return false;
+            } else if (obstacle->getType() == Obstacle::BOMB) {
+                player.sendOutput("DEATH" + std::to_string(p.id));
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool Server::updateGame() {
     deltaTime = clock.restart().asSeconds();
+    int count = 0;
+
     for (auto &client : clients) {
         try {
             sendPlayersDataToEachClient(client.second);
@@ -49,7 +75,12 @@ bool Server::updateGame() {
             // Continue processing other clients despite the error
         }
         updateGravity(client.second);
+        if (checkCollisions(client.second))
+            count++;
     }
+
+    if (clients.size() - count > 2)
+        return true;
     return false;
 }
 
