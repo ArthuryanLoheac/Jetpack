@@ -18,4 +18,7 @@ class Obstacle {
     void draw(Window &window);
 
     static bool cmpObstacles(Obstacle &a, Obstacle &b);
+ private:
+    int width = 134;
+    int height = 134;
 };
