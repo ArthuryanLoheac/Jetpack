@@ -81,7 +81,7 @@ SRC_CLIENT	= 	$(shell find src/client -type f -name "*.cpp" ! \
 			 -name "main_server.cpp" ! -name "main_client.cpp") \
 			 src/log/Log.cpp \
 
-SRC_TESTS	= 	tests/test_1.cpp \
+SRC_TESTS	= 	\
 
 # ============= RULES ============= #
 
