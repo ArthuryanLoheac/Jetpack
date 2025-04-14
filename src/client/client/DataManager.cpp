@@ -1,8 +1,11 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <sstream>
 
 #include "client/client/DataManager.hpp"
+#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -97,10 +100,20 @@ void DataManager::setState(GameState state) {
     this->state = state;
 }
 
+void DataManager::setMap(std::vector<std::string> map) {
+    this->map = map;
+    for (auto s:this->map)
+        std::cout << s << std::endl;
+}
+
 sf::Texture &DataManager::getTextureMenu() {
     return textureMenu;
 }
 
 sf::Font &DataManager::getFont() {
     return font;
+}
+
+std::vector<std::string> DataManager::getMap() const {
+    return map;
 }

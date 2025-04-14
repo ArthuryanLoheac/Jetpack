@@ -28,6 +28,8 @@ class DataManager {
     sf::Font font;
     GameState state = MENU;
 
+    std::vector<std::string> map;
+
  public:
     std::mutex mutexState;
     static DataManager *instance;
@@ -43,6 +45,7 @@ class DataManager {
     std::vector<std::unique_ptr<Player>> &getPlayers();
     GameState getState() const;
     sf::Font &getFont();
+    std::vector<std::string> getMap() const;
 
     void setGravity(int gravity);
     void setSpeedX(int speed);
@@ -52,6 +55,7 @@ class DataManager {
     void setPort(int port);
     void setIp(std::string ip);
     void setState(GameState state);
+    void setMap(std::vector<std::string> map);
 
     sf::Texture &getTexturePlayer();
     sf::Texture &getTextureBackground();
