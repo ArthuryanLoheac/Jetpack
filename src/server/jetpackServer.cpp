@@ -78,13 +78,49 @@ static int runServer(int port, std::string map) {
     return 0;
 }
 
+static bool checkMapFormat(const std::string &map) {
+    int globalLength = 0;
+    int currentLength = 0;
+    int lineNumber = 0;
+    if (map.empty()) {
+        std::cerr << "Invalid map format (map is empty)" << std::endl;
+        return false;
+    }
+    for (char c : map) {
+        if (c != '_' && c != 'e' && c != 'c' && c != '\n') {
+            std::cerr << "Invalid map format (invalid character: " << c
+                << ")" << std::endl;
+            return false;
+        }
+        if (c == '\n') {
+            if (globalLength == 0) {
+                globalLength = currentLength;
+            } else if (currentLength != globalLength) {
+                std::cerr << "Invalid map format (inconsistent line length)"
+                    << std::endl;
+                return false;
+            }
+            lineNumber++;
+            currentLength = 0;
+        } else {
+            currentLength++;
+        }
+    }
+    if (lineNumber != 10) {
+        std::cerr << "Invalid map format (invalid number of lines: "
+            << lineNumber << ")" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int entrypointServer(int argc, char **argv) {
     std::string map = "";
     int port = -1;
 
     if (!handleArgs(argc - 1, argv + 1, port, map))
         return printHelp(84);
-    if (port == -1 || map == "")
+    if (port == -1 || !checkMapFormat(map))
         return 84;
     std::cout << "Starting server on port " << port << std::endl;
     return runServer(port, map);
