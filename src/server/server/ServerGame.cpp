@@ -39,7 +39,13 @@ void Server::updateGravity(ClientServer &player) {
 bool Server::updateGame() {
     deltaTime = clock.restart().asSeconds();
     for (auto &client : clients) {
-        sendPlayersDataToEachClient(client.second);
+        try {
+            sendPlayersDataToEachClient(client.second);
+        } catch (std::exception &e) {
+            std::cerr << "Error sending data to client " << client.first
+                      << ": " << e.what() << std::endl;
+            return true;
+        }
         updateGravity(client.second);
     }
     return false;
