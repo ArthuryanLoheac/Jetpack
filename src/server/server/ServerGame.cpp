@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "server/server/Server.hpp"
 #include "game/gameConstants.hpp"
 
