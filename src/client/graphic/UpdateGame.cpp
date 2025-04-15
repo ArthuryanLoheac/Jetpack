@@ -67,6 +67,17 @@ void updatePlayers(Window &window) {
     }
 }
 
+void drawTotalCoins(Window &window) {
+    sf::Text text;
+    text.setFont(DataManager::instance->getFont());
+    text.setString("Total Coins " +
+        std::to_string(DataManager::instance->getPlayers()[0]->getCoins()));
+    text.setCharacterSize(30);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(10, 10);
+    window.getWindow().draw(text);
+}
+
 void updateGame(Window &window, Game &game) {
     while (window.pollEvent())
         EventGame(window);
@@ -78,4 +89,5 @@ void updateGame(Window &window, Game &game) {
     game.draw(window.getWindow());
     DataManager::instance->drawMap(window);
     drawPlayers(window);
+    drawTotalCoins(window);
 }
