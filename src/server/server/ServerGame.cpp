@@ -54,7 +54,7 @@ bool Server::checkCollisions(ClientServer &player) {
                 obstacles.erase(std::next(obstacle).base());
                 return false;
             } else if (obstacle->getType() == Obstacle::BOMB) {
-                player.sendOutput("DEATH" + std::to_string(p.id));
+                player.sendOutput("DEATH " + std::to_string(p.id));
                 return true;
             }
         }
