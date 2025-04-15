@@ -13,6 +13,8 @@ void Server::startGame() {
 
 void Server::sendPlayersDataToEachClient(ClientServer &player) {
     for (auto &otherClient : clients) {
+        if (otherClient.second.getPlayer().isAlive == false)
+            continue;
         player.sendOutput(
         "PLAYER " + std::to_string(otherClient.second.getPlayer().id) + " " +
         std::to_string(otherClient.second.getPlayer().x) + " " +
@@ -78,8 +80,6 @@ bool Server::updateGame() {
 
     updatePosObstacles();
     for (auto &client : clients) {
-        if (client.second.getPlayer().isAlive == false)
-            continue;
         try {
             sendPlayersDataToEachClient(client.second);
         } catch (std::exception &e) {
