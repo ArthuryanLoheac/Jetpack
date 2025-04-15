@@ -13,6 +13,7 @@ DataManager::DataManager() {
     if (instance)
         return;
     instance = this;
+    running = true;
     textures["Player"] = sf::Texture();
     textures["Player"].loadFromFile("assets/player_sprite_sheet.png");
     textures["BG"] = sf::Texture();

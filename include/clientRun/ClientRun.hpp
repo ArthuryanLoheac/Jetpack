@@ -41,7 +41,7 @@ const int HEIGHT = 920;
 
 int client_connection(int &sockfd);
 void loopClient(int sockfd);
-int graphic(void);
+int graphic(int sockfd);
 void update(Game &game, Window &window);
 void handleCommand(std::string command);
 void updateImagePlayer(Player &player);
