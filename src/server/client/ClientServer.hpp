@@ -19,6 +19,7 @@ class ClientServer {
          bool isFire;
          int width;
          int height;
+         bool isAlive = true;
          std::vector<int> coinsEarned;
 
          bool checkCoinsEarned(int id) {

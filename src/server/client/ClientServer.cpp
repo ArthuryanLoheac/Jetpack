@@ -1,3 +1,6 @@
+#include <unistd.h>
+#include <bits/this_thread_sleep.h>
+
 #include <string>
 
 #include "server/client/ClientServer.hpp"
@@ -24,6 +27,7 @@ ClientServer::ClientServer(int _id, int _clientFd, std::string _mapPath) :
     sendOutput("HELLO " + std::to_string(id) + ", " + std::to_string(GRAVITY)
         + ", " + std::to_string(SPEED_HORIZONTAL) + ", "
         + std::to_string(SPEED_JETPACK));
+    std::this_thread::sleep_for(std::chrono::microseconds(500));
     sendOutput("MAP " + getMapPath());
 }
 
@@ -35,5 +39,5 @@ ClientServer::~ClientServer() {
 
 ClientServer::Player::Player(int i) :
     id(i), x(100), y(100), velocity_y(0.f),
-    coins(0), isFire(false), width(134), height(134) {
+    coins(0), isFire(false), width(92), height(92) {
 }

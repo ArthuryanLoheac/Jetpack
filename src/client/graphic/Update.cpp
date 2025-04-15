@@ -15,8 +15,8 @@
 
 void handleMaxMin(sf::Vector2f &position) {
     bool isGround = false;
-    if (position.y >= HEIGHT - Player::instance->getHeight() - 30) {
-        position.y = HEIGHT - Player::instance->getHeight() - 30;
+    if (position.y >= HEIGHT - 93 - 30) {
+        position.y = HEIGHT - 93 - 30;
         Player::instance->setVelocityY(0);
         isGround = true;
         if (Player::instance->getLanding() == Player::ON_AIR) {

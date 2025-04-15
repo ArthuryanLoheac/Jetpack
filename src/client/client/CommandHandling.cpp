@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <memory>
+#include <vector>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
@@ -103,6 +104,14 @@ void handleStart() {
     DataManager::instance->mutexState.unlock();
 }
 
+void handleMap(std::istringstream& iss) {
+    std::string mapLine;
+    std::vector<std::string> mapPath;
+    while (std::getline(iss, mapLine))
+        mapPath.push_back(mapLine);
+    DataManager::instance->setMap(mapPath);
+}
+
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
@@ -118,4 +127,6 @@ void handleCommand(std::string command) {
         handleStart();
     else if (commandName == "READY")
         handleReady(iss);
+    else if (commandName == "MAP")
+        handleMap(iss);
 }

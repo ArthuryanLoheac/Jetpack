@@ -1,6 +1,5 @@
 #pragma once
 #include "client/graphic/ImageClass.hpp"
-#include "client/client/DataManager.hpp"
 
 class BackGround {
  private:
@@ -9,13 +8,13 @@ class BackGround {
     float speed = 500;
 
  public:
-    explicit BackGround(sf::Texture &texture, int posX = 0)
+    BackGround(sf::Texture &texture, int s, int posX = 0)
     : img(texture) {
         pos.x = posX;
         img.setPosition(posX, pos.y);
         img.setScale(3.7, 3.7);
         img.setRectangle(0, 0, 1726, 341);
-        speed = DataManager::instance->getSpeedX();
+        speed = s;
     }
     void update(float deltaTime) {
         pos.x -= speed * deltaTime;

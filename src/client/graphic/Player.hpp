@@ -20,6 +20,7 @@ class Player {
     explicit Player(sf::Texture &texturePlayer)
         : img(texturePlayer) {
         img.setRectangle(0, 0, width, height);
+        img.setScale(92.f/width, 92.f/height);
         img.setTimeAnimation(0.15f);
         img.setPosition(x, y);
         img.setNbFrame(4);

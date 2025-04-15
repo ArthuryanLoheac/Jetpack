@@ -4,6 +4,8 @@
 #include "game/gameConstants.hpp"
 #include "server/Obstacle.hpp"
 
+#include "SFML/Graphics.h"
+
 void Server::startGame() {
     gameStarted = true;
     clock.restart();
@@ -11,6 +13,8 @@ void Server::startGame() {
 
 void Server::sendPlayersDataToEachClient(ClientServer &player) {
     for (auto &otherClient : clients) {
+        if (otherClient.second.getPlayer().isAlive == false)
+            continue;
         player.sendOutput(
         "PLAYER " + std::to_string(otherClient.second.getPlayer().id) + " " +
         std::to_string(otherClient.second.getPlayer().x) + " " +
@@ -40,21 +44,22 @@ void Server::updateGravity(ClientServer &player) {
 }
 
 bool Server::checkCollisions(ClientServer &player) {
-    auto p = player.getPlayer();
+    auto &p = player.getPlayer();
+    sf::FloatRect rectPlayer = {p.x, p.y, 92, 92};
+
     for (auto obstacle = obstacles.rbegin();
         obstacle != obstacles.rend(); ++obstacle) {
-        if (p.x + p.width >= obstacle->getRect().left &&
-            p.x <= obstacle->getRect().left + obstacle->getRect().width &&
-            p.y + p.height >= obstacle->getRect().top &&
-            p.y <= obstacle->getRect().top + obstacle->getRect().height) {
+        if (rectPlayer.intersects(obstacle->getRect())) {
             if (obstacle->getType() == Obstacle::COIN &&
                 !p.checkCoinsEarned(obstacle->getId())) {
-                p.coins++;
+                p.coins += 1;
                 p.coinsEarned.push_back(obstacle->getId());
                 obstacles.erase(std::next(obstacle).base());
                 return false;
             } else if (obstacle->getType() == Obstacle::BOMB) {
-                player.sendOutput("DEATH" + std::to_string(p.id));
+                for (auto &pToSend : clients)
+                    pToSend.second.sendOutput("DEATH " + std::to_string(p.id));
+                p.isAlive = false;
                 return true;
             }
         }
@@ -62,10 +67,17 @@ bool Server::checkCollisions(ClientServer &player) {
     return false;
 }
 
+void Server::updatePosObstacles() {
+    for (auto obstacle = obstacles.rbegin();
+        obstacle != obstacles.rend(); ++obstacle)
+        obstacle->getRectRef().left -= deltaTime * 500;
+}
+
 bool Server::updateGame() {
     deltaTime = clock.restart().asSeconds();
     int count = 0;
 
+    updatePosObstacles();
     for (auto &client : clients) {
         try {
             sendPlayersDataToEachClient(client.second);
@@ -77,7 +89,6 @@ bool Server::updateGame() {
         if (checkCollisions(client.second))
             count++;
     }
-
     if (clients.size() - count > 2)
         return true;
     return false;

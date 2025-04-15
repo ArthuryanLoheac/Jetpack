@@ -36,7 +36,7 @@ int main(int ac, char **av) {
     DataManager::instance->setDebug(false);
     Client client(0, sockfd, "");
     DataManager::instance->getPlayers().push_back(
-        std::make_unique<Player>(DataManager::instance->getTexturePlayer()));
+        std::make_unique<Player>(DataManager::instance->getTexture("Player")));
 
     if (!(ac == 5 || ac == 6))
         return 84;

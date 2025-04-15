@@ -1,6 +1,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
 
 #include "client/client/DataManager.hpp"
 
@@ -11,9 +14,16 @@ DataManager::DataManager() {
         return;
     instance = this;
     running = true;
-    texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
-    textureBackground.loadFromFile("assets/background.png");
-    textureMenu.loadFromFile("assets/menu.jpg");
+    textures["Player"] = sf::Texture();
+    textures["Player"].loadFromFile("assets/player_sprite_sheet.png");
+    textures["BG"] = sf::Texture();
+    textures["BG"].loadFromFile("assets/background.png");
+    textures["Menu"] = sf::Texture();
+    textures["Menu"].loadFromFile("assets/menu.jpg");
+    textures["Zapper"] = sf::Texture();
+    textures["Zapper"].loadFromFile("assets/zapper_sprite_sheet.png");
+    textures["Coins"] = sf::Texture();
+    textures["Coins"].loadFromFile("assets/coins_sprite_sheet.png");
     font.loadFromFile("assets/jetpack_font.ttf");
 }
 
@@ -53,9 +63,28 @@ DataManager::GameState DataManager::getState() const {
     return state;
 }
 
+sf::Texture &DataManager::getTexture(std::string x) {
+    return textures[x];
+}
+
 Player &DataManager::addNewPlayer() {
-    players.emplace_back(std::make_unique<Player>(texturePlayer));
+    players.emplace_back(std::make_unique<Player>(textures["Player"]));
     return *players.back();
+}
+
+void DataManager::updateMap(float dt) {
+    for (size_t i = 0; i < obstacles.size(); i++) {
+        obstacles[i].update(dt);
+        if (obstacles[i].x < -143) {
+            obstacles.erase(obstacles.begin() + i);
+            i--;
+        }
+    }
+}
+
+void DataManager::drawMap(Window &window) {
+    for (auto &ob : obstacles)
+        ob.draw(window);
 }
 
 void DataManager::setGravity(int gravity) {
@@ -86,22 +115,37 @@ void DataManager::setIp(std::string ip) {
     this->ip = ip;
 }
 
-sf::Texture &DataManager::getTexturePlayer() {
-    return texturePlayer;
-}
-
-sf::Texture &DataManager::getTextureBackground() {
-    return textureBackground;
-}
-
 void DataManager::setState(GameState state) {
     this->state = state;
 }
 
-sf::Texture &DataManager::getTextureMenu() {
-    return textureMenu;
+void DataManager::setMap(std::vector<std::string> map) {
+    if (this->map.size() != 0)
+        return;
+    this->map = map;
+    int size = 92;
+    int x = 0;
+    int y = 0;
+
+    for (auto &s : this->map) {
+        x = 0;
+        for (char &c : s) {
+            if (c == 'c')
+                obstacles.push_back(Obstacle(x, y, Obstacle::COIN));
+            else if (c == 'e')
+                obstacles.push_back(Obstacle(x, y, Obstacle::OBSTACLE));
+            x += size;
+        }
+        y += size;
+    }
+
+    std::sort(obstacles.begin(), obstacles.end(), Obstacle::cmpObstacles);
 }
 
 sf::Font &DataManager::getFont() {
     return font;
+}
+
+std::vector<std::string> DataManager::getMap() const {
+    return map;
 }

@@ -2,15 +2,21 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <queue>
+#include <map>
 
 #include "client/graphic/Player.hpp"
+#include "client/client/Obstacle.hpp"
+
+class Obstacle;
+class Window;
 
 class DataManager {
  public:
-      enum GameState {
-         MENU,
-         GAME
-      };
+    enum GameState {
+        MENU,
+        GAME
+    };
 
  private:
     int gravity;
@@ -22,11 +28,12 @@ class DataManager {
     int port;
     std::string ip;
     std::vector<std::unique_ptr<Player>> players;
-    sf::Texture texturePlayer;
-    sf::Texture textureBackground;
-    sf::Texture textureMenu;
+    std::map<std::string, sf::Texture> textures;
     sf::Font font;
     GameState state = MENU;
+
+    std::vector<std::string> map;
+    std::vector<Obstacle> obstacles;
 
  public:
     std::mutex mutexState;
@@ -44,6 +51,7 @@ class DataManager {
     std::vector<std::unique_ptr<Player>> &getPlayers();
     GameState getState() const;
     sf::Font &getFont();
+    std::vector<std::string> getMap() const;
 
     void setGravity(int gravity);
     void setSpeedX(int speed);
@@ -53,9 +61,11 @@ class DataManager {
     void setPort(int port);
     void setIp(std::string ip);
     void setState(GameState state);
+    void setMap(std::vector<std::string> map);
 
-    sf::Texture &getTexturePlayer();
-    sf::Texture &getTextureBackground();
-    sf::Texture &getTextureMenu();
+    sf::Texture &getTexture(std::string x);
     Player &addNewPlayer();
+
+    void updateMap(float dt);
+    void drawMap(Window &window);
 };
