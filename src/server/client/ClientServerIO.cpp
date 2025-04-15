@@ -39,6 +39,8 @@ void ClientServer::handleCommand(std::string command) {
         handleFire(iss);
     if (commandName == "READY")
         handleReady(iss);
+    if (commandName == "BYE")
+        throw clientException("Client disconnected");
 }
 
 bool ClientServer::handleInput() {

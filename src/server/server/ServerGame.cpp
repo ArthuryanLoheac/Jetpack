@@ -72,7 +72,6 @@ bool Server::updateGame() {
         } catch (std::exception &e) {
             std::cerr << "Error sending data to client " << client.first
                       << ": " << e.what() << std::endl;
-            // Continue processing other clients despite the error
         }
         updateGravity(client.second);
         if (checkCollisions(client.second))

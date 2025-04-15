@@ -31,6 +31,7 @@ class DataManager {
  public:
     std::mutex mutexState;
     static DataManager *instance;
+    bool running;
 
     DataManager();
     int getGravity() const;

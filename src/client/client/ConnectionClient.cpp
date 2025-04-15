@@ -53,7 +53,7 @@ void loopClient(int sockfd) {
 
     fds.fd = sockfd;
     fds.events = POLLIN;
-    while (1) {
+    while (DataManager::instance->running) {
         readDatas(sockfd, fds);
         if (DataManager::instance->getState() == DataManager::MENU) {
             clockReadys(sockfd);
