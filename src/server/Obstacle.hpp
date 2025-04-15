@@ -15,7 +15,8 @@ class Obstacle {
     void setId(int id) { this->id = id; }
     int getId() { return id; }
     void setRect(int x, int y);
-    sf::Rect<int> getRect() const { return rect; }
+    sf::Rect<float> getRect() const { return rect; }
+    sf::Rect<float> &getRectRef() { return rect; }
     void setType(TypeObstacle type) { this->type = type; }
     TypeObstacle getType() { return type; }
     static bool cmpObstacle(const Obstacle &a, const Obstacle &b) {
@@ -24,6 +25,6 @@ class Obstacle {
 
  private:
     int id;
-    sf::Rect<int> rect;
+    sf::Rect<float> rect;
     TypeObstacle type;
 };

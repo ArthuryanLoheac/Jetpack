@@ -4,6 +4,8 @@
 #include "game/gameConstants.hpp"
 #include "server/Obstacle.hpp"
 
+#include "SFML/Graphics.h"
+
 void Server::startGame() {
     gameStarted = true;
     clock.restart();
@@ -40,21 +42,25 @@ void Server::updateGravity(ClientServer &player) {
 }
 
 bool Server::checkCollisions(ClientServer &player) {
-    auto p = player.getPlayer();
+    auto &p = player.getPlayer();
+    sf::FloatRect rectPlayer = {p.x, p.y, 92, 92};
+
     for (auto obstacle = obstacles.rbegin();
         obstacle != obstacles.rend(); ++obstacle) {
-        if (p.x + p.width >= obstacle->getRect().left &&
-            p.x <= obstacle->getRect().left + obstacle->getRect().width &&
-            p.y + p.height >= obstacle->getRect().top &&
-            p.y <= obstacle->getRect().top + obstacle->getRect().height) {
+
+        obstacle->getRectRef().left -= deltaTime * 500;
+
+        if (rectPlayer.intersects(obstacle->getRect())) {
             if (obstacle->getType() == Obstacle::COIN &&
                 !p.checkCoinsEarned(obstacle->getId())) {
-                p.coins++;
+                p.coins += 1;
                 p.coinsEarned.push_back(obstacle->getId());
                 obstacles.erase(std::next(obstacle).base());
                 return false;
             } else if (obstacle->getType() == Obstacle::BOMB) {
-                player.sendOutput("DEATH " + std::to_string(p.id));
+                for (auto &pToSend : clients)
+                    pToSend.second.sendOutput("DEATH " + std::to_string(p.id));
+                p.isAlive = false;
                 return true;
             }
         }
@@ -67,12 +73,13 @@ bool Server::updateGame() {
     int count = 0;
 
     for (auto &client : clients) {
+        if (client.second.getPlayer().isAlive == false)
+            continue;
         try {
             sendPlayersDataToEachClient(client.second);
         } catch (std::exception &e) {
             std::cerr << "Error sending data to client " << client.first
                       << ": " << e.what() << std::endl;
-            // Continue processing other clients despite the error
         }
         updateGravity(client.second);
         if (checkCollisions(client.second))
