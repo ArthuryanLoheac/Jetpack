@@ -13,8 +13,10 @@
 #include <atomic>
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 #include "server/client/ClientServer.hpp"
+#include "server/Obstacle.hpp"
 
 #include "SFML/System/Clock.hpp"
 
@@ -47,11 +49,14 @@ class Server {
     void removeClient(struct pollfd fds[], int &nfds, int index);
     bool handleGameEvents();
     bool handleMenuEvents();
+    void sortObstacles();
+    void getMapObstacles();
 
     void startGame();
     bool updateGame();
     void sendPlayersDataToEachClient(ClientServer &player);
     void updateGravity(ClientServer &player);
+    bool checkCollisions(ClientServer &player);
 
     bool updateMenu();
     void sendReadyDataToEachClient(ClientServer &player);
@@ -71,4 +76,5 @@ class Server {
     GameState state = MENU;
     bool gameStarted;
     float deltaTime;
+    std::vector<Obstacle> obstacles;
 };
