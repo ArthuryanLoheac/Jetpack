@@ -98,6 +98,21 @@ static void handleReady(std::istringstream& iss) {
     }
 }
 
+static void handleDeath(std::istringstream& iss) {
+    std::string idStr;
+    std::getline(iss, idStr, ' ');
+
+    int id = std::stoi(idStr);
+
+    for (const auto &p : DataManager::instance->getPlayers()) {
+        if (p->getId() == id) {
+            std::lock_guard<std::mutex> lock(p->getMutexPlayer());
+            p->setAlive(false);
+            break;
+        }
+    }
+}
+
 void handleStart() {
     DataManager::instance->mutexState.lock();
     DataManager::instance->setState(DataManager::GAME);
@@ -129,4 +144,6 @@ void handleCommand(std::string command) {
         handleReady(iss);
     else if (commandName == "MAP")
         handleMap(iss);
+    else if (commandName == "DEATH")
+        handleDeath(iss);
 }

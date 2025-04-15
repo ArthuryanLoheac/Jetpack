@@ -45,6 +45,8 @@ class Player {
     int getId() { return id; }
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
+    void setAlive(bool isAlive) { this->isAlive = isAlive; }
+    bool getAlive() { return isAlive; }
     std::mutex &getMutexPlayer() { return mutexPlayer; }
     Ready getReady() {
         std::lock_guard<std::mutex> lock(mutexPlayer);
@@ -65,6 +67,7 @@ class Player {
     bool isGround = false;
     int coins = 0;
     int id = 0;
+    bool isAlive = true;
     Ready ready = NOT_READY;
     ImageClass img;
     Landing landing = ON_AIR;
