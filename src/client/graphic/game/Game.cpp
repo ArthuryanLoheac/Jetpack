@@ -18,6 +18,11 @@ Game::Game()
     music.sound.setLoop(true);
     music.sound.setVolume(VolumeMusic);
     jetpack.sound.setVolume(VolumeSound);
+    coinsText.setFont(DataManager::instance->getFont());
+    coinsText.setCharacterSize(30);
+    coinsText.setFillColor(sf::Color::White);
+    coinsText.setPosition(10, 10);
+    totalCoins = 0;
 }
 
 void Game::update(float deltaTime) {
@@ -32,6 +37,15 @@ void Game::Start() {
 void Game::draw(sf::RenderWindow &window) {
     bg.draw(window);
     bg2.draw(window);
+}
+
+void Game::updateCoins(int coins) {
+    totalCoins = coins;
+    coinsText.setString("Total Coins " + std::to_string(totalCoins));
+}
+
+void Game::drawCoins(sf::RenderWindow &window) {
+    window.draw(coinsText);
 }
 
 void Game::updateSound() {

@@ -4,6 +4,9 @@
 
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Game {
  private:
@@ -18,6 +21,9 @@ class Game {
     int VolumeMusic;
     int VolumeSound;
 
+    sf::Text coinsText;
+    int totalCoins;
+
  public:
     GameSound music;
     GameSound jetpack;
@@ -31,4 +37,6 @@ class Game {
     void setVolumeSound(int volume);
     int getVolumeMusic();
     int getVolumeSound();
+    void updateCoins(int coins);
+    void drawCoins(sf::RenderWindow &window);
 };
