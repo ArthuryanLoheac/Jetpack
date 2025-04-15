@@ -10,6 +10,7 @@ DataManager::DataManager() {
     if (instance)
         return;
     instance = this;
+    running = true;
     texturePlayer.loadFromFile("assets/player_sprite_sheet.png");
     textureBackground.loadFromFile("assets/background.png");
     textureMenu.loadFromFile("assets/menu.jpg");

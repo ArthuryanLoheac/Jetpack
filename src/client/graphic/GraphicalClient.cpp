@@ -17,7 +17,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
-int graphic(void) {
+int graphic(int sockfd) {
     Window window;
     Game game;
     Menu menu(DataManager::instance->getId());
@@ -38,5 +38,9 @@ int graphic(void) {
         window.display();
         lastState = state;
     }
+    DataManager::instance->mutexState.lock();
+    DataManager::instance->running = false;
+    DataManager::instance->mutexState.unlock();
+    write(sockfd, "BYE\r\n", 6);
     return 0;
 }
