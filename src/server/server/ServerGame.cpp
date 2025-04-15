@@ -47,9 +47,6 @@ bool Server::checkCollisions(ClientServer &player) {
 
     for (auto obstacle = obstacles.rbegin();
         obstacle != obstacles.rend(); ++obstacle) {
-
-        obstacle->getRectRef().left -= deltaTime * 500;
-
         if (rectPlayer.intersects(obstacle->getRect())) {
             if (obstacle->getType() == Obstacle::COIN &&
                 !p.checkCoinsEarned(obstacle->getId())) {
@@ -68,10 +65,18 @@ bool Server::checkCollisions(ClientServer &player) {
     return false;
 }
 
+void Server::updatePosObstacles()
+{
+    for (auto obstacle = obstacles.rbegin();
+        obstacle != obstacles.rend(); ++obstacle)
+        obstacle->getRectRef().left -= deltaTime * 500;
+}
+
 bool Server::updateGame() {
     deltaTime = clock.restart().asSeconds();
     int count = 0;
 
+    updatePosObstacles();
     for (auto &client : clients) {
         if (client.second.getPlayer().isAlive == false)
             continue;
@@ -85,7 +90,6 @@ bool Server::updateGame() {
         if (checkCollisions(client.second))
             count++;
     }
-
     if (clients.size() - count > 2)
         return true;
     return false;

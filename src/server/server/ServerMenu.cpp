@@ -18,7 +18,6 @@ bool Server::updateMenu() {
         sendReadyDataToEachClient(client.second);
         if (!client.second.ready)
             everyoneReady = false;
-        client.second.sendOutput("MAP " + client.second.getMapPath());
     }
     if (everyoneReady) {
         state = GAME;

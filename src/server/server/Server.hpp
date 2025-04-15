@@ -57,6 +57,7 @@ class Server {
     void sendPlayersDataToEachClient(ClientServer &player);
     void updateGravity(ClientServer &player);
     bool checkCollisions(ClientServer &player);
+    void updatePosObstacles();
 
     bool updateMenu();
     void sendReadyDataToEachClient(ClientServer &player);

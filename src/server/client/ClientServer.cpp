@@ -3,6 +3,7 @@
 #include "server/client/ClientServer.hpp"
 #include "log/Log.hpp"
 #include "game/gameConstants.hpp"
+#include <unistd.h>
 
 // ---------------------------- ClientServer CLASS ----------------------------
 
@@ -24,6 +25,9 @@ ClientServer::ClientServer(int _id, int _clientFd, std::string _mapPath) :
     sendOutput("HELLO " + std::to_string(id) + ", " + std::to_string(GRAVITY)
         + ", " + std::to_string(SPEED_HORIZONTAL) + ", "
         + std::to_string(SPEED_JETPACK));
+    usleep(500);
+    sendOutput("MAP " + getMapPath());
+
 }
 
 ClientServer::~ClientServer() {
