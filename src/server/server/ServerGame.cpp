@@ -4,7 +4,7 @@
 #include "game/gameConstants.hpp"
 #include "server/Obstacle.hpp"
 
-#include "SFML/Graphics.h"
+#include "SFML/Graphics.hpp"
 
 void Server::startGame() {
     gameStarted = true;
