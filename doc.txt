@@ -100,40 +100,44 @@ Table of Contents
       START <CRLF> ->
          server is ready to start the game
 
-      MAP <SP> <map> <SP> <length> <SP> <height> <SP> <repetition> <SP>
-      <CRLF> ->
+      MAP <SP> <map> <SP> <length> <SP> <height> <SP> <repetition> <CRLF> ->
          send the map to the client (with the length, height and repetition)
          the server need to wait for the client to send the MAP command
 
-      HELLO <SP> <playerNumber> <SP> <gravity> <SP> <velocity_x> <SP>
-      <CRLF> ->
+      HELLO <SP> <playerNumber> <SP> <gravity> <SP> <velocity_x> <CRLF> ->
          send the ID of the player to the client
 
       PLAYER <SP> <playerNumber> <SP> <x> <SP> <y> <SP> <velocity_y> <SP>
-      <coins> <SP> <isFiring> <SP> <CRLF> ->
+      <coins> <SP> <isFiring> <CRLF> ->
          send the state of the game for the given player
 
-      DEATH <SP> <playerNumber> <SP> <CRLF> ->
+      DEATH <SP> <playerNumber> <CRLF> ->
          send the ID of the player who died
 
-      FINISH <SP> <playerNumber> <SP> <CRLF> ->
+      FINISH <SP> <playerNumber> <CRLF> ->
          send the ID of the player who won
 
-      READY <SP> <playerNumber> <SP> <ready> <SP> <CRLF> ->
+      READY <SP> <playerNumber> <SP> <ready> <CRLF> ->
          send the ID of the player set ready (0 || 1)
+
+      DISCONNECTED <SP> <playerNumber> <CRLF> ->
+         send the ID of the player who disconnected
 
    3.3. Client Commands
 
-      READY <SP> <ready> <SP> <CRLF> ->
+      READY <SP> <ready> <CRLF> ->
          send if the player is ready (0 || 1) (the server must wait for all
          players)
 
       MAP <CRLF> ->
          client is ready to receive the map
 
-      FIRE <SP> <isFiring> <SP> <CRLF> ->
+      FIRE <SP> <isFiring> <CRLF> ->
          send info if the player is firing (moving up). !! Value must be 0
          (not firing) or 1 (firing) !!
+
+      BYE <CRLF> ->
+         client is leaving the game
 
 4. Security Considerations
 
