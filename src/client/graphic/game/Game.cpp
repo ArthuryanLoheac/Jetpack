@@ -1,5 +1,5 @@
+#include "client/DataManager.hpp"
 #include "client/graphic/game/Game.hpp"
-#include "DataManager.hpp"
 
 Game::Game()
     : bg(BackGround(DataManager::instance->getTexture("BG"),

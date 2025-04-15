@@ -1,4 +1,4 @@
-#include "Obstacle.hpp"
+#include "client/client/Obstacle.hpp"
 
 Obstacle::Obstacle(float x, float y, TypeObstacle tp)
 : x(x), y(y), type(tp), img(DataManager::instance->getTexture("Coins")) {

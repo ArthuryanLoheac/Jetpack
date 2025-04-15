@@ -1,6 +1,5 @@
+#include "client/DataManager.hpp"
 #include "client/graphic/game/Menu.hpp"
-#include "DataManager.hpp"
-
 
 Menu::Menu(int id)
     : bg(DataManager::instance->getTexture("Menu")) {

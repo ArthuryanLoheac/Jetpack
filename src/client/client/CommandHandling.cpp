@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <memory>
+#include <vector>
 
 #include "client/graphic/Player.hpp"
 #include "client/client/DataManager.hpp"
@@ -106,7 +107,7 @@ void handleStart() {
 void handleMap(std::istringstream& iss) {
     std::string mapLine;
     std::vector<std::string> mapPath;
-    while(std::getline(iss, mapLine))
+    while (std::getline(iss, mapLine))
         mapPath.push_back(mapLine);
     DataManager::instance->setMap(mapPath);
 }
@@ -114,7 +115,7 @@ void handleMap(std::istringstream& iss) {
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
- 
+
     if (DataManager::instance->getDebug())
         std::cout << command;
     std::getline(iss, commandName, ' ');

@@ -67,8 +67,7 @@ bool Server::checkCollisions(ClientServer &player) {
     return false;
 }
 
-void Server::updatePosObstacles()
-{
+void Server::updatePosObstacles() {
     for (auto obstacle = obstacles.rbegin();
         obstacle != obstacles.rend(); ++obstacle)
         obstacle->getRectRef().left -= deltaTime * 500;

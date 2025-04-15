@@ -3,9 +3,10 @@
 #include <vector>
 #include <memory>
 #include <queue>
+#include <map>
 
 #include "client/graphic/Player.hpp"
-#include "Obstacle.hpp"
+#include "client/client/Obstacle.hpp"
 
 class Obstacle;
 class Window;
@@ -16,6 +17,7 @@ class DataManager {
         MENU,
         GAME
     };
+
  private:
     int gravity;
     int speed_x;

@@ -21,9 +21,8 @@ bool Server::updateMenu() {
     }
     if (everyoneReady) {
         state = GAME;
-        for (auto &client : clients){
+        for (auto &client : clients)
             client.second.sendOutput("START ");
-        }
     }
     return false;
 }

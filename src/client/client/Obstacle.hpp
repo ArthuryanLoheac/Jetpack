@@ -1,8 +1,8 @@
 #pragma once
 
 #include "client/graphic/ImageClass.hpp"
-#include "DataManager.hpp"
-#include "Window.hpp"
+#include "client/DataManager.hpp"
+#include "client/graphic/window/Window.hpp"
 
 class Obstacle {
  public:

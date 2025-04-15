@@ -2,10 +2,10 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <algorithm>
 #include <sstream>
 
 #include "client/client/DataManager.hpp"
-#include "DataManager.hpp"
 
 DataManager* DataManager::instance = nullptr;
 
@@ -132,8 +132,8 @@ void DataManager::setMap(std::vector<std::string> map) {
         for (char &c : s) {
             if (c == 'c')
                 obstacles.push_back(Obstacle(x, y, Obstacle::COIN));
-            else if (c == 'e'){
-                obstacles.push_back(Obstacle(x, y, Obstacle::OBSTACLE));}
+            else if (c == 'e')
+                obstacles.push_back(Obstacle(x, y, Obstacle::OBSTACLE));
             x += size;
         }
         y += size;
