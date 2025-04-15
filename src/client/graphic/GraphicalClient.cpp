@@ -38,9 +38,10 @@ int graphic(int sockfd) {
         window.display();
         lastState = state;
     }
-    DataManager::instance->mutexState.lock();
-    DataManager::instance->running = false;
-    DataManager::instance->mutexState.unlock();
+    {
+        std::lock_guard<std::mutex> lock(DataManager::instance->mutexState);
+        DataManager::instance->running = false;
+    }
     write(sockfd, "BYE\r\n", 6);
     return 0;
 }
