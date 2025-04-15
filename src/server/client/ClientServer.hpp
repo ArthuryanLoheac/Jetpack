@@ -3,6 +3,7 @@
 #include <iostream>
 #include <exception>
 #include <string>
+#include <vector>
 
 class ClientServer {
  public:
@@ -18,6 +19,15 @@ class ClientServer {
          bool isFire;
          int width;
          int height;
+         std::vector<int> coinsEarned;
+
+         bool checkCoinsEarned(int id) {
+             for (std::size_t i = 0; i < coinsEarned.size(); i++) {
+                 if (coinsEarned[i] == id)
+                     return true;
+             }
+             return false;
+         }
     };
 
     class clientException : public std::exception {
