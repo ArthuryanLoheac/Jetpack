@@ -119,6 +119,8 @@ void DataManager::setState(GameState state) {
 }
 
 void DataManager::setMap(std::vector<std::string> map) {
+    if (this->map.size() != 0)
+        return;
     this->map = map;
     int size = 92;
     int x = 0;

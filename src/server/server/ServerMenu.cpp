@@ -18,13 +18,12 @@ bool Server::updateMenu() {
         sendReadyDataToEachClient(client.second);
         if (!client.second.ready)
             everyoneReady = false;
+        client.second.sendOutput("MAP " + client.second.getMapPath());
     }
     if (everyoneReady) {
         state = GAME;
         for (auto &client : clients){
             client.second.sendOutput("START ");
-            for (int i = 0; i < 3; i++)
-                client.second.sendOutput("MAP " + client.second.getMapPath());
         }
     }
     return false;
