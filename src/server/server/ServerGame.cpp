@@ -67,6 +67,7 @@ bool Server::checkCollisions(ClientServer &player) {
                 for (auto &pToSend : clients)
                     pToSend.second.sendOutput("DEATH " + std::to_string(p.id));
                 p.isAlive = false;
+                p.isDeadThisFrame = true;
                 return true;
             }
         }

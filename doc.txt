@@ -114,7 +114,7 @@ Table of Contents
       DEATH <SP> <playerNumber> <CRLF> ->
          send the ID of the player who died
 
-      FINISH <SP> <playerNumber> <CRLF> ->
+      FINISH <SP> <playerNumber> [<SP> <playerNumber> ...] <CRLF> ->
          send the ID of the player who won
 
       READY <SP> <playerNumber> <SP> <ready> <CRLF> ->

@@ -9,26 +9,27 @@ class ClientServer {
  public:
     class Player {
      public:
-         explicit Player(int i);
+        explicit Player(int i);
 
-         int id;
-         float x;
-         float y;
-         float velocity_y;
-         int coins;
-         bool isFire;
-         int width;
-         int height;
-         bool isAlive = true;
-         std::vector<int> coinsEarned;
+        int id;
+        float x;
+        float y;
+        float velocity_y;
+        int coins;
+        bool isFire;
+        int width;
+        int height;
+        bool isAlive = true;
+        bool isDeadThisFrame = false;
+        std::vector<int> coinsEarned;
 
-         bool checkCoinsEarned(int id) {
-             for (std::size_t i = 0; i < coinsEarned.size(); i++) {
-                 if (coinsEarned[i] == id)
-                     return true;
-             }
-             return false;
-         }
+        bool checkCoinsEarned(int id) {
+            for (std::size_t i = 0; i < coinsEarned.size(); i++) {
+                if (coinsEarned[i] == id)
+                    return true;
+            }
+            return false;
+        }
     };
 
     class clientException : public std::exception {

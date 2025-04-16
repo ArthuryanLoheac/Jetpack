@@ -52,6 +52,9 @@ class Server {
     void sortObstacles();
     void getMapObstacles();
     void checkWins();
+    bool endOfRun();
+    bool lastPlayerStanding();
+    bool isEveryoneDead();
 
     void startGame();
     bool updateGame();
@@ -78,5 +81,6 @@ class Server {
     GameState state = MENU;
     bool gameStarted;
     float deltaTime;
+    bool ended = false;
     std::vector<Obstacle> obstacles;
 };

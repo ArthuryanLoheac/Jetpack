@@ -129,7 +129,88 @@ void Server::getMapObstacles() {
 }
 
 void Server::checkWins() {
-    std::cerr << obstacles.size() << std::endl;
+    if (lastPlayerStanding())
+        ended = true;
+    else if (obstacles.size() == 0 && endOfRun()) { // End of the road
+        ended = true;
+        return;
+    }
+}
+
+bool Server::endOfRun() {
+    std::vector<int> lstPlayerWin;
+    int max = -1;
+
+    for (auto &p : clients) {
+        if (p.second.getPlayer().isAlive) {
+            if (p.second.getPlayer().coins > max) {
+                max = p.second.getPlayer().coins;
+                lstPlayerWin.clear();
+            }
+            if (p.second.getPlayer().coins == max)
+                lstPlayerWin.push_back(p.second.getPlayer().id);
+        }
+    }
+    if (max == -1)
+        return false;
+    std::string input = "FINISH";
+    for (int st : lstPlayerWin)
+        input += " " + std::to_string(st);
+    input += " \r\n";
+    for (auto &p : clients) {
+        try {
+            p.second.sendOutput(input);
+        } catch (std::exception &e) {}
+    }
+    return true;
+}
+
+bool Server::lastPlayerStanding() {
+    int nb = 0;
+    int id = -1;
+    std::vector<int> lstPlayerWinDeadThisFrame;
+    std::vector<int> lstPlayerWin;
+    int maxDeadThisRound = -1;
+
+    // Analyse data
+    for (auto &p : clients) {
+        if (p.second.getPlayer().isAlive) {
+            nb++;
+            id = p.second.getPlayer().id;
+        } else if (p.second.getPlayer().isDeadThisFrame) {
+            p.second.getPlayer().isDeadThisFrame = false;
+            if (p.second.getPlayer().coins > maxDeadThisRound) {
+                maxDeadThisRound = p.second.getPlayer().coins;
+                lstPlayerWinDeadThisFrame.clear();
+            }
+            if (p.second.getPlayer().coins == maxDeadThisRound)
+                lstPlayerWinDeadThisFrame.push_back(p.second.getPlayer().id);
+        }
+    }
+    if (nb == 1) {
+        for (auto &p : clients) {
+            std::string input = "FINISH " + std::to_string(id) + "\r\n";
+            try {
+                p.second.sendOutput(input);
+            } catch (std::exception &e) {}
+        }
+        return true;
+    }
+    if (nb == 0) {
+        if (maxDeadThisRound == -1)
+            return false;
+        std::string input = "FINISH";
+        for (int st : lstPlayerWinDeadThisFrame)
+            input += " " + std::to_string(st);
+        input += " \r\n";
+        for (auto &p : clients) {
+            try {
+                p.second.sendOutput(input);
+            } catch (std::exception &e) {}
+        }
+        return true;
+    }
+    return false;
 }
 
 void Server::run()
@@ -146,13 +227,12 @@ void Server::run()
     getMapObstacles();
     sortObstacles();
     while (!sigInt) {
-        if (state == GAME)
+        if (state == GAME && !ended)
             sigInt = handleGameEvents();
         else if (state == MENU)
             sigInt = handleMenuEvents();
         hasEvents = checkPollEvents();
-        if (hasEvents) {
+        if (hasEvents)
             processReadyFds();
-        }
     }
 }
