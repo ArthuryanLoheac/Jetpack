@@ -13,11 +13,15 @@ Game::Game()
         return;
     if (!jetpack.buff.loadFromFile("assets/jetpack.ogg"))
         return;
+    if (!coin.buff.loadFromFile("assets/coin_pickup_1.wav"))
+        return;
     jetpack.sound.setBuffer(jetpack.buff);
     music.sound.setBuffer(music.buff);
+    coin.sound.setBuffer(coin.buff);
     music.sound.setLoop(true);
     music.sound.setVolume(VolumeMusic);
     jetpack.sound.setVolume(VolumeSound);
+    coin.sound.setVolume(VolumeSound);
     coinsText.setFont(DataManager::instance->getFont());
     coinsText.setCharacterSize(30);
     coinsText.setFillColor(sf::Color::White);
@@ -50,6 +54,7 @@ void Game::drawCoins(sf::RenderWindow &window) {
 
 void Game::updateSound() {
     jetpack.sound.setVolume(VolumeSound);
+    coin.sound.setVolume(VolumeSound);
     music.sound.setVolume(VolumeMusic);
 }
 

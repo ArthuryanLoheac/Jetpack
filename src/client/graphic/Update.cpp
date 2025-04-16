@@ -119,7 +119,7 @@ static void updateSound(Game &game, Window &window) {
     }
 }
 
-void updateTakeCoins() {
+void updateTakeCoins(Game &game) {
     sf::IntRect RectPl = {static_cast<int>(Player::instance->getX()),
         static_cast<int>(Player::instance->getY()),
         Player::instance->getWidth(), Player::instance->getHeight()};
@@ -137,6 +137,9 @@ void updateTakeCoins() {
             static_cast<int>(item.y), item.width, item.height};
         if (RectPl.intersects(RectIt)) {
             if (item.type == Obstacle::COIN) {
+                if (game.coin.sound.getStatus() == sf::Sound::Playing)
+                    game.coin.sound.stop();
+                game.coin.sound.play();
                 DataManager::instance->getObstacles().erase(
                     DataManager::instance->getObstacles().begin() + i);
                 i++;
@@ -156,7 +159,7 @@ void update(Game &game, Window &window) {
     Player::instance->getImage().setPosition(position.x, position.y);
     Player::instance->setPos(position.x, position.y);
     Player::instance->getImage().updateAnimation();
-    updateTakeCoins();
+    updateTakeCoins(game);
     updateImage();
     updateSound(game, window);
 }
