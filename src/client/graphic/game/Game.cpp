@@ -49,7 +49,7 @@ void Game::update(float deltaTime) {
             DataManager::instance->getPlayers()[i]->getCoins()});
     std::sort(IdScores.begin(), IdScores.end(), cmpTuple);
     for (size_t i = 0; i < IdScores.size(); i++) {
-        if (i <= scoresLeaderBoard.size())
+        if (i >= scoresLeaderBoard.size())
             addElementScoreBoard();
         scoresLeaderBoard[i].setString(
             "Player " + std::to_string(std::get<0>(IdScores[i]))
