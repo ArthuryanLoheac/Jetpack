@@ -24,6 +24,9 @@ class Game {
     sf::Text coinsText;
     int totalCoins;
 
+    std::vector<sf::Text> scoresLeaderBoard;
+    sf::Text leaderBoardTitle;
+
  public:
     GameSound music;
     GameSound jetpack;
@@ -39,4 +42,6 @@ class Game {
     int getVolumeSound();
     void updateCoins(int coins);
     void drawCoins(sf::RenderWindow &window);
+
+    void addElementScoreBoard();
 };
