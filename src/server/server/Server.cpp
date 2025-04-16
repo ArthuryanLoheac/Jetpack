@@ -16,7 +16,6 @@
 #include "server/Server.hpp"
 #include "server/Obstacle.hpp"
 #include "log/Log.hpp"
-#include "Server.hpp"
 
 std::atomic<bool> sigInt;
 
@@ -129,9 +128,9 @@ void Server::getMapObstacles() {
 }
 
 void Server::checkWins() {
-    if (lastPlayerStanding())
+    if (lastPlayerStanding()) {
         ended = true;
-    else if (obstacles.size() == 0 && endOfRun()) { // End of the road
+    } else if (obstacles.size() == 0 && endOfRun()) {  // End of the road
         ended = true;
         return;
     }
@@ -179,6 +178,7 @@ bool Server::lastPlayerStanding() {
             id = p.second.getPlayer().id;
         } else if (p.second.getPlayer().isDeadThisFrame) {
             p.second.getPlayer().isDeadThisFrame = false;
+            // Save the max coins in case of a tie
             if (p.second.getPlayer().coins > maxDeadThisRound) {
                 maxDeadThisRound = p.second.getPlayer().coins;
                 lstPlayerWinDeadThisFrame.clear();
@@ -187,6 +187,7 @@ bool Server::lastPlayerStanding() {
                 lstPlayerWinDeadThisFrame.push_back(p.second.getPlayer().id);
         }
     }
+    // Last player standing
     if (nb == 1) {
         for (auto &p : clients) {
             std::string input = "FINISH " + std::to_string(id) + "\r\n";
@@ -196,6 +197,7 @@ bool Server::lastPlayerStanding() {
         }
         return true;
     }
+    // Tie : all dead at the same frame
     if (nb == 0) {
         if (maxDeadThisRound == -1)
             return false;
@@ -213,8 +215,7 @@ bool Server::lastPlayerStanding() {
     return false;
 }
 
-void Server::run()
-{
+void Server::run() {
     bool hasEvents;
     struct sigaction sigIntHandler;
 
