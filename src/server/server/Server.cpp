@@ -16,6 +16,7 @@
 #include "server/Server.hpp"
 #include "server/Obstacle.hpp"
 #include "log/Log.hpp"
+#include "Server.hpp"
 
 std::atomic<bool> sigInt;
 
@@ -127,7 +128,12 @@ void Server::getMapObstacles() {
     }
 }
 
-void Server::run() {
+void Server::checkWins() {
+    std::cerr << obstacles.size() << std::endl;
+}
+
+void Server::run()
+{
     bool hasEvents;
     struct sigaction sigIntHandler;
 

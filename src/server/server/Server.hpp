@@ -51,6 +51,7 @@ class Server {
     bool handleMenuEvents();
     void sortObstacles();
     void getMapObstacles();
+    void checkWins();
 
     void startGame();
     bool updateGame();
