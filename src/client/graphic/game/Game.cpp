@@ -1,6 +1,9 @@
+#include <vector>
+#include <tuple>
+#include <algorithm>
+
 #include "client/DataManager.hpp"
 #include "client/graphic/game/Game.hpp"
-#include "Game.hpp"
 
 Game::Game()
     : bg(BackGround(DataManager::instance->getTexture("BG"),
@@ -41,10 +44,9 @@ void Game::update(float deltaTime) {
     bg2.update(deltaTime);
     std::vector<std::tuple<int, int>> IdScores;
 
-    for (size_t i = 0; i < DataManager::instance->getPlayers().size(); i++) {
+    for (size_t i = 0; i < DataManager::instance->getPlayers().size(); i++)
         IdScores.push_back({DataManager::instance->getPlayers()[i]->getId(),
             DataManager::instance->getPlayers()[i]->getCoins()});
-    }
     std::sort(IdScores.begin(), IdScores.end(), cmpTuple);
     for (size_t i = 0; i < IdScores.size(); i++) {
         if (i <= scoresLeaderBoard.size())
@@ -58,7 +60,6 @@ void Game::update(float deltaTime) {
         else
             scoresLeaderBoard[i].setFillColor(sf::Color::White);
     }
-
 }
 
 void Game::Start() {
@@ -70,7 +71,7 @@ void Game::draw(sf::RenderWindow &window) {
     bg2.draw(window);
 
     window.draw(leaderBoardTitle);
-    for (auto &s: scoresLeaderBoard)
+    for (auto &s : scoresLeaderBoard)
         window.draw(s);
 }
 
@@ -92,8 +93,7 @@ void Game::addElementScoreBoard() {
     scoresLeaderBoard[s - 1].setPosition({WIDTH - 150, 0});
 }
 
-void Game::updateSound()
-{
+void Game::updateSound() {
     jetpack.sound.setVolume(VolumeSound);
     music.sound.setVolume(VolumeMusic);
 }
