@@ -149,3 +149,7 @@ sf::Font &DataManager::getFont() {
 std::vector<std::string> DataManager::getMap() const {
     return map;
 }
+
+std::vector<Obstacle> &DataManager::getObstacles() {
+    return obstacles;
+}
