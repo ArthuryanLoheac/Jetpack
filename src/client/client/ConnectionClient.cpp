@@ -37,9 +37,9 @@ static void readDatas(int sockfd, struct pollfd &fds) {
 static void clockPosition(int sockfd) {
     std::string input;
 
-        input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
-        write(sockfd, input.c_str(), input.size());
-    }
+    input = "FIRE " + std::to_string(Player::instance->getFire()) + "\n";
+    write(sockfd, input.c_str(), input.size());
+}
 
 static void clockReadys(int sockfd) {
     std::string input;
