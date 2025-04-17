@@ -39,7 +39,7 @@ port(port), map(_map), nfds(1), i(0), gameStarted(false) {
 Server::~Server() {
     delete[] fds;
     close(socketFd);
-    Log::info() << "\nServer stopped" << std::endl;
+    Log::info() << "Server stopped" << std::endl;
 }
 
 void Server::setMap(std::string path) {
