@@ -229,7 +229,7 @@ void Server::run() {
     sortObstacles();
     while (!sigInt) {
         if (state == GAME && !ended)
-            sigInt = handleGameEvents();
+            handleGameEvents();
         else if (state == MENU)
             sigInt = handleMenuEvents();
         hasEvents = checkPollEvents();
