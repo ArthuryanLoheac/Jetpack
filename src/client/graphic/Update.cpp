@@ -144,6 +144,35 @@ static void updateSound(Game &game, Window &window) {
     }
 }
 
+void updateTakeCoins(Game &game) {
+    sf::IntRect RectPl = {static_cast<int>(Player::instance->getX()),
+        static_cast<int>(Player::instance->getY()),
+        Player::instance->getWidth(), Player::instance->getHeight()};
+    if (DataManager::instance->getObstacles().size() < 1)
+        return;
+    for (int i = DataManager::instance->getObstacles().size() - 1;
+            i >= 0; i--) {
+        if (i >= static_cast<int>(
+            DataManager::instance->getObstacles().size()))
+            break;
+        Obstacle item = DataManager::instance->getObstacles()[i];
+        if (item.x > 300)
+            break;
+        sf::IntRect RectIt = {static_cast<int>(item.x),
+            static_cast<int>(item.y), item.width, item.height};
+        if (RectPl.intersects(RectIt)) {
+            if (item.type == Obstacle::COIN) {
+                if (game.coin.sound.getStatus() == sf::Sound::Playing)
+                    game.coin.sound.stop();
+                game.coin.sound.play();
+                DataManager::instance->getObstacles().erase(
+                    DataManager::instance->getObstacles().begin() + i);
+                i++;
+            }
+        }
+    }
+}
+
 void update(Game &game, Window &window) {
     sf::Vector2f position =
         {Player::instance->getX(), Player::instance->getY()};
@@ -155,6 +184,7 @@ void update(Game &game, Window &window) {
     Player::instance->getImage().setPosition(position.x, position.y);
     Player::instance->setPos(position.x, position.y);
     Player::instance->getImage().updateAnimation();
+    updateTakeCoins(game);
     updateImage();
     updateSound(game, window);
 }

@@ -52,6 +52,7 @@ class DataManager {
     GameState getState() const;
     sf::Font &getFont();
     std::vector<std::string> getMap() const;
+    std::vector<Obstacle> &getObstacles();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);

@@ -27,6 +27,7 @@ class Game {
  public:
     GameSound music;
     GameSound jetpack;
+    GameSound coin;
 
     Game();
     void Start();
