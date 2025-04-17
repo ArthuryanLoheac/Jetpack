@@ -44,8 +44,9 @@ void ClientServer::handleCommand(std::string command) {
     } else if (commandName == "BYE") {
         sendOutput("200 ok");
         throw clientException("Client disconnected");
-    } else
+    } else {
         sendOutput("501 Not implemented");
+    }
 }
 
 bool ClientServer::handleInput() {
