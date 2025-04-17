@@ -35,12 +35,17 @@ void ClientServer::handleCommand(std::string command) {
     std::string commandName;
 
     std::getline(iss, commandName, ' ');
-    if (commandName == "FIRE")
+    if (commandName == "FIRE") {
+        sendOutput("200 ok");
         handleFire(iss);
-    if (commandName == "READY")
+    } else if (commandName == "READY") {
+        sendOutput("200 ok");
         handleReady(iss);
-    if (commandName == "BYE")
+    } else if (commandName == "BYE") {
+        sendOutput("200 ok");
         throw clientException("Client disconnected");
+    } else
+        sendOutput("501 Not implemented");
 }
 
 bool ClientServer::handleInput() {
