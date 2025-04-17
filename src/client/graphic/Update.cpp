@@ -95,7 +95,7 @@ void updateImagePlayer(Player &player) {
         player.getImage().updateAnimation();
         return;
     }
-    if (player.getY() >= HEIGHT - player.getHeight() - 30) {
+    if (player.getY() >= HEIGHT - player.getHeight()) {
         player.setGround(true);
         if (player.getLanding() == Player::ON_AIR) {
             player.setLanding(Player::LANDING);

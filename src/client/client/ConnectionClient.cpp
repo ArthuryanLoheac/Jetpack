@@ -29,6 +29,7 @@ static void readDatas(int sockfd, struct pollfd &fds) {
             valread = read(sockfd, buffer, 1024);
             if (valread > 0)
                 handleCommand(buffer);
+            fds.revents = 0;
         }
     }
 }
@@ -43,9 +44,12 @@ static void clockPosition(int sockfd) {
 static void clockReadys(int sockfd) {
     std::string input;
     bool isReady = Player::instance->getReady() == Player::READY;
-
-    input = "READY " + std::to_string(isReady) + "\n";
-    write(sockfd, input.c_str(), input.size());
+    bool lastisReady = Player::instance->getReadyLastFrame() == Player::READY;
+    if (lastisReady != isReady) {
+        input = "READY " + std::to_string(isReady) + "\n";
+        write(sockfd, input.c_str(), input.size());
+    }
+    Player::instance->setReadyLastFrame();
 }
 
 void loopClient(int sockfd) {

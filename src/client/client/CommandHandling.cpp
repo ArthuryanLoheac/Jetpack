@@ -47,32 +47,34 @@ static void handlePlayer(std::istringstream& iss) {
     std::getline(iss, coinsStr, ' ');
     std::getline(iss, isFireStr, ' ');
 
-    int id = std::stoi(idStr);
-    float x = std::stof(xStr);
-    float y = std::stof(yStr);
-    float velocityY = std::stof(velocityYStr);
-    int coins = std::stoi(coinsStr);
-    bool isFire = std::stoi(isFireStr) == 1;
+    try {
+        int id = std::stoi(idStr);
+        float x = std::stof(xStr);
+        float y = std::stof(yStr);
+        float velocityY = std::stof(velocityYStr);
+        int coins = std::stoi(coinsStr);
+        bool isFire = std::stoi(isFireStr) == 1;
 
-    if (!isIdInList(id)) {
-        Player &newPlayer = DataManager::instance->addNewPlayer();
-        std::lock_guard<std::mutex> lock(newPlayer.getMutexPlayer());
-        newPlayer.setId(id);
-        newPlayer.setPos(x, y);
-        newPlayer.setVelocityY(velocityY);
-        newPlayer.setFire(isFire);
-        newPlayer.setCoins(coins);
-    } else {
-        for (const auto &p : DataManager::instance->getPlayers()) {
-            if (p->getId() == id) {
-                std::lock_guard<std::mutex> lock(p->getMutexPlayer());
-                p->setPos(x, y);
-                p->setVelocityY(velocityY);
-                p->setFire(isFire);
-                p->setCoins(coins);
+        if (!isIdInList(id)) {
+            Player &newPlayer = DataManager::instance->addNewPlayer();
+            std::lock_guard<std::mutex> lock(newPlayer.getMutexPlayer());
+            newPlayer.setId(id);
+            newPlayer.setPos(x, y);
+            newPlayer.setVelocityY(velocityY);
+            newPlayer.setFire(isFire);
+            newPlayer.setCoins(coins);
+        } else {
+            for (const auto &p : DataManager::instance->getPlayers()) {
+                if (p->getId() == id) {
+                    std::lock_guard<std::mutex> lock(p->getMutexPlayer());
+                    p->setPos(x, y);
+                    p->setVelocityY(velocityY);
+                    p->setFire(isFire);
+                    p->setCoins(coins);
+                }
             }
         }
-    }
+    } catch (std::exception &e) {}
 }
 
 static void handleReady(std::istringstream& iss) {

@@ -104,7 +104,8 @@ Table of Contents
          send the map to the client (with the length, height and repetition)
          the server need to wait for the client to send the MAP command
 
-      HELLO <SP> <playerNumber> <SP> <gravity> <SP> <velocity_x> <CRLF> ->
+      HELLO <SP> <playerNumber> <SP> <gravity> <SP> <velocity_x> 
+         <SP> <speedJetpack> <CRLF> ->
          send the ID of the player to the client
 
       PLAYER <SP> <playerNumber> <SP> <x> <SP> <y> <SP> <velocity_y> <SP>
