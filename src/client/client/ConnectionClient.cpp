@@ -44,12 +44,8 @@ static void clockPosition(int sockfd) {
 static void clockReadys(int sockfd) {
     std::string input;
     bool isReady = Player::instance->getReady() == Player::READY;
-    bool lastisReady = Player::instance->getReadyLastFrame() == Player::READY;
-    if (lastisReady != isReady) {
-        input = "READY " + std::to_string(isReady) + "\n";
-        write(sockfd, input.c_str(), input.size());
-    }
-    Player::instance->setReadyLastFrame();
+    input = "READY " + std::to_string(isReady) + "\n";
+    write(sockfd, input.c_str(), input.size());
 }
 
 void loopClient(int sockfd) {

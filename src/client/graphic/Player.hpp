@@ -34,11 +34,9 @@ class Player {
     float getX() { return x; }
     float getY() { return y; }
     void setVelocityY(float velocityY) { this->velocityY = velocityY; }
-    void setFireLastFrame() { isFireLastFrame = isFire; }
     float getVelocityY() { return velocityY; }
     void setFire(bool isFire) { this->isFire = isFire; }
     bool getFire() { return isFire; }
-    bool getFireLastFrame() { return isFireLastFrame; }
     int getWidth() { return width; }
     int getHeight() { return height; }
     ImageClass &getImage() { return img; }
@@ -57,17 +55,9 @@ class Player {
         std::lock_guard<std::mutex> lock(mutexPlayer);
         return ready;
     }
-    Ready getReadyLastFrame() {
-        std::lock_guard<std::mutex> lock(mutexPlayer);
-        return readyLastFrame;
-    }
     void setReady(Ready ready) {
         std::lock_guard<std::mutex> lock(mutexPlayer);
         this->ready = ready;
-    }
-    void setReadyLastFrame() {
-        std::lock_guard<std::mutex> lock(mutexPlayer);
-        this->readyLastFrame = ready;
     }
 
  private:
@@ -77,13 +67,11 @@ class Player {
     int height = 134;
     float velocityY = 0.f;
     bool isFire = false;
-    bool isFireLastFrame = false;
     bool isGround = false;
     int coins = 0;
     int id = 0;
     bool isAlive = true;
     Ready ready = NOT_READY;
-    Ready readyLastFrame = NOT_READY;
     ImageClass img;
     Landing landing = ON_AIR;
     std::mutex mutexPlayer;
