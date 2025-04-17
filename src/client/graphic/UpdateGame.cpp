@@ -32,7 +32,8 @@ void drawPlayers(Window &window) {
             player->getImage().setPosition(player->getX(), player->getY());
             player->getImage().setTransparency(100);
             player->getImage().draw(window.getWindow());
-            if (player->getIsDisconnected() && player->getTimeDrawDisconnected() > 0)
+            if (player->getIsDisconnected() &&
+                player->getTimeDrawDisconnected() > 0)
                 window.getWindow().draw(player->getDisconnectTxt());
         }
     }
