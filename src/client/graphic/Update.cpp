@@ -47,6 +47,19 @@ static void updateVelocity(std::map<int, int> &map_keys, float deltaTime) {
 void updateImage() {
     ImageClass &image = Player::instance->getImage();
 
+    if (!Player::instance->getAlive()) {
+        image.getPosRectangle().top = image.getPosRectangle().height * 3;
+        if (image.getPosRectangle().left / image.getPosRectangle().width >=
+            image.getNbFrame() - 1)
+            image.getPosRectangle().left = 0;
+        if (Player::instance->getY() >= HEIGHT - 93 - 30)
+            Player::instance->setPos(Player::instance->getX(),
+                HEIGHT - 93 - 30);
+        else if (Player::instance->getX() >= (0 - 93 - 30))
+            Player::instance->setPos(Player::instance->getX() - 0.25f,
+                Player::instance->getY());
+        return;
+    }
     if (Player::instance->getGround()) {
         if (Player::instance->getLanding() == Player::LANDING) {
             image.getPosRectangle().top = image.getPosRectangle().height * 2;
@@ -70,7 +83,19 @@ void updateImage() {
 void updateImagePlayer(Player &player) {
     ImageClass &image = player.getImage();
 
-    if (player.getY() >= HEIGHT - player.getHeight()) {
+    if (!player.getAlive()) {
+        image.getPosRectangle().top = image.getPosRectangle().height * 3;
+        if (image.getPosRectangle().left / image.getPosRectangle().width >=
+            image.getNbFrame() - 1)
+            image.getPosRectangle().left = 0;
+        if (player.getY() >= HEIGHT - 93 - 30)
+            player.setPos(player.getX(), HEIGHT - 93 - 30);
+        else if (player.getX() >= (0 - 93 - 30))
+            player.setPos(player.getX() - 0.25f, player.getY());
+        player.getImage().updateAnimation();
+        return;
+    }
+    if (player.getY() >= HEIGHT - player.getHeight() - 30) {
         player.setGround(true);
         if (player.getLanding() == Player::ON_AIR) {
             player.setLanding(Player::LANDING);
