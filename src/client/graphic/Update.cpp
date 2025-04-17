@@ -47,6 +47,19 @@ static void updateVelocity(std::map<int, int> &map_keys, float deltaTime) {
 void updateImage() {
     ImageClass &image = Player::instance->getImage();
 
+    if (!Player::instance->getAlive()) {
+        image.getPosRectangle().top = image.getPosRectangle().height * 3;
+        if (image.getPosRectangle().left / image.getPosRectangle().width >=
+            image.getNbFrame() - 1)
+            image.getPosRectangle().left = 0;
+        if (Player::instance->getY() >= HEIGHT - 93 - 30)
+            Player::instance->setPos(Player::instance->getX(),
+                HEIGHT - 93 - 30);
+        else if (Player::instance->getX() >= (0 - 93 - 30))
+            Player::instance->setPos(Player::instance->getX() - 0.25f,
+                Player::instance->getY());
+        return;
+    }
     if (Player::instance->getGround()) {
         if (Player::instance->getLanding() == Player::LANDING) {
             image.getPosRectangle().top = image.getPosRectangle().height * 2;
@@ -70,6 +83,18 @@ void updateImage() {
 void updateImagePlayer(Player &player) {
     ImageClass &image = player.getImage();
 
+    if (!player.getAlive()) {
+        image.getPosRectangle().top = image.getPosRectangle().height * 3;
+        if (image.getPosRectangle().left / image.getPosRectangle().width >=
+            image.getNbFrame() - 1)
+            image.getPosRectangle().left = 0;
+        if (player.getY() >= HEIGHT - 93 - 30)
+            player.setPos(player.getX(), HEIGHT - 93 - 30);
+        else if (player.getX() >= (0 - 93 - 30))
+            player.setPos(player.getX() - 0.25f, player.getY());
+        player.getImage().updateAnimation();
+        return;
+    }
     if (player.getY() >= HEIGHT - player.getHeight()) {
         player.setGround(true);
         if (player.getLanding() == Player::ON_AIR) {
@@ -119,6 +144,35 @@ static void updateSound(Game &game, Window &window) {
     }
 }
 
+void updateTakeCoins(Game &game) {
+    sf::IntRect RectPl = {static_cast<int>(Player::instance->getX()),
+        static_cast<int>(Player::instance->getY()),
+        Player::instance->getWidth(), Player::instance->getHeight()};
+    if (DataManager::instance->getObstacles().size() < 1)
+        return;
+    for (int i = DataManager::instance->getObstacles().size() - 1;
+            i >= 0; i--) {
+        if (i >= static_cast<int>(
+            DataManager::instance->getObstacles().size()))
+            break;
+        Obstacle item = DataManager::instance->getObstacles()[i];
+        if (item.x > 300)
+            break;
+        sf::IntRect RectIt = {static_cast<int>(item.x),
+            static_cast<int>(item.y), item.width, item.height};
+        if (RectPl.intersects(RectIt)) {
+            if (item.type == Obstacle::COIN) {
+                if (game.coin.sound.getStatus() == sf::Sound::Playing)
+                    game.coin.sound.stop();
+                game.coin.sound.play();
+                DataManager::instance->getObstacles().erase(
+                    DataManager::instance->getObstacles().begin() + i);
+                i++;
+            }
+        }
+    }
+}
+
 void update(Game &game, Window &window) {
     sf::Vector2f position =
         {Player::instance->getX(), Player::instance->getY()};
@@ -130,6 +184,7 @@ void update(Game &game, Window &window) {
     Player::instance->getImage().setPosition(position.x, position.y);
     Player::instance->setPos(position.x, position.y);
     Player::instance->getImage().updateAnimation();
+    updateTakeCoins(game);
     updateImage();
     updateSound(game, window);
 }

@@ -1,11 +1,17 @@
 #include "server/server/Server.hpp"
 #include "game/gameConstants.hpp"
+#include "log/Log.hpp"
 
 void Server::sendReadyDataToEachClient(ClientServer &player) {
     for (auto &otherClient : clients) {
-        player.sendOutput("READY " +
-            std::to_string(otherClient.second.getPlayer().id) + " " +
-            std::to_string(otherClient.second.ready));
+        try {
+            player.sendOutput("READY " +
+                std::to_string(otherClient.second.getPlayer().id) + " " +
+                std::to_string(otherClient.second.ready));
+        } catch (const std::exception &e) {
+            Log::error() << "Error sending ready data to client: "
+                << e.what() << std::endl;
+        }
     }
 }
 

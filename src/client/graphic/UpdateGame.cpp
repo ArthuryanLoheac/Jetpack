@@ -74,7 +74,7 @@ void updateGame(Window &window, Game &game) {
     game.update(window.getDeltaTime());
     DataManager::instance->updateMap(window.getDeltaTime());
     updatePlayers(window);
-    game.updateCoins(DataManager::instance->getPlayers()[0]->getCoins());
+    game.updateCoins(Player::instance->getCoins());
     window.clear();
     game.draw(window.getWindow());
     DataManager::instance->drawMap(window);
