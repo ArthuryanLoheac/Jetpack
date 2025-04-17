@@ -34,8 +34,8 @@ void Server::updateGravity(ClientServer &player) {
     player.getPlayer().velocity_y += (-gravite + fireVelocity) * deltaTime;
     player.getPlayer().y -= player.getPlayer().velocity_y * deltaTime;
 
-    if (player.getPlayer().y >= HEIGHT - player.getPlayer().height - 30) {
-        player.getPlayer().y = HEIGHT - player.getPlayer().height - 30;
+    if (player.getPlayer().y >= HEIGHT - player.getPlayer().height) {
+        player.getPlayer().y = HEIGHT - player.getPlayer().height;
         player.getPlayer().velocity_y = 0;
     } else if (player.getPlayer().y <= 0) {
         player.getPlayer().y = 0;
@@ -47,19 +47,27 @@ bool Server::checkCollisions(ClientServer &player) {
     auto &p = player.getPlayer();
     sf::FloatRect rectPlayer = {p.x, p.y, 92, 92};
 
-    for (auto obstacle = obstacles.rbegin();
-        obstacle != obstacles.rend(); ++obstacle) {
+    for (size_t i = 0; i < obstacles.size(); i++) {
+        if (obstacles[i].getRect().left < -100) {
+            obstacles.erase(obstacles.begin() + i);
+            i--;
+        }
+    }
+    for (auto obstacle = obstacles.rend();
+        obstacle != obstacles.rbegin(); --obstacle) {
+        if (obstacle->getRect().left > 300)
+            break;
         if (rectPlayer.intersects(obstacle->getRect())) {
             if (obstacle->getType() == Obstacle::COIN &&
-                !p.checkCoinsEarned(obstacle->getId())) {
+                !p.checkCoinsEarned(obstacle->getId()) && p.isAlive) {
                 p.coins += 1;
                 p.coinsEarned.push_back(obstacle->getId());
-                obstacles.erase(std::next(obstacle).base());
                 return false;
             } else if (obstacle->getType() == Obstacle::BOMB) {
                 for (auto &pToSend : clients)
                     pToSend.second.sendOutput("DEATH " + std::to_string(p.id));
                 p.isAlive = false;
+                p.isDeadThisFrame = true;
                 return true;
             }
         }
@@ -89,6 +97,7 @@ bool Server::updateGame() {
         if (checkCollisions(client.second))
             count++;
     }
+    checkWins();
     if (clients.size() - count > 2)
         return true;
     return false;
