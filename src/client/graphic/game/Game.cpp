@@ -39,18 +39,20 @@ Game::Game()
     leaderBoardTitle.setString("LEADERBOARD");
 }
 
-bool cmpTuple(const std::tuple<int, int> &a, const std::tuple<int, int> &b) {
+bool cmpTuple(const std::tuple<int, int, bool> &a,
+    const std::tuple<int, int, bool> &b) {
     return std::get<1>(a) > std::get<1>(b);
 }
 
 void Game::update(float deltaTime) {
     bg.update(deltaTime);
     bg2.update(deltaTime);
-    std::vector<std::tuple<int, int>> IdScores;
+    std::vector<std::tuple<int, int, bool>> IdScores;
 
     for (size_t i = 0; i < DataManager::instance->getPlayers().size(); i++)
         IdScores.push_back({DataManager::instance->getPlayers()[i]->getId(),
-            DataManager::instance->getPlayers()[i]->getCoins()});
+            DataManager::instance->getPlayers()[i]->getCoins(),
+            DataManager::instance->getPlayers()[i]->getAlive()});
     std::sort(IdScores.begin(), IdScores.end(), cmpTuple);
     for (size_t i = 0; i < IdScores.size(); i++) {
         if (i >= scoresLeaderBoard.size())
@@ -59,10 +61,10 @@ void Game::update(float deltaTime) {
             "Player " + std::to_string(std::get<0>(IdScores[i]))
             + ": " + std::to_string(std::get<1>(IdScores[i])));
         scoresLeaderBoard[i].setPosition({WIDTH - 150, (i+1) * 35.f});
-        if (std::get<0>(IdScores[i]) == Player::instance->getId())
-            scoresLeaderBoard[i].setFillColor(sf::Color::Green);
-        else
-            scoresLeaderBoard[i].setFillColor(sf::Color::White);
+        sf::Color c = (std::get<0>(IdScores[i]) == Player::instance->getId()) ?
+            sf::Color::Green : sf::Color::White;
+        c.a = std::get<2>(IdScores[i]) ? 255 : 100;
+        scoresLeaderBoard[i].setFillColor(c);
     }
 }
 

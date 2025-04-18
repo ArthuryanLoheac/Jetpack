@@ -32,9 +32,13 @@ void drawPlayers(Window &window) {
             player->getImage().setPosition(player->getX(), player->getY());
             player->getImage().setTransparency(100);
             player->getImage().draw(window.getWindow());
+            player->getNameTxt().setPosition(player->getX() +
+                player->getWidth()/4, player->getY());
             if (player->getIsDisconnected() && player->getAlive() &&
+                Player::instance->getAlive() &&
                 player->getTimeDrawDisconnected() > 0)
                 window.getWindow().draw(player->getDisconnectTxt());
+            window.getWindow().draw(player->getNameTxt());
         }
     }
     // Draw the main player in front
@@ -69,7 +73,7 @@ void updatePlayers(Window &window) {
             if (!player->getIsDisconnected()) {
                 player->setTimeDisconnect(player->getTimeDisconnect() -
                     window.getDeltaTime());
-                if (player->getTimeDisconnect() < 0)
+                if (player->getTimeDisconnect() < 0 && player->getAlive())
                     player->setIsDisconnected(true);
             } else if (player->getTimeDrawDisconnected() > 0) {
                 player->setTimeDrawDisconnected(

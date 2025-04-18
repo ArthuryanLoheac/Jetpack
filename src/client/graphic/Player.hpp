@@ -31,6 +31,11 @@ class Player {
         txtDisconnect.setFillColor(sf::Color::Red);
         txtDisconnect.setPosition(1280/2, 0);
         txtDisconnect.setOrigin(txtDisconnect.getGlobalBounds().width / 2, 0);
+        nametxt.setString("P");
+        nametxt.setCharacterSize(30);
+        nametxt.setPosition(0, 0);
+        nametxt.setOrigin(nametxt.getGlobalBounds().width / 2, 20);
+        nametxt.setFillColor(sf::Color(255, 255, 255, 200));
     }
     void setPos(float x, float y) {
         this->x = x;
@@ -70,7 +75,8 @@ class Player {
     bool getIsDisconnected() { return isDisconnected; }
     void setTimeDrawDisconnected(float t) { this->timeDrawDisconnected = t; }
     float getTimeDrawDisconnected() { return timeDrawDisconnected; }
-    sf::Text getDisconnectTxt() { return txtDisconnect; }
+    sf::Text &getDisconnectTxt() { return txtDisconnect; }
+    sf::Text &getNameTxt() { return nametxt; }
 
  private:
     float timeDisconnect = 3.f;
@@ -91,4 +97,5 @@ class Player {
     bool isDisconnected;
     float timeDrawDisconnected;
     sf::Text txtDisconnect;
+    sf::Text nametxt;
 };

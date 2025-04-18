@@ -6,4 +6,6 @@ void Player::setId(int id) {
     txtDisconnect.setFont(DataManager::instance->getFont());
     txtDisconnect.setString("Player " + std::to_string(this->id) +
         " disconnected");
+    nametxt.setFont(DataManager::instance->getFont());
+    nametxt.setString("P " + std::to_string(this->id));
 }
