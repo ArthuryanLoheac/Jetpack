@@ -98,8 +98,8 @@ bool Server::updateGame() {
             count++;
     }
     checkWins();
-    if (clients.size() - count > 2)
-        return true;
+    //  if (clients.size() - count < 2)
+    //      return true;
     return false;
 }
 
