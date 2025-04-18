@@ -37,6 +37,11 @@ Game::Game()
     leaderBoardTitle.setCharacterSize(30);
     leaderBoardTitle.setPosition({WIDTH - 180, 0});
     leaderBoardTitle.setString("LEADERBOARD");
+
+    result.setFillColor(sf::Color::White);
+    result.setFont(DataManager::instance->getFont());
+    result.setCharacterSize(30);
+    result.setPosition({WIDTH / 2 - 100, HEIGHT / 2 - 50});
 }
 
 bool cmpTuple(const std::tuple<int, int> &a, const std::tuple<int, int> &b) {

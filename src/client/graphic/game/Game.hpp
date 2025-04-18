@@ -28,6 +28,8 @@ class Game {
     std::vector<sf::Text> scoresLeaderBoard;
     sf::Text leaderBoardTitle;
 
+    sf::Text result;
+
  public:
     GameSound music;
     GameSound jetpack;
@@ -44,6 +46,7 @@ class Game {
     int getVolumeSound();
     void updateCoins(int coins);
     void drawCoins(sf::RenderWindow &window);
+    void drawResult(sf::RenderWindow &window);
 
     void addElementScoreBoard();
 };
