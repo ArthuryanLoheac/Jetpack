@@ -32,6 +32,9 @@ void drawPlayers(Window &window) {
             player->getImage().setPosition(player->getX(), player->getY());
             player->getImage().setTransparency(100);
             player->getImage().draw(window.getWindow());
+            if (player->getIsDisconnected() &&
+                player->getTimeDrawDisconnected() > 0)
+                window.getWindow().draw(player->getDisconnectTxt());
         }
     }
     // Draw the main player in front
@@ -63,6 +66,15 @@ void updatePlayers(Window &window) {
             position.y -= (player->getVelocityY() * window.getDeltaTime());
             handleMaxMin(position);
             player->setPos(position.x, position.y);
+            if (!player->getIsDisconnected()) {
+                player->setTimeDisconnect(player->getTimeDisconnect() -
+                    window.getDeltaTime());
+                if (player->getTimeDisconnect() < 0)
+                    player->setIsDisconnected(true);
+            } else if (player->getTimeDrawDisconnected() > 0) {
+                player->setTimeDrawDisconnected(
+                    player->getTimeDrawDisconnected() - window.getDeltaTime());
+            }
         }
     }
 }

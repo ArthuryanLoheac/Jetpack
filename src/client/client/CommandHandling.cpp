@@ -63,6 +63,9 @@ static void handlePlayer(std::istringstream& iss) {
             newPlayer.setVelocityY(velocityY);
             newPlayer.setFire(isFire);
             newPlayer.setCoins(coins);
+            newPlayer.setTimeDisconnect(3.f);
+            newPlayer.setIsDisconnected(false);
+            newPlayer.setTimeDrawDisconnected(2.f);
         } else {
             for (const auto &p : DataManager::instance->getPlayers()) {
                 if (p->getId() == id) {
@@ -71,6 +74,9 @@ static void handlePlayer(std::istringstream& iss) {
                     p->setVelocityY(velocityY);
                     p->setFire(isFire);
                     p->setCoins(coins);
+                    p->setTimeDisconnect(3.f);
+                    p->setIsDisconnected(false);
+                    p->setTimeDrawDisconnected(2.f);
                 }
             }
         }

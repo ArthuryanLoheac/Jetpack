@@ -26,6 +26,11 @@ class Player {
         img.setNbFrame(4);
         if (instance == nullptr)
             instance = this;
+        txtDisconnect.setString("Player disconnected");
+        txtDisconnect.setCharacterSize(30);
+        txtDisconnect.setFillColor(sf::Color::Red);
+        txtDisconnect.setPosition(1280/2, 0);
+        txtDisconnect.setOrigin(txtDisconnect.getGlobalBounds().width / 2, 0);
     }
     void setPos(float x, float y) {
         this->x = x;
@@ -44,7 +49,7 @@ class Player {
     bool getGround() { return isGround; }
     void setLanding(Landing landing) { this->landing = landing; }
     Landing getLanding() { return landing; }
-    void setId(int id) { this->id = id; }
+    void setId(int id);
     int getId() { return id; }
     void setCoins(int coins) { this->coins = coins; }
     int getCoins() { return coins; }
@@ -59,8 +64,16 @@ class Player {
         std::lock_guard<std::mutex> lock(mutexPlayer);
         this->ready = ready;
     }
+    void setTimeDisconnect(float t) { this->timeDisconnect = t; }
+    float getTimeDisconnect() { return timeDisconnect; }
+    void setIsDisconnected(bool t) { this->isDisconnected = t; }
+    bool getIsDisconnected() { return isDisconnected; }
+    void setTimeDrawDisconnected(float t) { this->timeDrawDisconnected = t; }
+    float getTimeDrawDisconnected() { return timeDrawDisconnected; }
+    sf::Text getDisconnectTxt() { return txtDisconnect; }
 
  private:
+    float timeDisconnect = 3.f;
     float x = 100;
     float y = 100;
     int width = 134;
@@ -75,4 +88,7 @@ class Player {
     ImageClass img;
     Landing landing = ON_AIR;
     std::mutex mutexPlayer;
+    bool isDisconnected;
+    float timeDrawDisconnected;
+    sf::Text txtDisconnect;
 };
