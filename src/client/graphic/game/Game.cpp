@@ -111,7 +111,6 @@ void Game::setResult() {
 void Game::drawResult(sf::RenderWindow &window) {
     if (!DataManager::instance->getIdWinners().empty())
         window.draw(result);
-    window.draw(result);
 }
 
 void Game::addElementScoreBoard() {
