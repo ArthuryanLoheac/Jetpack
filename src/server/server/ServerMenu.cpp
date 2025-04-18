@@ -25,6 +25,8 @@ bool Server::updateMenu() {
         if (!client.second.ready)
             everyoneReady = false;
     }
+    if (clients.size() < 2)
+        everyoneReady = false;
     if (everyoneReady) {
         state = GAME;
         for (auto &client : clients)
