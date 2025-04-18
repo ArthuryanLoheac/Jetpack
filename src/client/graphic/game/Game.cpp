@@ -1,6 +1,7 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
+#include <string>
 
 #include "client/DataManager.hpp"
 #include "client/graphic/game/Game.hpp"
@@ -91,6 +92,24 @@ void Game::updateCoins(int coins) {
 
 void Game::drawCoins(sf::RenderWindow &window) {
     window.draw(coinsText);
+}
+
+void Game::setResult() {
+    if (!DataManager::instance->getIdWinners().empty()) {
+        for (auto &s : DataManager::instance->getIdWinners()) {
+            if (s == Player::instance->getId()) {
+                result.setString("VICTORY");
+                return;
+            }
+        }
+        result.setString("DEFEAT");
+    }
+}
+
+void Game::drawResult(sf::RenderWindow &window) {
+    if (!DataManager::instance->getIdWinners().empty())
+        window.draw(result);
+    window.draw(result);
 }
 
 void Game::addElementScoreBoard() {

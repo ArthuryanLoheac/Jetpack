@@ -34,6 +34,7 @@ class DataManager {
 
     std::vector<std::string> map;
     std::vector<Obstacle> obstacles;
+    std::vector<int> idWinners;
 
  public:
     std::mutex mutexState;
@@ -53,6 +54,7 @@ class DataManager {
     sf::Font &getFont();
     std::vector<std::string> getMap() const;
     std::vector<Obstacle> &getObstacles();
+    std::vector<int> &getIdWinners();
 
     void setGravity(int gravity);
     void setSpeedX(int speed);

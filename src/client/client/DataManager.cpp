@@ -67,6 +67,10 @@ sf::Texture &DataManager::getTexture(std::string x) {
     return textures[x];
 }
 
+std::vector<int> &DataManager::getIdWinners() {
+    return idWinners;
+}
+
 Player &DataManager::addNewPlayer() {
     players.emplace_back(std::make_unique<Player>(textures["Player"]));
     return *players.back();

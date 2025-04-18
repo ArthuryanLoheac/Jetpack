@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 #include "client/graphic/BackGround.hpp"
 
@@ -46,6 +47,7 @@ class Game {
     int getVolumeSound();
     void updateCoins(int coins);
     void drawCoins(sf::RenderWindow &window);
+    void setResult();
     void drawResult(sf::RenderWindow &window);
 
     void addElementScoreBoard();
