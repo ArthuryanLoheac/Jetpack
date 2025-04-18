@@ -138,11 +138,8 @@ void handleMap(std::istringstream& iss) {
 void handleFinish(std::istringstream& iss) {
     std::string id;
 
-    while (std::getline(iss, id, ' ')) {
-        try {
-            DataManager::instance->getIdWinners().push_back(std::atoi(id.c_str()));
-        } catch (std::exception &e) {}
-    }
+    while (std::getline(iss, id, ' '))
+        DataManager::instance->getIdWinners().push_back(std::atoi(id.c_str()));
 }
 
 void handleCommand(std::string command) {

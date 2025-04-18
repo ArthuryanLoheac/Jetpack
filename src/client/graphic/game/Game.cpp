@@ -41,8 +41,8 @@ Game::Game()
 
     result.setFillColor(sf::Color::White);
     result.setFont(DataManager::instance->getFont());
-    result.setCharacterSize(30);
-    result.setPosition({WIDTH / 2 - 100, HEIGHT / 2 - 50});
+    result.setCharacterSize(100);
+    result.setPosition({WIDTH / 2 - 150, HEIGHT / 2 - 50});
 }
 
 bool cmpTuple(const std::tuple<int, int> &a, const std::tuple<int, int> &b) {
@@ -99,10 +99,12 @@ void Game::setResult() {
         for (auto &s : DataManager::instance->getIdWinners()) {
             if (s == Player::instance->getId()) {
                 result.setString("VICTORY");
+                result.setFillColor(sf::Color::Green);
                 return;
             }
         }
         result.setString("DEFEAT");
+        result.setFillColor(sf::Color::Red);
     }
 }
 
