@@ -135,6 +135,13 @@ void handleMap(std::istringstream& iss) {
     DataManager::instance->setMap(mapPath);
 }
 
+void handleFinish(std::istringstream& iss) {
+    std::string id;
+
+    while (std::getline(iss, id, ' '))
+        DataManager::instance->getIdWinners().push_back(std::atoi(id.c_str()));
+}
+
 void handleCommand(std::string command) {
     std::istringstream iss(command);
     std::string commandName;
@@ -154,4 +161,6 @@ void handleCommand(std::string command) {
         handleMap(iss);
     else if (commandName == "DEATH")
         handleDeath(iss);
+    else if (commandName == "FINISH")
+        handleFinish(iss);
 }

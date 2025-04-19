@@ -96,4 +96,6 @@ void updateGame(Window &window, Game &game) {
     DataManager::instance->drawMap(window);
     drawPlayers(window);
     game.drawCoins(window.getWindow());
+    game.setResult();
+    game.drawResult(window.getWindow());
 }

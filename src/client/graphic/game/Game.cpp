@@ -1,6 +1,7 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
+#include <string>
 
 #include "client/DataManager.hpp"
 #include "client/graphic/game/Game.hpp"
@@ -37,6 +38,11 @@ Game::Game()
     leaderBoardTitle.setCharacterSize(30);
     leaderBoardTitle.setPosition({WIDTH - 180, 0});
     leaderBoardTitle.setString("LEADERBOARD");
+
+    result.setFillColor(sf::Color::White);
+    result.setFont(DataManager::instance->getFont());
+    result.setCharacterSize(100);
+    result.setPosition({WIDTH / 2 - 150, HEIGHT / 2 - 50});
 }
 
 bool cmpTuple(const std::tuple<int, int, bool> &a,
@@ -88,6 +94,25 @@ void Game::updateCoins(int coins) {
 
 void Game::drawCoins(sf::RenderWindow &window) {
     window.draw(coinsText);
+}
+
+void Game::setResult() {
+    if (!DataManager::instance->getIdWinners().empty()) {
+        for (auto &s : DataManager::instance->getIdWinners()) {
+            if (s == Player::instance->getId()) {
+                result.setString("VICTORY");
+                result.setFillColor(sf::Color::Green);
+                return;
+            }
+        }
+        result.setString("DEFEAT");
+        result.setFillColor(sf::Color::Red);
+    }
+}
+
+void Game::drawResult(sf::RenderWindow &window) {
+    if (!DataManager::instance->getIdWinners().empty())
+        window.draw(result);
 }
 
 void Game::addElementScoreBoard() {
